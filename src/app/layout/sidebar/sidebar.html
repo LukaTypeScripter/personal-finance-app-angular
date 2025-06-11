@@ -1,11 +1,14 @@
 <nav class="sidebar">
     <div class="sidebar__list">
         @for (tab of tabConfig; track tab.id) {
-            <div class="sidebar__list-tab">
-                <a >
-                    <img src="./assets/images/{{ tab.icon }}" alt="{{ tab.name }}">
+
+            @let isActive = currentUrl() === tab.route;
+
+            <div class="sidebar__list-tab" [class.sidebar__list-tab--active]="isActive">
+                <a [routerLink]="tab.route">
+                    <app-svg-icon [iconName]="tab.icon" [fill]="isActive ? tab.fillActive : tab.fill"></app-svg-icon>
                 </a>
-                <!-- <span>{{ tab.name }}</span> -->
+                <span>{{ tab.name }}</span>
             </div>
         }
     </div>

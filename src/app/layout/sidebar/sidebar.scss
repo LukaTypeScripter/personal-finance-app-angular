@@ -22,13 +22,18 @@
         box-sizing: border-box;
 
         &-tab {
-            padding: 10px 25px 15px 25px;
+            padding: 10px 26px 15px 26px;
+            border-bottom:  variables.$spacing-50 solid transparent;
+            span {
+                display: none;
+            }
 
             &--active {
+                transition: all 0.5s ease-in-out;
                 background-color: variables.$color-white;
-                padding-inline: variables.$spacing-200;
                 border-top-left-radius: variables.$spacing-150;
                 border-top-right-radius: variables.$spacing-150;
+                border-bottom:  variables.$spacing-50 solid variables.$color-green;
             }
 
             a {
