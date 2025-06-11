@@ -1,1 +1,14 @@
-/* You can add global styles to this file, and also import other style files */
+@use "@/assets/styles/_variables.scss";
+@use "@/assets/styles/_mixins.scss";
+@use "@/assets/styles/_fonts.scss";
+
+@include fonts.font-ttf('Public Sans', '@/assets/fonts/static/PublicSans-Regular', 400, normal);
+
+@include fonts.font-ttf('Public Sans', '@/assets/fonts/static/PublicSans-Bold', 700, normal); 
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: variables.$font-primary;
+}
