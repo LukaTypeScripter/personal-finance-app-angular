@@ -1,0 +1,12 @@
+<nav class="sidebar">
+    <div class="sidebar__list">
+        @for (tab of tabConfig; track tab.id) {
+            <div class="sidebar__list-tab">
+                <a >
+                    <img src="./assets/images/{{ tab.icon }}" alt="{{ tab.name }}">
+                </a>
+                <!-- <span>{{ tab.name }}</span> -->
+            </div>
+        }
+    </div>
+</nav>

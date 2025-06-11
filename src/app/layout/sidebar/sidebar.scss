@@ -1,0 +1,42 @@
+@use "@/assets/styles/_variables.scss";
+
+.sidebar {
+    box-sizing: border-box;
+    overflow: hidden;
+    text-wrap: nowrap;
+    height: 55px;
+    width: 100%;
+    background-color: variables.$color-grey-900;
+    position: fixed;
+    bottom: 0;
+    border-top-left-radius: variables.$spacing-150;
+    border-top-right-radius: variables.$spacing-150;
+    z-index: 999;
+
+    &__list {
+        height: 100%;
+        display: flex;
+        justify-content: space-around;
+        padding: variables.$spacing-100 0 0 0;
+        margin: 0;
+        box-sizing: border-box;
+
+        &-tab {
+            padding: 10px 25px 15px 25px;
+
+            &--active {
+                background-color: variables.$color-white;
+                padding-inline: variables.$spacing-200;
+                border-top-left-radius: variables.$spacing-150;
+                border-top-right-radius: variables.$spacing-150;
+            }
+
+            a {
+                display: flex;
+                align-items: center;
+                height: 100%;
+                text-decoration: none;
+            }
+        }
+    }
+}
