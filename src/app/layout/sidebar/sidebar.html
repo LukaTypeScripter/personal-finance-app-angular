@@ -1,15 +1,23 @@
-<nav class="sidebar">
+<nav class="sidebar" [class.sidebar--close]="!isSidebarOpen()">
+    <img class="sidebar__logo" routerLink='/' [src]="isSidebarOpen() ? 'assets/images/logo-large.svg' : 'assets/images/logo-small.svg'" alt="logo">
     <div class="sidebar__list">
         @for (tab of tabConfig; track tab.id) {
 
             @let isActive = currentUrl() === tab.route;
 
-            <div class="sidebar__list-tab" [class.sidebar__list-tab--active]="isActive">
-                <a [routerLink]="tab.route">
+            <div class="sidebar__list-tab" [routerLink]="tab.route" [class.sidebar__list-tab--active]="isActive">
+                <a>
                     <app-svg-icon [iconName]="tab.icon" [fill]="isActive ? tab.fillActive : tab.fill"></app-svg-icon>
                 </a>
-                <span>{{ tab.name }}</span>
+                    <span>{{ tab.name }}</span>
             </div>
         }
+    </div>
+
+    <div class="sidebar__footer">   
+        <div class="sidebar__footer-item" (click)="isSidebarOpen.set(!isSidebarOpen())">
+            <img src="assets/images/icon-minimize-menu.svg" alt="avatar">
+            <span>Minimize Menu</span>
+        </div>
     </div>
 </nav>

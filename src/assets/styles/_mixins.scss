@@ -2,13 +2,15 @@
     @if $breakpoint == xs {
       @media (max-width: 575.98px) { @content; }
     } @else if $breakpoint == sm {
-      @media (min-width: 576px) and (max-width: 767.98px) { @content; }
+      @media (min-width: 576px) and (max-width: 1199.98px) { @content; }
     } @else if $breakpoint == md {
-      @media (min-width: 768px) and (max-width: 991.98px) { @content; }
-    } @else if $breakpoint == lg {
-      @media (min-width: 992px) and (max-width: 1199.98px) { @content; }
-    } @else if $breakpoint == xl {
       @media (min-width: 1200px) { @content; }
     }
   }
-  
+
+  @mixin flex( $align: stretch,$justify: flex-start, $direction: row) {
+    display: flex;
+    justify-content: $justify;
+    align-items: $align;
+    flex-direction: $direction;
+  }
