@@ -1,0 +1,25 @@
+@use "@/assets/styles/_variables.scss";
+@use "@/assets/styles/_mixins.scss";
+
+
+.app-container {
+  min-height: 100dvh;
+  display: grid;
+  grid-template-columns:auto 1fr;
+  background-color: variables.$color-beige-100;
+
+  &__content {
+    padding: 24px 16px;
+  }
+
+  @include mixins.respond(sm)  {
+    &__content {
+      padding: 32px 40px;
+    }
+  }
+  @include mixins.respond(md) {
+    &__content {
+      padding: 40px;
+    }
+  }
+}

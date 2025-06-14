@@ -1,0 +1,17 @@
+@use "@/assets/styles/_mixins.scss";
+@use "@/assets/styles/_variables.scss";
+
+.overview-pots-header {
+    @include mixins.flex(center, space-between);
+
+    &__title {
+        font-size: variables.$font-size-preset-2;
+        font-weight: 700;
+        color: variables.$color-grey-900;
+    }
+
+    &__button {
+        @include mixins.flex(center, center);
+        gap: variables.$spacing-150;
+    }
+}

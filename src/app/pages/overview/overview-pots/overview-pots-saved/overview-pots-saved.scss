@@ -1,0 +1,32 @@
+@use "@/assets/styles/_mixins.scss";
+@use "@/assets/styles/_variables.scss";
+
+.overview-pots-saved {
+    @include mixins.card();
+    background-color: variables.$color-beige-100;
+
+    &__content {
+        @include mixins.flex(center, flex-start);
+        gap: variables.$spacing-200;
+
+        img {
+            width: 40px;
+            height: 40px;
+        }
+    }
+
+ 
+
+    &__content-title {
+        font-size: variables.$font-size-preset-4;
+        font-weight: 700;
+        color: variables.$color-grey-900;
+    }
+
+    &__content-amount {
+        font-size: variables.$font-size-preset-1;
+        font-weight: 700;
+        color: variables.$color-grey-900;
+        padding-top: variables.$spacing-150;
+    }
+}

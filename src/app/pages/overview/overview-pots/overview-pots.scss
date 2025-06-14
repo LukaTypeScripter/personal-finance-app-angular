@@ -1,0 +1,15 @@
+@use "@/assets/styles/_mixins.scss";
+@use "@/assets/styles/_variables.scss";
+
+.overview-pots {
+    @include mixins.card();
+  
+
+    &__title {
+        font-size: variables.$font-size-preset-1;
+        font-weight: 700;
+        color: variables.$color-grey-900;
+    }
+    
+    
+}

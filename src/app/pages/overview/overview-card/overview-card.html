@@ -1,0 +1,9 @@
+<div class="overview-card"
+    [ngClass]="{
+        'overview-card--black': type() === 'black',
+        'overview-card--white': type() === 'white'
+    }"
+>
+    <p class="overview-card__title">{{ title() }}</p>
+    <p class="overview-card__amount">{{ amount() | currencyFormat }}</p>
+</div>

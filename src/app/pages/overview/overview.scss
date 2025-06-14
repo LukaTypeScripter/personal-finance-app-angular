@@ -1,0 +1,34 @@
+@use "@/assets/styles/_variables.scss";
+@use "@/assets/styles/_mixins.scss";
+
+.overview {
+    &__title {
+        font-size: variables.$font-size-preset-1;
+        font-weight: 700;
+        color: variables.$color-grey-900;
+    }
+
+    &-cards {
+        @include mixins.flex(center, center, column);
+        width: 100%;
+        gap: variables.$spacing-150;
+        margin-top: variables.$spacing-400;
+    }
+
+    &__content {
+        margin-top: variables.$spacing-300;
+    }
+
+    @include mixins.respond(sm) {
+        &-cards {
+            @include mixins.flex(center, center, row);
+            gap: variables.$spacing-200;
+        }
+    }
+    @include mixins.respond(md) {
+        &-cards {
+            @include mixins.flex(center, center, row);
+            gap: variables.$spacing-200;
+        }
+    }
+}

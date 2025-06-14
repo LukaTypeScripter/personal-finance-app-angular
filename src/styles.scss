@@ -1,6 +1,7 @@
 @use "@/assets/styles/_variables.scss";
 @use "@/assets/styles/_mixins.scss";
 @use "@/assets/styles/_fonts.scss";
+@use "@/assets/styles/_reset.scss";
 
 @include fonts.font-ttf('Public Sans', '@/assets/fonts/static/PublicSans-Regular', 400, normal);
 

@@ -1,8 +1,10 @@
+@use "@/assets/styles/_variables.scss";
+
 @mixin respond($breakpoint) {
     @if $breakpoint == xs {
-      @media (max-width: 575.98px) { @content; }
+      @media (max-width: 700px) { @content; }
     } @else if $breakpoint == sm {
-      @media (min-width: 576px) and (max-width: 1199.98px) { @content; }
+      @media (min-width: 701px) and (max-width: 1199.98px) { @content; }
     } @else if $breakpoint == md {
       @media (min-width: 1200px) { @content; }
     }
@@ -13,4 +15,21 @@
     justify-content: $justify;
     align-items: $align;
     flex-direction: $direction;
+  }
+
+  @mixin card() {
+    display: flex;
+    flex-direction: column;
+    border-radius: variables.$spacing-150;
+    overflow: hidden;
+    padding-inline: variables.$spacing-250;
+    padding-block: variables.$spacing-300;  
+    gap: variables.$spacing-300;
+    background-color: variables.$color-white;
+    width: 100%;
+    height: auto;
+
+    @include respond(xs) {
+        padding-block: variables.$spacing-400;
+    }
   }

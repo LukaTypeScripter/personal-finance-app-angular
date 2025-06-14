@@ -1,0 +1,39 @@
+@use "@/assets/styles/_variables.scss";
+@use "@/assets/styles/_mixins.scss";
+
+:host {
+    width: 100%;
+    height: 100%;
+}
+
+.overview-card {
+    border-radius: variables.$spacing-100;
+    padding: variables.$spacing-250;
+    width: 100%;
+    height: 100%;
+
+    &--black {
+        background-color: variables.$color-grey-900;
+
+        .overview-card__title {
+            color: variables.$color-white;
+        }
+
+        .overview-card__amount {
+            color: variables.$color-white;
+        }
+    }
+
+    &--white {
+        background-color: variables.$color-white;
+    }
+
+    &__amount {
+        font-size: variables.$font-size-preset-1;
+        font-weight: 700;
+        color: variables.$color-grey-900;
+        padding-top: 12px;
+    }
+
+    
+}
