@@ -10,6 +10,12 @@
         font-weight: 700;
         color: variables.$color-grey-900;
     }
+
+    &__summary {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: variables.$spacing-200;
+    }
     
     
 }

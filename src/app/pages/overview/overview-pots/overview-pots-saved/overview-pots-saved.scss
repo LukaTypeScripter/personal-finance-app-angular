@@ -2,8 +2,12 @@
 @use "@/assets/styles/_variables.scss";
 
 .overview-pots-saved {
+
     @include mixins.card();
-    background-color: variables.$color-beige-100;
+
+    & {
+        background-color: variables.$color-beige-100;
+    }
 
     &__content {
         @include mixins.flex(center, flex-start);

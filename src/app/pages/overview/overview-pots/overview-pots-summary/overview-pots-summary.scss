@@ -1,0 +1,37 @@
+@use "@/assets/styles/_mixins.scss";
+@use "@/assets/styles/_variables.scss";
+
+.overview-pots-summary {
+    @include mixins.flex(center, flex-start);
+    height: 100%;
+
+    gap: variables.$spacing-200;
+
+    &-content {
+       p:nth-child(2) {
+        padding-top: variables.$spacing-50;
+       }
+    }
+
+    &-line {
+        width: 4px;
+        height: 100%;
+
+        &--saving {
+            background-color: variables.$color-green;
+        }
+
+        &--gift {
+            background-color: variables.$color-cyan;
+        }
+
+        &--ticket {
+            background-color: variables.$color-purple;
+        }
+
+        &--laptop {
+            background-color: variables.$color-orange;
+        }
+        
+    }
+}
