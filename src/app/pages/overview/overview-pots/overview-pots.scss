@@ -2,20 +2,44 @@
 @use "@/assets/styles/_variables.scss";
 
 .overview-pots {
-    @include mixins.card();
-  
+  @include mixins.card();
 
-    &__title {
-        font-size: variables.$font-size-preset-1;
-        font-weight: 700;
-        color: variables.$color-grey-900;
+  &__title {
+    font-size: variables.$font-size-preset-1;
+    font-weight: 700;
+    color: variables.$color-grey-900;
+  }
+
+  &__summary {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: variables.$spacing-200;
+    margin-top: 20px;
+  }
+
+  @include mixins.respond(sm) {
+    &__content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: variables.$spacing-200;
+      column-gap: 20px;
     }
 
-    &__summary {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: variables.$spacing-200;
+    &__summary  {
+        margin-top: 0;
     }
-    
-    
+  }
+
+  @include mixins.respond(md) {
+    &__content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: variables.$spacing-200;
+      column-gap: 20px;
+    }
+
+    &__summary  {
+        margin-top: 0;
+    }
+  }
 }
