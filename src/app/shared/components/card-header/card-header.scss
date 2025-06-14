@@ -1,7 +1,7 @@
 @use "@/assets/styles/_mixins.scss";
 @use "@/assets/styles/_variables.scss";
 
-.overview-pots-header {
+.card-header {
     @include mixins.flex(center, space-between);
 
     &__title {

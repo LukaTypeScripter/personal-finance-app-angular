@@ -1,0 +1,22 @@
+@use "@/assets/styles/_mixins.scss";
+@use "@/assets/styles/_variables.scss";
+
+.transactions {
+    @include mixins.card();
+
+    margin-top: variables.$spacing-150;
+
+    &__header {
+        margin-bottom: variables.$spacing-400;
+    }
+
+    &__item {
+        &-line {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            width: 100%;
+            height: 1px;
+            background-color: variables.$color-grey-100;
+        }
+    }
+}

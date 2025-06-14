@@ -15,7 +15,7 @@
   @include mixins.respond(sm)  {
     grid-template-columns:auto 1fr;
     &__content {
-      padding: 32px 40px;
+      padding: 32px 40px 88px 40px;
     }
   }
   @include mixins.respond(md) {

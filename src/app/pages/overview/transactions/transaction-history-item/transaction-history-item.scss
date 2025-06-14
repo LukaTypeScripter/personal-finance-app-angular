@@ -1,0 +1,45 @@
+@use "@/assets/styles/_mixins.scss";
+@use "@/assets/styles/_variables.scss";
+
+.transaction-history-item {
+    @include mixins.flex(center, space-between);
+
+    &__left {
+        @include mixins.flex(center, center);
+        gap: variables.$spacing-150;
+
+        img {
+            object-fit: fill;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+        }
+    }
+    
+    &__right {
+        @include mixins.flex(center, center,column);
+        gap: variables.$spacing-100;
+
+        h3 {
+            font-size: variables.$font-size-preset-4;
+            color: variables.$color-grey-900;
+        }
+
+        p {
+            margin-top: variables.$spacing-100;
+        }
+        
+        &--success {
+            h3 {
+                color: variables.$color-green;
+                font-size: variables.$font-size-preset-4;
+            }
+
+            p {
+                color: variables.$color-grey-500;
+                font-size: variables.$font-size-preset-5;
+            }
+        }
+    }
+    
+}

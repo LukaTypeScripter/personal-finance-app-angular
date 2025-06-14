@@ -16,7 +16,7 @@
     }
 
     &__content {
-        margin-top: variables.$spacing-300;
+        margin-top: variables.$spacing-400;
     }
 
     @include mixins.respond(sm) {

@@ -1,0 +1,9 @@
+<div class="card-header">
+    <h2 class="card-header__title">{{ title() }}</h2>
+    <div class="card-header__actions">
+        <button class="card-header__button" [routerLink]="redirectPath()">
+            <p>{{ redirectPlaceHolder() }}</p>
+            <img src="./assets/images/icon-caret-right.svg" alt="add">
+        </button>
+    </div>
+</div>
