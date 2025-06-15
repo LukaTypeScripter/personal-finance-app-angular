@@ -1,0 +1,1 @@
+export const SUMMARY_TYPE = ['saving','gift','ticket','laptop']

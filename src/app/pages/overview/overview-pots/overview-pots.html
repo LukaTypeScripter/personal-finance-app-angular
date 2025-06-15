@@ -6,13 +6,9 @@
         <!-- -->
     
         <div class="overview-pots__summary">
-            <app-overview-pots-summary type="saving" [name]="pots()[0].name" [amount]="pots()[0].total"></app-overview-pots-summary>        
-            <!-- -->
-            <app-overview-pots-summary type="gift" [name]="pots()[1].name" [amount]="pots()[1].total"></app-overview-pots-summary>
-            <!-- -->
-            <app-overview-pots-summary type="ticket" [name]="pots()[2].name" [amount]="pots()[2].total"></app-overview-pots-summary>   
-            <!-- -->
-            <app-overview-pots-summary type="laptop" [name]="pots()[3].name" [amount]="pots()[3].total"></app-overview-pots-summary>  
+            @for (pot of pots(); track $index) {
+                <app-overview-pots-summary [type]="SUMMARY_TYPE[$index]" [name]="pot.name" [amount]="pot.total" [theme]="pot.theme"></app-overview-pots-summary>
+            }
         </div>
     </div>
 </div>

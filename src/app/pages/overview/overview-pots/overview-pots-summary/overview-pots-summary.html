@@ -1,11 +1,6 @@
 <div class="overview-pots-summary">
     <div class="overview-pots-summary-line"
-    [ngClass]="{
-        'overview-pots-summary-line--saving': type() === 'saving',
-        'overview-pots-summary-line--gift': type() === 'gift',
-        'overview-pots-summary-line--ticket': type() === 'ticket',
-        'overview-pots-summary-line--laptop': type() === 'laptop'
-    }"
+    [style.background-color]="theme()"
     ></div>
     <div class="overview-pots-summary-content">
         <p>{{name()}}</p>

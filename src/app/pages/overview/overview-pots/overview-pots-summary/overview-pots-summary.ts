@@ -1,6 +1,5 @@
 import { Component, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Pot } from '@/app/core/models/finance-data.model';
 @Component({
   selector: 'app-overview-pots-summary',
   imports: [CommonModule],
@@ -8,7 +7,8 @@ import { Pot } from '@/app/core/models/finance-data.model';
   styleUrl: './overview-pots-summary.scss'
 })
 export class OverviewPotsSummary {
-  type = input.required<'saving' | 'gift' | 'ticket' | 'laptop'>();
+  type = input.required<string>();
   name = input.required<string>();
   amount = input.required<number>();
+  theme = input.required<string>();
 }
