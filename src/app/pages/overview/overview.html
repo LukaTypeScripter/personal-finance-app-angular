@@ -2,12 +2,12 @@
     <h1 class="overview__title">Overview</h1>
     <!-- -->
     <div class="overview-cards">
-        <app-overview-card type="black" title="Total Sales" [amount]="1000"></app-overview-card>
+        <app-overview-card type="black" title="Total Sales" [amount]="balance().current"></app-overview-card>
         <!-- -->
-        <app-overview-card type="white" title="Total Sales" [amount]="1000"></app-overview-card>
+        <app-overview-card type="white" title="Total Sales" [amount]="balance().income"></app-overview-card>
         <!-- -->
-        <app-overview-card type="white" title="Total Sales" [amount]="1000"></app-overview-card>
-    </div>
+            <app-overview-card type="white" title="Total Sales" [amount]="balance().expenses"></app-overview-card>
+        </div>
     <!-- -->
     <div class="overview__content">
         <div class="overview__content-card">

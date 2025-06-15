@@ -1,7 +1,8 @@
 import { CardHeader } from '@/app/shared/components/card-header/card-header';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { DonutChart } from '@/app/shared/components/donut-chart/donut-chart';
 import { OverviewPotsSummary } from '../overview-pots/overview-pots-summary/overview-pots-summary';
+import { Api } from '@/app/shared/service/api';
 @Component({
   selector: 'app-overview-budgets',
   imports: [CardHeader,DonutChart,OverviewPotsSummary],
@@ -10,4 +11,5 @@ import { OverviewPotsSummary } from '../overview-pots/overview-pots-summary/over
 })
 export class OverviewBudgets {
 
+  protected budgets = inject(Api).userBudgets;
 }

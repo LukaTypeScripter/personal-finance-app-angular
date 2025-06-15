@@ -1,12 +1,13 @@
 <div class="transaction-history-item">
         <div class="transaction-history-item__left">
-           <img src="./assets/images/avatars/liam-hughes.jpg" alt="transaction-history-item">
-           <p>Liam Hughes</p>
+           <img [src]="transaction().avatar" alt="transaction-history-item">
+           <p>{{transaction().name}}</p>
         </div>
         <div class="transaction-history-item__right"
-            [class.transaction-history-item__right--success]="true"
+            [class.transaction-history-item__right--success]="transaction().amount > 0"
+
         >
-            <h3>+$75.50</h3>
-            <p>19 Aug 2024</p>
+            <h3>${{transaction().amount}}</h3>
+            <p>{{transaction().date | date:'dd MMM yyyy'}}</p>
         </div>
 </div>

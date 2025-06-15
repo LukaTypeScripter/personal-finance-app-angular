@@ -26,7 +26,8 @@
         }
 
         p {
-            margin-top: variables.$spacing-100;
+            color: variables.$color-grey-500;
+            font-size: variables.$font-size-preset-5;
         }
         
         &--success {
@@ -35,10 +36,7 @@
                 font-size: variables.$font-size-preset-4;
             }
 
-            p {
-                color: variables.$color-grey-500;
-                font-size: variables.$font-size-preset-5;
-            }
+        
         }
     }
     

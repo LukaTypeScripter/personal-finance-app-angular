@@ -1,5 +1,6 @@
 import { Component, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Pot } from '@/app/core/models/finance-data.model';
 @Component({
   selector: 'app-overview-pots-summary',
   imports: [CommonModule],
@@ -8,6 +9,6 @@ import { CommonModule } from '@angular/common';
 })
 export class OverviewPotsSummary {
   type = input.required<'saving' | 'gift' | 'ticket' | 'laptop'>();
-  amount = input<number>(156);
-  name = input<string>('saving');
+  name = input.required<string>();
+  amount = input.required<number>();
 }

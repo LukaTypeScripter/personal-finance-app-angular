@@ -1,28 +1,12 @@
 <div class="transactions">
     <app-card-header class="transactions__header" title="Transactions" redirectPlaceHolder="View All" redirectPath="/"></app-card-header>
     <!-- -->
-    <div class="transactions__item">
-        <app-transaction-history-item></app-transaction-history-item>
-
-        <div class="transactions__item-line"></div>
-    </div>
-    <div class="transactions__item">
-        <app-transaction-history-item></app-transaction-history-item>
-
-        <div class="transactions__item-line"></div>
-    </div>
-    <div class="transactions__item">
-        <app-transaction-history-item></app-transaction-history-item>
-
-        <div class="transactions__item-line"></div>
-    </div>
-    <div class="transactions__item">
-        <app-transaction-history-item></app-transaction-history-item>
-
-        <div class="transactions__item-line"></div>
-    </div>
-
-    <div class="transactions__item">
-        <app-transaction-history-item></app-transaction-history-item>
-    </div>
+    @for (transaction of transactions().slice(0, 5); track $index) {
+        <div class="transactions__item">
+            <app-transaction-history-item [transaction]="transaction"></app-transaction-history-item>
+            @if ($index < 4) {
+                <div class="transactions__item-line"></div>
+            }
+        </div>
+    }
 </div>

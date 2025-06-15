@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CardHeader } from '@/app/shared/components/card-header/card-header';
 import { TransactionHistoryItem } from './transaction-history-item/transaction-history-item';
+import { Api } from '@/app/shared/service/api';
 @Component({
   selector: 'app-overview-transactions',
   imports: [CardHeader,TransactionHistoryItem],
@@ -8,5 +9,7 @@ import { TransactionHistoryItem } from './transaction-history-item/transaction-h
   styleUrl: './transactions.scss'
 })
 export class OverviewTransactions {
+
+  protected transactions = inject(Api).userTransactions;
 
 }

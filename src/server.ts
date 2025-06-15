@@ -6,7 +6,6 @@ import {
 } from '@angular/ssr/node';
 import express from 'express';
 import { join } from 'node:path';
-
 const browserDistFolder = join(import.meta.dirname, '../browser');
 
 const app = express();
@@ -46,6 +45,8 @@ app.use((req, res, next) => {
     )
     .catch(next);
 });
+
+app.use('/assets', express.static(join(import.meta.dirname, 'browser/assets')));
 
 /**
  * Start the server if this module is the main entry point.

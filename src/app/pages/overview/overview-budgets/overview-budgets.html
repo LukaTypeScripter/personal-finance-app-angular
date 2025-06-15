@@ -5,10 +5,10 @@
         <app-donut-chart></app-donut-chart>
         <!-- -->
         <div class="overview-budgets__chart-summary">
-            <app-overview-pots-summary type="saving" [amount]="156" [name]="'saving'"></app-overview-pots-summary>
-            <app-overview-pots-summary type="gift" [amount]="156" [name]="'gift'"></app-overview-pots-summary>
-            <app-overview-pots-summary type="ticket" [amount]="156" [name]="'ticket'"></app-overview-pots-summary>
-            <app-overview-pots-summary type="laptop" [amount]="156" [name]="'laptop'"></app-overview-pots-summary>
+            <app-overview-pots-summary type="saving" [name]="budgets()[0].category" [amount]="budgets()[0].maximum"></app-overview-pots-summary>
+            <app-overview-pots-summary type="gift" [name]="budgets()[1].category" [amount]="budgets()[1].maximum"></app-overview-pots-summary>
+            <app-overview-pots-summary type="ticket" [name]="budgets()[2].category" [amount]="budgets()[2].maximum"></app-overview-pots-summary>
+            <app-overview-pots-summary type="laptop" [name]="budgets()[3].category" [amount]="budgets()[3].maximum"></app-overview-pots-summary>
         </div>
     </div>
 </div>
