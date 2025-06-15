@@ -8,4 +8,6 @@ import { CommonModule } from '@angular/common';
 })
 export class OverviewPotsSummary {
   type = input.required<'saving' | 'gift' | 'ticket' | 'laptop'>();
+  amount = input<number>(156);
+  name = input<string>('saving');
 }

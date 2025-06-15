@@ -1,0 +1,16 @@
+<div class="overview-reccuring-bill-item"
+    [ngClass]="{
+        'overview-reccuring-bill-item--paid': type() === 'paid',
+        'overview-reccuring-bill-item--upcoming': type() === 'upcoming',
+        'overview-reccuring-bill-item--total': type() === 'total'
+    }"
+>
+    <div class="overview-reccuring-bill-item__content">
+        <div class="overview-reccuring-bill-item__content-status">
+            <p>{{status()}}</p>
+        </div>
+        <div class="overview-reccuring-bill-item__content-amount">
+            <p>{{amount() | currencyFormat}}</p>
+        </div>
+    </div>
+</div>

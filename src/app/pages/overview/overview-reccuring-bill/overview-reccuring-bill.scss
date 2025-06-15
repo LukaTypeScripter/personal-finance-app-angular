@@ -1,0 +1,26 @@
+@use "@/assets/styles/_mixins.scss";
+@use "@/assets/styles/_variables.scss";
+
+.overview-reccuring-bill {
+  @include mixins.card();
+
+  & {
+    gap: variables.$spacing-400;
+  }
+
+  & {
+    margin-top: variables.$spacing-150;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: variables.$spacing-100;
+
+
+  }
+
+  @include mixins.respond(md) {
+    margin-top: unset;
+  }
+}

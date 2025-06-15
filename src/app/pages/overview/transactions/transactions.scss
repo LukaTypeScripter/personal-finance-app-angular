@@ -4,7 +4,9 @@
 .transactions {
     @include mixins.card();
 
-    margin-top: variables.$spacing-150;
+    & {
+        margin-top: variables.$spacing-150;
+    }
 
     &__header {
         margin-bottom: variables.$spacing-400;
@@ -18,5 +20,9 @@
             height: 1px;
             background-color: variables.$color-grey-100;
         }
+    }
+
+    @include mixins.respond(md) {
+        margin-top: unset;
     }
 }

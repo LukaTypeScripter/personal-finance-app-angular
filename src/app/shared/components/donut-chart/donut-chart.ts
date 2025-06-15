@@ -1,4 +1,5 @@
-import { Component, ViewChild } from '@angular/core';
+import {  isPlatformBrowser } from '@angular/common';
+import { Component, inject, PLATFORM_ID, ViewChild } from '@angular/core';
 import {
   ApexNonAxisChartSeries,
   ApexResponsive,
@@ -27,10 +28,13 @@ export type ChartOptions = {
   templateUrl: './donut-chart.html',
   styleUrl: './donut-chart.scss'
 })
-export class DonutChart {
+export class DonutChart  {
   @ViewChild("chart") chart!: ChartComponent;
   public chartOptions: ChartOptions;
 
+  platformId = inject(PLATFORM_ID);
+  isBrowser = isPlatformBrowser(this.platformId);
+  
   constructor() {
     this.chartOptions = {
       series: [338, 637, 100, 200], 

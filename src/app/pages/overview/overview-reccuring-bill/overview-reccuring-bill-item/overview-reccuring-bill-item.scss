@@ -1,0 +1,35 @@
+@use "@/assets/styles/_mixins.scss";
+@use "@/assets/styles/_variables.scss";
+
+.overview-reccuring-bill-item {
+    padding: 20px 16px;
+    border-radius: 10px;
+    background-color: variables.$color-beige-100;
+    width: 100%;
+
+    &--paid {
+        border-left: 4px solid variables.$color-green;
+    }
+
+    &--upcoming {
+        border-left: 4px solid variables.$color-yellow;
+    }
+
+    &--total {
+        border-left: 4px solid variables.$color-cyan;
+    }
+
+    &__content {
+        @include mixins.flex(center,space-between);
+
+        &-status {
+            color: variables.$color-grey-500;
+            font-weight: 400;
+        }
+
+        &-amount {
+            margin: 0;
+            font-weight: 700;
+        }
+    }
+}

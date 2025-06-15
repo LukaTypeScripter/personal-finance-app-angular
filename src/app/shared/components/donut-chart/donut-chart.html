@@ -1,6 +1,8 @@
-<div class="chart-container" >
-    <apx-chart
-      [series]="chartOptions.series"
+<div id="chart" class="chart-container" >
+    @if(isBrowser) {
+        <apx-chart
+        #chart 
+        [series]="chartOptions.series"
       [chart]="chartOptions.chart"
       [labels]="chartOptions.labels"
       [responsive]="chartOptions.responsive"
@@ -18,5 +20,6 @@
         <div class="custom-legend__item-label">of $975 limit</div>
       </div>
     </div>
+    }
   </div>
   

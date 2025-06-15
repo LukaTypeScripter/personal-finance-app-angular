@@ -10,10 +10,10 @@
 
     &__chart {
         display: grid;
-        grid-template-columns: 1fr ;
-        place-items: center;
+        grid-template-columns: 1fr;
         gap: variables.$spacing-200;
         place-items: center;
+
 
         &-summary {
             display: grid;
@@ -28,10 +28,16 @@
     @include mixins.respond(sm) {
         &__chart {
             grid-template-columns: 1fr 1fr;
+            gap: 200px;
+
+            &-summary  {
+                grid-template-columns: 1fr;
+            }
         }
     }
 
     @include mixins.respond(md) {
+        margin-top: unset;
         &__chart {
             grid-template-columns: 1fr 1fr;
         }
