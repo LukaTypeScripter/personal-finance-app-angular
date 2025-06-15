@@ -1,0 +1,41 @@
+@use "@/assets/styles/_mixins.scss";
+@use "@/assets/styles/_variables.scss";
+
+.overview-budgets {
+    @include mixins.card();
+
+    & {
+        margin-top: 12px;
+    }
+
+    &__chart {
+        display: grid;
+        grid-template-columns: 1fr ;
+        place-items: center;
+        gap: variables.$spacing-200;
+        place-items: center;
+
+        &-summary {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: variables.$spacing-200;
+            margin-top: 20px;
+            width: 100%;
+            margin: auto;
+        }
+    }
+
+    @include mixins.respond(sm) {
+        &__chart {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    @include mixins.respond(md) {
+        &__chart {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+
+}
