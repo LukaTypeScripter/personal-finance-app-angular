@@ -1,0 +1,25 @@
+@use "@/assets/styles/_variables.scss";
+@use "@/assets/styles/_mixins.scss";
+
+.transaction {
+  &-title {
+    font-size: variables.$font-size-preset-1;
+    color: variables.$color-grey-900;
+  }
+
+  &__content {
+    @include mixins.card();
+    margin-top: variables.$spacing-400;
+
+    &-buttons {
+      display: flex;
+      gap: variables.$spacing-300;
+      align-items: center;
+    }
+
+    &-header {
+      @include mixins.flex(center, center);
+      gap: variables.$spacing-300;
+    }
+  }
+}

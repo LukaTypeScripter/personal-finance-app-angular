@@ -5,7 +5,7 @@
 .app-container {
   min-height: 100dvh;
   display: grid;
-  grid-template-columns:1fr;
+  grid-template-columns:auto 1fr;
   background-color: variables.$color-beige-100;
 
   &__content {

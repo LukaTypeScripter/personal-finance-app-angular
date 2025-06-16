@@ -1,0 +1,37 @@
+<div class="input">
+  @if(label()) {
+  <label class="input__title">{{ label() }} </label>
+  }
+
+  <div
+    class="input-container"
+    [ngClass]="{
+      'input-container--left': iconPosition() === 'left',
+      'input-container--right': iconPosition() === 'right'
+    }"
+  >
+    @if(iconPosition() === 'left') {
+    <img src="assets/images/{{ iconName() }}.svg" alt="" />
+    }
+
+    <input
+      (blur)="onTouched()"
+      (input)="onInput($event)"
+      [disabled]="isDisabled"
+      [placeholder]="placeholder()"
+      [value]="value"
+      class="input__main"
+      [ngClass]="{
+        'input__main--invalid': hasError()
+      }"
+    />
+    @if(iconPosition() === 'right') {
+    <img src="assets/images/{{ iconName() }}.svg" alt="" />
+    }
+  </div>
+  @for (error of errorMessage(); track error.message) {
+  <p *ngIf="error.isVisible" class="input__error-text">
+    {{ error.message }}
+  </p>
+  }
+</div>
