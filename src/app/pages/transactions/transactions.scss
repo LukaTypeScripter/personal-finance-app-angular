@@ -9,7 +9,9 @@
 
   &__content {
     @include mixins.card();
-    margin-top: variables.$spacing-400;
+    & {
+      margin-top: variables.$spacing-400;
+    }
 
     &-buttons {
       display: flex;
