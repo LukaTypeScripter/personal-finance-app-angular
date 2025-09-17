@@ -7,6 +7,7 @@ import {ILinkedSignal} from '@/app/pages/transactions/helper/interfaces/linked-s
 import {TransactionsSkeleton} from '@/app/pages/transactions/transactions-skeleton/transactions-skeleton';
 import {LazyAttribute} from '@/app/shared/directives/lazy-attribute';
 import {NgOptimizedImage} from '@angular/common';
+import { updatePagination } from './helper/functions/update-pagination.function';
 
 @Component({
   selector: 'app-transactions',
@@ -48,46 +49,16 @@ export class Transactions {
       totalPages: this.totalPages(),
     }),
     computation:({currentPage,totalPages}) => {
-      return this.updatePagination(currentPage,totalPages,this.PAGINATION_BUTTON_COUNT)
+      return updatePagination(currentPage,totalPages,this.PAGINATION_BUTTON_COUNT)
     }
   })
 
-
-  public updatePagination(currentPage: number, totalPages: number, maxVisiblePages: number): number[] {
-    const maxBullets = Math.max(1, Math.floor(maxVisiblePages));
-    const safeTotal = Math.max(1, totalPages);
-    const safeCurrent = Math.min(Math.max(1, currentPage), safeTotal);
-
-    if (safeTotal <= maxBullets) {
-      const out: number[] = [];
-      for (let i = 1; i <= safeTotal; i++) out.push(i);
-      return out;
-    }
-
-    if (maxBullets === 1) {
-      return [safeCurrent];
-    }
-    if (maxBullets === 2) {
-      return [1, safeTotal];
-    }
-
-    const middleCount = maxBullets - 2; 
-
-    let start = safeCurrent - Math.floor(middleCount / 2);
-    let end = start + middleCount - 1;
-
-    if (start < 2) {
-      start = 2;
-      end = start + middleCount - 1;
-    }
-    if (end > safeTotal - 1) {
-      end = safeTotal - 1;
-      start = end - middleCount + 1;
-    }
-
-    const pages: number[] = [1];
-    for (let i = start; i <= end; i++) pages.push(i);
-    pages.push(safeTotal);
-    return pages;
+  public handleNextPage() {
+    this.currentPage.set(Math.min(this.currentPage() + 1, this.totalPages()))
   }
+
+  public handlePreviousPage() {
+    this.currentPage.set(Math.max(this.currentPage() - 1, 1))
+  }
+  
 }

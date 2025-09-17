@@ -44,7 +44,7 @@
     </div>
     <!---->
     <div class="transaction__pagination">
-      <button class="transaction__pagination-prev">
+      <button class="transaction__pagination-prev" (click)="handlePreviousPage()">
         <img  alt="icon-filter-mobile"
               ngSrc="./assets/images/icon-caret-left.svg"
               width="6"
@@ -56,7 +56,7 @@
           <div (click)="typeof bullets !== 'string' && currentPage.set(bullets)" [class.transaction__pagination-content--active]="bullets === currentPage()">{{bullets}}</div>
         }
       </div>
-      <button class="transaction__pagination-next">
+      <button class="transaction__pagination-next" (click)="handleNextPage()">
         <img  alt="icon-filter-mobile"
               ngSrc="./assets/images/icon-caret-right.svg"
               width="6"
