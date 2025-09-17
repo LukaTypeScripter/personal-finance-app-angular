@@ -1,0 +1,17 @@
+<div class="transactions-row">
+  <div class="transactions-row__left">
+    <img alt="*" class="transactions-row__left-sender-img" src="./assets/images/avatars/emma-richardson.jpg">
+    <div class="transactions-row__left-sender">
+      <p>{{ transaction()?.name }}</p>
+      <p>{{ transaction()?.category }}</p>
+    </div>
+  </div>
+
+  <div class="transactions-row__right">
+    <p>{{ transaction()?.amount }}$</p>
+    <p>{{ transaction()?.date | date:'d-MMM-yyyy' }}</p>
+  </div>
+
+
+</div>
+<div class="transactions-row-line"></div>

@@ -8,18 +8,18 @@ import { computed, inject, Injectable, PLATFORM_ID, resource } from '@angular/co
 })
 export class Api {
   private platformId = inject(PLATFORM_ID);
-  
-   userResource = resource({
-    loader: ({ abortSignal }): Promise<FinanceData> => {
+
+  userResource = resource({
+    loader: ({abortSignal}): Promise<FinanceData> => {
       try {
         if (isPlatformBrowser(this.platformId)) {
-          return fetch('/assets/data/data.json', { signal: abortSignal })
+          return fetch('/assets/data/data.json', {signal: abortSignal})
             .then(res => res.json() as Promise<FinanceData>);
         }
       } catch (error) {
         return Promise.resolve(DEFAULT_FINANCE_DATA);
       }
-          
+
       return Promise.resolve(DEFAULT_FINANCE_DATA);
     },
   });
@@ -32,5 +32,6 @@ export class Api {
     )
   );
   userBalance = computed(() => (this.userResource.value() ?? DEFAULT_FINANCE_DATA).balance);
-  
+  userLoading = computed(() => this.userResource.isLoading())
+
 }

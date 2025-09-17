@@ -4,21 +4,41 @@
   <div class="transaction__content">
     <div class="transaction__content-header">
       <app-reusable-input
+        class="transaction__content-input"
         iconName="icon-search"
         iconPosition="right"
         placeholder="Search transaction"
-      />  
+      />
       <!-- -->
       <div class="transaction__content-buttons">
         <button class="transaction__content-button">
-          <img src="./assets/images/icon-sort-mobile.svg" alt="">
+          <img alt="" src="./assets/images/icon-sort-mobile.svg">
         </button>
 
         <button class="transaction__content-button">
-          <img src="./assets/images/icon-filter-mobile.svg" alt="">
+          <img alt="" src="./assets/images/icon-filter-mobile.svg">
         </button>
       </div>
       <!-- -->
     </div>
+    <!-- -->
+    <div class="transaction__content-rows">
+      @if (isLoading()) {
+    ...loading
+      } @else {
+        @for (transaction of paginatedTransaction(); track $index) {
+          <app-transactions-row [transaction]="transaction"/>
+        }
+      }
+
+    </div>
+    <!---->
+    <div class="transaction__pagination">
+      <button class="transaction__pagination-prev"> <</button>
+      <div></div>
+      <button class="transaction__pagination-next"> ></button>
+    </div>
   </div>
+
+
 </div>

@@ -1,12 +1,13 @@
 <div class="transactions">
-    <app-card-header class="transactions__header" title="Transactions" redirectPlaceHolder="View All" redirectPath="/"></app-card-header>
-    <!-- -->
-    @for (transaction of transactions().slice(0, 5); track $index) {
-        <div class="transactions__item">
-            <app-transaction-history-item [transaction]="transaction"></app-transaction-history-item>
-            @if ($index < 4) {
-                <div class="transactions__item-line"></div>
-            }
-        </div>
-    }
+  <app-card-header class="transactions__header" redirectPath="/" redirectPlaceHolder="View All"
+                   title="Transactions"></app-card-header>
+  <!-- -->
+  @for (transaction of slicedTransactions(); track $index) {
+    <div class="transactions__item">
+      <app-transaction-history-item [transaction]="transaction"></app-transaction-history-item>
+      @if ($index < 4) {
+        <div class="transactions__item-line"></div>
+      }
+    </div>
+  }
 </div>

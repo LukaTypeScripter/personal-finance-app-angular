@@ -1,27 +1,26 @@
 @use "@/assets/styles/_mixins.scss";
 @use "@/assets/styles/_variables.scss";
 
+
 .input {
-    width: 100%;
+  width: 100%;
+  height: 100%;
+
+  &-container {
+    @include mixins.flex(center, space-between);
 
 
+    position: relative;
+    max-width: 400px;
+    height: 100%;
+    padding: variables.$spacing-100 10px 12px 20px;
+    border-radius: variables.$spacing-100;
+    border: 1px solid variables.$color-beige-500;
+    font-size: variables.$font-size-preset-4;
+    outline: none;
+    transition: border .3s ease;
 
-    
-
-    &-container {
-        @include mixins.flex(center, space-between);
-
-
-        position: relative;
-        max-width: 400px;
-        padding: variables.$spacing-100 10px 12px 20px;
-        border-radius: variables.$spacing-100;
-        border: 1px solid variables.$color-beige-500;
-        font-size: variables.$font-size-preset-4;
-        outline: none;
-        transition: border .3s ease;
-
-    }
+  }
 }
 
 

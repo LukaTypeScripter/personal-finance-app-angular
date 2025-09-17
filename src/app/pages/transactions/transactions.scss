@@ -9,6 +9,12 @@
 
   &__content {
     @include mixins.card();
+
+    &-input {
+      min-width: 216px;
+      height: 46px;
+    }
+
     & {
       margin-top: variables.$spacing-400;
     }
@@ -22,6 +28,7 @@
     &-header {
       @include mixins.flex(center, center);
       gap: variables.$spacing-300;
+      min-height: 46px;
     }
   }
 }
