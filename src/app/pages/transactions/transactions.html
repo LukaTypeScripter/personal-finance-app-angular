@@ -1,3 +1,5 @@
+@let pageData = paginatedTransaction();
+
 <div class="transactions">
   <h2 class="transaction-title">Transactions</h2>
   <!-- -->
@@ -12,25 +14,33 @@
       <!-- -->
       <div class="transaction__content-buttons">
         <button class="transaction__content-button">
-          <img alt="" src="./assets/images/icon-sort-mobile.svg">
+          <img alt="icon-sort-mobile"
+               ngSrc="./assets/images/icon-sort-mobile.svg" appLazyAttribute
+               width="16"
+               height="16"
+               />
         </button>
 
         <button class="transaction__content-button">
-          <img alt="" src="./assets/images/icon-filter-mobile.svg">
+          <img alt="icon-filter-mobile" ngSrc="./assets/images/icon-filter-mobile.svg"
+               width="16"
+               height="16"
+               appLazyAttribute />
         </button>
       </div>
       <!-- -->
     </div>
     <!-- -->
     <div class="transaction__content-rows">
-      @if (isLoading()) {
-    ...loading
-      } @else {
-        @for (transaction of paginatedTransaction(); track $index) {
+      @defer (when pageData.length) {
+        @for (transaction of pageData; track $index) {
           <app-transactions-row [transaction]="transaction"/>
         }
+      } @placeholder  {
+        @for (_ of [].constructor(ITEMS_PER_PAGE);track $index) {
+          <app-transactions-skeleton/>
+        }
       }
-
     </div>
     <!---->
     <div class="transaction__pagination">
@@ -39,6 +49,5 @@
       <button class="transaction__pagination-next"> ></button>
     </div>
   </div>
-
 
 </div>

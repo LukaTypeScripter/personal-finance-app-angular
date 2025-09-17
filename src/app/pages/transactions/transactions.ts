@@ -4,17 +4,21 @@ import {TransactionsRow} from '@/app/pages/transactions/transactions-row/transac
 import {Api} from '@/app/shared/service/api';
 import {Transaction} from '@/app/core/models/finance-data.model';
 import {ILinkedSignal} from '@/app/pages/transactions/helper/interfaces/linked-signal.interface';
+import {TransactionsSkeleton} from '@/app/pages/transactions/transactions-skeleton/transactions-skeleton';
+import {LazyAttribute} from '@/app/shared/directives/lazy-attribute';
+import {NgOptimizedImage} from '@angular/common';
 
 @Component({
   selector: 'app-transactions',
-  imports: [ReusableInput, TransactionsRow],
+  imports: [ReusableInput, TransactionsRow, TransactionsSkeleton, LazyAttribute, NgOptimizedImage],
   templateUrl: './transactions.html',
   styleUrl: './transactions.scss'
 })
 export class Transactions {
   private readonly currentPage = signal(1)
-  private readonly ITEMS_PER_PAGE = 10;
   private readonly api = inject(Api);
+
+  public readonly ITEMS_PER_PAGE = 10;
 
   public isLoading = this.api.userLoading
   public transactions = this.api.userTransactions
