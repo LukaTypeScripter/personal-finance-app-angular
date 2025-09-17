@@ -31,4 +31,38 @@
       min-height: 46px;
     }
   }
+  &__pagination {
+    @include mixins.flex(center,center);
+    gap: 8px;
+
+    &-prev,&-next {
+      padding-inline: variables.$spacing-200;
+      padding-top: variables.$spacing-150;
+      padding-bottom: variables.$spacing-150;
+      border: 1px solid variables.$color-beige-500;
+      border-radius: 10px;
+    }
+
+    &-content {
+      @include mixins.flex(center,center);
+      gap: 8px;
+
+      &--active {
+        background-color: variables.$color-grey-900;
+        color: white;
+      }
+
+        ::ng-deep {
+
+          div {
+            border: 1px solid variables.$color-beige-500;
+            border-radius: 10px;
+            padding-inline: 18px;
+            padding-top: 8px;
+            padding-bottom: 8px;
+          }
+        }
+    }
+
+  }
 }

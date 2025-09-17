@@ -1,4 +1,4 @@
-import {Component, effect, inject, linkedSignal, signal} from '@angular/core';
+import {Component, computed, effect, inject, linkedSignal, signal} from '@angular/core';
 import {ReusableInput} from '@/app/shared/components/reuseble-input/reusable-input.component';
 import {TransactionsRow} from '@/app/pages/transactions/transactions-row/transactions-row';
 import {Api} from '@/app/shared/service/api';
@@ -15,13 +15,18 @@ import {NgOptimizedImage} from '@angular/common';
   styleUrl: './transactions.scss'
 })
 export class Transactions {
-  private readonly currentPage = signal(1)
   private readonly api = inject(Api);
 
   public readonly ITEMS_PER_PAGE = 10;
+  public readonly PAGINATION_BUTTON_COUNT = 4
 
-  public isLoading = this.api.userLoading
   public transactions = this.api.userTransactions
+
+  public totalPages = computed(() => {
+    return Math.ceil(this.transactions().length / this.ITEMS_PER_PAGE);
+  })
+
+  public currentPage = signal(1)
 
   public paginatedTransaction = linkedSignal<ILinkedSignal, Transaction[]>({
     source: () => ({
@@ -29,7 +34,7 @@ export class Transactions {
       transactions: this.transactions()
     }),
     computation: ({currentPage, transactions}) => {
-      const start = currentPage * this.ITEMS_PER_PAGE;
+      const start = (currentPage - 1) * this.ITEMS_PER_PAGE;
       const end = start + this.ITEMS_PER_PAGE;
 
 
@@ -37,6 +42,52 @@ export class Transactions {
     }
   });
 
+  public paginationBullets = linkedSignal({
+    source:() => ({
+      currentPage: this.currentPage(),
+      totalPages: this.totalPages(),
+    }),
+    computation:({currentPage,totalPages}) => {
+      return this.updatePagination(currentPage,totalPages,this.PAGINATION_BUTTON_COUNT)
+    }
+  })
 
 
+  public updatePagination(currentPage: number, totalPages: number, maxVisiblePages: number): number[] {
+    const maxBullets = Math.max(1, Math.floor(maxVisiblePages));
+    const safeTotal = Math.max(1, totalPages);
+    const safeCurrent = Math.min(Math.max(1, currentPage), safeTotal);
+
+    if (safeTotal <= maxBullets) {
+      const out: number[] = [];
+      for (let i = 1; i <= safeTotal; i++) out.push(i);
+      return out;
+    }
+
+    if (maxBullets === 1) {
+      return [safeCurrent];
+    }
+    if (maxBullets === 2) {
+      return [1, safeTotal];
+    }
+
+    const middleCount = maxBullets - 2; 
+
+    let start = safeCurrent - Math.floor(middleCount / 2);
+    let end = start + middleCount - 1;
+
+    if (start < 2) {
+      start = 2;
+      end = start + middleCount - 1;
+    }
+    if (end > safeTotal - 1) {
+      end = safeTotal - 1;
+      start = end - middleCount + 1;
+    }
+
+    const pages: number[] = [1];
+    for (let i = start; i <= end; i++) pages.push(i);
+    pages.push(safeTotal);
+    return pages;
+  }
 }

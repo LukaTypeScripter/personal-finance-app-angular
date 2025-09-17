@@ -16,14 +16,14 @@
         <button class="transaction__content-button">
           <img alt="icon-sort-mobile"
                ngSrc="./assets/images/icon-sort-mobile.svg" appLazyAttribute
-               width="16"
+               width="18"
                height="16"
                />
         </button>
 
         <button class="transaction__content-button">
           <img alt="icon-filter-mobile" ngSrc="./assets/images/icon-filter-mobile.svg"
-               width="16"
+               width="18"
                height="16"
                appLazyAttribute />
         </button>
@@ -44,9 +44,25 @@
     </div>
     <!---->
     <div class="transaction__pagination">
-      <button class="transaction__pagination-prev"> <</button>
-      <div></div>
-      <button class="transaction__pagination-next"> ></button>
+      <button class="transaction__pagination-prev">
+        <img  alt="icon-filter-mobile"
+              ngSrc="./assets/images/icon-caret-left.svg"
+              width="6"
+              height="11"
+              appLazyAttribute>
+      </button>
+      <div class="transaction__pagination-content">
+        @for (bullets of paginationBullets();track $index) {
+          <div (click)="typeof bullets !== 'string' && currentPage.set(bullets)" [class.transaction__pagination-content--active]="bullets === currentPage()">{{bullets}}</div>
+        }
+      </div>
+      <button class="transaction__pagination-next">
+        <img  alt="icon-filter-mobile"
+              ngSrc="./assets/images/icon-caret-right.svg"
+              width="6"
+              height="11"
+              appLazyAttribute>
+      </button>
     </div>
   </div>
 

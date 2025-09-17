@@ -15,10 +15,4 @@ export class TransactionsRow {
   transaction = input<Transaction>()
 
 
-  constructor() {
-    effect(() => {
-      console.log(this.transaction(), "123")
-    });
-  }
-
 }

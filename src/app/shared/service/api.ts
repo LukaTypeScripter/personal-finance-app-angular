@@ -9,6 +9,7 @@ import { computed, inject, Injectable, PLATFORM_ID, resource } from '@angular/co
 export class Api {
   private platformId = inject(PLATFORM_ID);
 
+
   userResource = resource({
     loader: ({abortSignal}): Promise<FinanceData> => {
       try {
