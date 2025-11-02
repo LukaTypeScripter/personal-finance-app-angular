@@ -11,7 +11,7 @@
     @include mixins.card();
 
     &-input {
-      min-width: 216px;
+      flex: 1 1 auto ;
       height: 46px;
     }
 
@@ -23,12 +23,62 @@
       display: flex;
       gap: variables.$spacing-300;
       align-items: center;
+
+      @include mixins.respond(xs) {
+        gap: unset;
+      }
+      @include mixins.respond(sm) {
+        gap: unset;
+      }
+    }
+
+    &-button {
+      &--mobile {
+        display: block;
+
+        @include mixins.respond(md) {
+          display: none;
+        }
+        @include mixins.respond(sm) {
+          display: none;
+        }
+      }
+
+      &--desktop {
+        display: none !important;
+
+        @include mixins.respond(md) {
+          display: flex !important;;
+          align-items: center;
+          gap: variables.$spacing-200;
+        }
+
+        @include mixins.respond(sm) {
+          display: flex !important;;
+          align-items: center;
+          gap: variables.$spacing-200;
+        }
+      }
     }
 
     &-header {
       @include mixins.flex(center, center);
       gap: variables.$spacing-300;
       min-height: 46px;
+      @include mixins.respond(md) {
+        justify-content: space-between;
+      }
+    }
+  }
+
+  &__dropdown {
+    @include mixins.flex(center, flex-start);
+    gap: variables.$spacing-200;
+
+    &-label {
+      font-size: variables.$font-size-preset-4;
+      color: variables.$color-grey-500;
+      white-space: nowrap;
     }
   }
   &__pagination {

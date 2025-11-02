@@ -1,5 +1,6 @@
 import {Component, computed, effect, inject, linkedSignal, signal} from '@angular/core';
 import {ReusableInput} from '@/app/shared/components/reuseble-input/reusable-input.component';
+import {ReusableButton} from '@/app/shared/components/reusable-button/reusable-button.component';
 import {TransactionsRow} from '@/app/pages/transactions/transactions-row/transactions-row';
 import {Api} from '@/app/shared/service/api';
 import {Transaction} from '@/app/core/models/finance-data.model';
@@ -11,7 +12,7 @@ import { updatePagination } from './helper/functions/update-pagination.function'
 
 @Component({
   selector: 'app-transactions',
-  imports: [ReusableInput, TransactionsRow, TransactionsSkeleton, LazyAttribute, NgOptimizedImage],
+  imports: [ReusableInput, ReusableButton, TransactionsRow, TransactionsSkeleton, LazyAttribute, NgOptimizedImage],
   templateUrl: './transactions.html',
   styleUrl: './transactions.scss'
 })
@@ -60,5 +61,4 @@ export class Transactions {
   public handlePreviousPage() {
     this.currentPage.set(Math.max(this.currentPage() - 1, 1))
   }
-  
 }

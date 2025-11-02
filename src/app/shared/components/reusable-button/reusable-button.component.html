@@ -1,0 +1,41 @@
+<button
+  [type]="type()"
+  [disabled]="disabled() || loading()"
+  (click)="onClick($event)"
+  class="btn"
+  [ngClass]="{
+    'btn--primary': variant() === 'primary',
+    'btn--secondary': variant() === 'secondary',
+    'btn--outlined': variant() === 'outlined',
+    'btn--ghost': variant() === 'ghost',
+    'btn--small': size() === 'small',
+    'btn--medium': size() === 'medium',
+    'btn--large': size() === 'large',
+    'btn--full-width': fullWidth(),
+    'btn--icon-only': iconOnly(),
+    'btn--loading': loading(),
+    'btn--disabled': disabled()
+  }"
+>
+  @if(loading()) {
+    <span class="btn__spinner"></span>
+  }
+
+  @if(!loading()) {
+    @if(iconName() && iconPosition() === 'left' && !iconOnly()) {
+      <img src="assets/images/{{ iconName() }}.svg" alt="" class="btn__icon btn__icon--left" />
+    }
+
+    @if(iconOnly() && iconName()) {
+      <img src="assets/images/{{ iconName() }}.svg" alt="" class="btn__icon" />
+    }
+
+    @if(!iconOnly() && text()) {
+      <span class="btn__text">{{ text() }}</span>
+    }
+
+    @if(iconName() && iconPosition() === 'right' && !iconOnly()) {
+      <img src="assets/images/{{ iconName() }}.svg" alt="" class="btn__icon btn__icon--right" />
+    }
+  }
+</button>
