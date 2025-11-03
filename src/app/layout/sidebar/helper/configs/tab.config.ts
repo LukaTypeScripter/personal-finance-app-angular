@@ -5,7 +5,7 @@ export const tabConfig = [
         icon: 'icon-nav-overview.svg',
         fill: '#b3b3b3',
         fillActive: 'hsl(177, 52%, 32%)',
-        route: '/'
+        route: '/dashboard/overview'
     },
     {
         id: 2,
@@ -13,7 +13,7 @@ export const tabConfig = [
         icon: 'icon-nav-transactions.svg',
         fill: '#b3b3b3',
         fillActive: 'hsl(177, 52%, 32%)',
-        route: '/transactions'
+        route: '/dashboard/transactions'
     },
     {
         id: 3,

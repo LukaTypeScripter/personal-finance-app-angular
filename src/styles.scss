@@ -5,7 +5,7 @@
 
 @include fonts.font-ttf('Public Sans', '@/assets/fonts/static/PublicSans-Regular', 400, normal);
 
-@include fonts.font-ttf('Public Sans', '@/assets/fonts/static/PublicSans-Bold', 700, normal); 
+@include fonts.font-ttf('Public Sans', '@/assets/fonts/static/PublicSans-Bold', 700, normal);
 
 * {
     margin: 0;
@@ -13,3 +13,5 @@
     box-sizing: border-box;
     font-family: variables.$font-primary;
 }
+
+
