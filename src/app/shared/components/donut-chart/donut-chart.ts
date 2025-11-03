@@ -1,111 +1,177 @@
-import {  isPlatformBrowser } from '@angular/common';
-import { Component, inject, PLATFORM_ID, ViewChild } from '@angular/core';
-import {
-  ApexNonAxisChartSeries,
-  ApexResponsive,
-  ApexChart,
-  ChartComponent,
-  NgApexchartsModule
-} from "ng-apexcharts";
-
-
-export type ChartOptions = {
-  series: ApexNonAxisChartSeries;
-  chart: ApexChart;
-  responsive: ApexResponsive[];
-  labels: string[];
-  plotOptions?:  any;
-  fill?: any;
-  stroke?: any;
-  legend?: any;
-  dataLabels?: any;
-  tooltip?: any;
-};
+import { Component, ViewChild, PLATFORM_ID, inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import {Chart, ChartConfiguration, Plugin, ArcElement, DoughnutController, Legend, Tooltip} from 'chart.js';
+import { BaseChartDirective } from 'ng2-charts';
+import {Subscription} from 'rxjs';
+import {BudgetDognut} from '@/app/core/models/finance-data.model';
+import tinycolor from 'tinycolor2';
 
 @Component({
   selector: 'app-donut-chart',
-  imports: [NgApexchartsModule ],
+  imports: [
+    BaseChartDirective
+  ],
   templateUrl: './donut-chart.html',
   styleUrl: './donut-chart.scss'
 })
 export class DonutChart  {
-  @ViewChild("chart") chart!: ChartComponent;
-  public chartOptions: ChartOptions;
-
-  platformId = inject(PLATFORM_ID);
+  private platformId = inject(PLATFORM_ID);
   isBrowser = isPlatformBrowser(this.platformId);
-  
-  constructor() {
-    this.chartOptions = {
-      series: [338, 637, 100, 200], 
-      chart: {
-        type: 'donut',
-        height: 300
+
+  totalMax!: number;
+  totalSpent!: number;
+  subscription!: Subscription;
+  budgets: BudgetDognut[] = [
+    {
+      id: 1,
+      category: 'Dining Out',
+      spent: 55.50,
+      max: 75,
+      theme: { name: 'Yellow', class: 'bg-yellow', color: '#F2CDAC' }
+    },
+    {
+      id: 2,
+      category: 'Personal Care',
+      spent: 115,
+      max: 100,
+      theme: { name: 'Purple', class: 'bg-purple', color: '#826CB0' }
+    },
+    {
+      id: 3,
+      category: 'Bills',
+      spent: 695.48,
+      max: 750,
+      theme: { name: 'Cyan', class: 'bg-cyan', color: '#82C9D7' }
+    },
+    {
+      id: 4,
+      category: 'Entertainment',
+      spent: 52.99,
+      max: 50,
+      theme: { name: 'Green', class: 'bg-g', color: '#277C78' }
+    }
+  ];
+  public doughnutChartDatasets: ChartConfiguration<'doughnut'>['data']['datasets'] =
+    [];
+
+  @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
+
+  ngOnInit(): void {
+    if (this.isBrowser) {
+      this.updateChartData();
+    }
+    // this.subscription = this.budgetService.budgets$.subscribe((budgets) => {
+    //   this.budgets = budgets;
+    //   this.updateChartData();
+    //   this.chart?.chart?.update(); // Update the chart after setting new data
+    // });
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
+  private updateChartData(): void {
+    let localMax = 0;
+    let localSpent = 0;
+
+    this.budgets.forEach((budget) => {
+      localMax += budget.max;
+      localSpent += budget.spent;
+    });
+    this.totalMax = localMax;
+    this.totalSpent = localSpent;
+
+    this.doughnutChartDatasets = [
+      {
+        data: this.budgets.map((budget) => budget.max),
+        backgroundColor: this.budgets.map((budget) => budget.theme.color),
+        weight: 1,
       },
-      labels: ['Entertainment', 'Bills','Dining Out','Personal Care'],
-      plotOptions: {
-        pie: {
-          donut: {
-            size: '75%',
-            labels: {
-              show: true,
-              name: { show: false },
-              value: { show: false }, 
-              total: {
-                show: true,
-                label: '',
-                fontSize: '32px',
-                fontWeight: 700,
-                color: '#23222B',
-                formatter: (w: any) => {
-                  return `
-                    <div style="font-size:2rem;font-weight:700;color:#23222B;line-height:1.1;">$${w.globals.series[0]}</div>
-                    <div style="font-size:1rem;color:#888;">of $975 limit</div>
-                  `;
-                }
-              }
-            }
-          }
-        }
+      {
+        data: this.budgets.map((budget) => budget.max),
+        backgroundColor: this.budgets
+          .map((budget) => budget.theme.color)
+          .map((color) => this.lightenColor(color)),
+        weight: 0.5,
       },
-      fill: {
-        colors: ['#277C7F', '#82C9D7','#F2CDAC','#626070']
-      },
-      stroke: {
-        show: false
-      },
+    ];
+  }
+
+
+  centerTextPlugin: Plugin<'doughnut'> = {
+    id: 'centerTextPlugin',
+    beforeDraw: (chart) => {
+      const ctx = chart.ctx;
+      const width = chart.width;
+      const height = chart.height;
+      const centerX = width / 2;
+      const centerY = height / 2;
+
+      ctx.save();
+
+
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillStyle = '#201F24';
+      ctx.font = '700 32px Public Sans';
+
+
+      const text = `$${this.totalSpent.toFixed(0)}`;
+      const firstTextY = centerY;
+
+
+      ctx.fillText(text, centerX, firstTextY);
+
+
+      ctx.fillStyle = '#696868';
+      ctx.font = '400 12px Public Sans';
+
+
+      const secondText = `of $${this.totalMax.toFixed(0)} limit`;
+      const secondTextY = firstTextY + 20 + 8;
+      ctx.fillText(secondText, centerX, secondTextY);
+
+      ctx.restore();
+    },
+  };
+
+  lightenColor = (color: string): string => {
+    let tc = tinycolor(color);
+    return tc
+      .lighten(9)
+      .saturate(0)
+      .toHexString();
+  };
+
+  public doughnutChartLabels: string[] = [];
+
+  public doughnutChartOptions: ChartConfiguration<'doughnut'>['options'] = {
+    responsive: true,
+    maintainAspectRatio: false,
+    cutout: '65%',
+    plugins: {
       legend: {
-        show: false
+        display: true,
       },
-      dataLabels: {
-        enabled: false
+    },
+    elements: {
+      arc: {
+        borderWidth: 0,
       },
-      tooltip: {
-        enabled: false
+    },
+    datasets: {
+      doughnut: {
+        spacing: 0,
       },
-      responsive: [
-        {
-          breakpoint: 1200, 
-          options: {
-            chart: {
-              width: 400,
-              height: 400
-            }
-          }
-        },
-        {
-          breakpoint: 700, 
-          options: {
-            chart: {
-              width: 300,
-              height: 300
-            },
-            legend: {
-              position: 'bottom'
-            }
-          }
-        }
-      ]
-    };
+    },
+  };
+
+  constructor() {
+    if (this.isBrowser) {
+      Chart.register(ArcElement, DoughnutController, Legend, Tooltip, this.centerTextPlugin);
+    }
   }
 }

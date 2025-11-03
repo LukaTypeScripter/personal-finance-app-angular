@@ -34,5 +34,4 @@ export class Api {
   );
   userBalance = computed(() => (this.userResource.value() ?? DEFAULT_FINANCE_DATA).balance);
   userLoading = computed(() => this.userResource.isLoading())
-
 }

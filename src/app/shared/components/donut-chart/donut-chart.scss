@@ -1,47 +1,29 @@
 @use "@/assets/styles/_variables.scss";
 @use "@/assets/styles/_mixins.scss";
 
-.chart-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
+.doughnut-container{
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-    .custom-legend {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+.text-container{
+  top: 0px;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  flex-direction: column;
+}
 
-        &__item {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            gap: variables.$spacing-100;
-
-            &-color {
-                font-size: variables.$font-size-preset-1;
-                font-weight: 700;
-                color: variables.$color-grey-900;
-            }
-
-            &-label {
-                font-size: variables.$font-size-preset-4;
-                font-weight: 400;
-                color: variables.$color-navy-grey;
-            }
-        }
-        
-    }
-
- 
-
-
-
-    @include mixins.respond(md) {
-        display: block;
-
-       
-    }
+@media (max-width: 65.94rem){
+  .doughnut-container{
+    max-height: 240px;
+  }
 }
