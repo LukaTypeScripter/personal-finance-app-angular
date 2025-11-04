@@ -11,7 +11,13 @@
     width: 41.67%;
     height: 100%;
     padding: variables.$spacing-250;
+    @include mixins.respond(sm) {
+      display: none;
+    }
 
+    @include mixins.respond(xs) {
+      display: none;
+    }
 
     &-img {
       align-items: flex-start;
@@ -26,5 +32,36 @@
     @include mixins.flex(center,center,row);
     width: 58.33%;
     padding: variables.$spacing-400 variables.$spacing-500;
+
+    @include mixins.respond(sm) {
+      width:auto;
+      height: 100%;
+      padding: variables.$spacing-300 variables.$spacing-200;
+    }
+
+    @include mixins.respond(xs) {
+      width:auto;
+      height: 100%;
+      padding: variables.$spacing-300 variables.$spacing-200;
+    }
+  }
+
+  &-mobile {
+    display: block;
+    @include mixins.flex(center,center,row);
+    background-color: variables.$color-grey-900;
+    padding: variables.$spacing-300 variables.$spacing-500;
+
+    @include mixins.respond(md) {
+      display: none;
+    }
+  }
+
+  @include mixins.respond(sm) {
+    flex-direction: column;
+  }
+
+  @include mixins.respond(xs) {
+    flex-direction: column;
   }
 }

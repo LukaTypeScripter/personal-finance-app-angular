@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import {Component, computed, forwardRef, input} from '@angular/core';
+import {Component, computed, forwardRef, input, signal} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {sign} from 'chart.js/helpers';
 
 @Component({
   selector: 'app-reusable-input',
@@ -29,6 +30,8 @@ export class ReusableInput implements ControlValueAccessor {
 
   hasError = computed(() => this.errorMessage()?.some(error => error.isVisible) ?? false)
 
+  showPassword = signal(false)
+
   value = ''
   isDisabled = false;
 
@@ -47,6 +50,10 @@ export class ReusableInput implements ControlValueAccessor {
 
   writeValue(value: any): void {
     this.value = value
+  }
+
+  handleEyeClick() {
+    this.showPassword.set(!this.showPassword())
   }
 
 

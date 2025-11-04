@@ -1,10 +1,11 @@
-<div class="input">
+<div class="input" (click)="inputElement.focus()">
   @if(label()) {
-  <label class="input__title">{{ label() }} </label>
+  <label class="input__title" (click)="inputElement.focus()">{{ label() }} </label>
   }
 
   <div
     class="input-container"
+    (click)="inputElement.focus()"
     [ngClass]="{
       'input-container--left': iconPosition() === 'left',
       'input-container--right': iconPosition() === 'right'
@@ -15,7 +16,8 @@
     }
 
     <input
-      [type]="type()"
+      #inputElement
+      [type]="showPassword() ? 'text' : type()"
       (blur)="onTouched()"
       (input)="onInput($event)"
       [disabled]="isDisabled"
@@ -27,7 +29,7 @@
       }"
     />
     @if(iconPosition() === 'right') {
-    <img src="assets/images/{{ iconName() }}.svg" alt="" />
+    <img (click)="iconName() && handleEyeClick()" src="assets/images/{{ iconName() }}.svg" alt="" />
     }
   </div>
   @for (error of errorMessage(); track error.message) {
