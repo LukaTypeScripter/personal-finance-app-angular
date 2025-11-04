@@ -32,6 +32,7 @@
     gap: variables.$spacing-100;
     &-account {
       @include mixins.flex();
+      gap: 4px;
       p,button {
         line-height: 120%;
         font-weight: 700;

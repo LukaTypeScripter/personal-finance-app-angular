@@ -1,1 +1,32 @@
-<p>auth-register works!</p>
+<app-auth-card [title]="'Sign up'">
+  <form ngProjectAs="[body]" class="auth-register" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div class="auth-register__fields">
+      <app-reusable-input
+        formControlName="email"
+        [label]="'Email'"
+        [placeholder]="''"
+      />
+
+      <app-reusable-input
+        formControlName="password"
+        [type]="'password'"
+        [label]="'Password'"
+        [placeholder]="''"
+      />
+
+      <app-reusable-input
+        formControlName="password"
+        [type]="'password'"
+        [label]="'Repeat Password'"
+        [placeholder]="''"
+      />
+    </div>
+
+    <app-reusable-button
+      [text]="'Create Account'"
+      [type]="'submit'"
+      [variant]="'primary'"
+      [fullWidth]="true"
+    />
+  </form>
+</app-auth-card>

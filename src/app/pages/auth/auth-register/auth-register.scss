@@ -1,0 +1,24 @@
+@use "@/assets/styles/_variables.scss";
+@use "@/assets/styles/_mixins.scss";
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.auth-register {
+  display: flex;
+  flex-direction: column;
+  gap: variables.$spacing-400;
+  @include mixins.animate-fade-in-up();
+
+  &__fields {
+    display: flex;
+    flex-direction: column;
+    gap: variables.$spacing-200;
+
+    @include mixins.stagger-children($count: 5, $delay: 0.2s);
+  }
+}
+
+

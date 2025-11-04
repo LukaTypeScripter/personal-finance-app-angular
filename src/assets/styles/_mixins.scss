@@ -23,7 +23,7 @@
     border-radius: variables.$spacing-150;
     overflow: hidden;
     padding-inline: variables.$spacing-250;
-    padding-block: variables.$spacing-300;  
+    padding-block: variables.$spacing-300;
     gap: variables.$spacing-300;
     background-color: variables.$color-white;
     width: 100%;
@@ -31,5 +31,67 @@
 
     @include respond(xs) {
         padding-block: variables.$spacing-400;
+    }
+  }
+
+  // Animation mixins
+  @mixin animate-fade-in-up($duration: 0.4s, $delay: 0s) {
+    animation: fadeInUp $duration ease-out $delay;
+  }
+
+  @mixin animate-fade-in-left($duration: 0.3s, $delay: 0s) {
+    animation: fadeInLeft $duration ease-out $delay;
+    animation-fill-mode: both;
+  }
+
+  @mixin animate-fade-in-right($duration: 0.3s, $delay: 0s) {
+    animation: fadeInRight $duration ease-out $delay;
+    animation-fill-mode: both;
+  }
+
+  @mixin stagger-children($count: 5, $delay: 0.1s, $animation-name: fadeInLeft, $duration: 0.3s) {
+    > * {
+      animation: $animation-name $duration ease-out;
+      animation-fill-mode: both;
+
+      @for $i from 1 through $count {
+        &:nth-child(#{$i}) {
+          animation-delay: #{$i * $delay};
+        }
+      }
+    }
+  }
+
+  // Keyframe definitions
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes fadeInRight {
+    from {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
     }
   }
