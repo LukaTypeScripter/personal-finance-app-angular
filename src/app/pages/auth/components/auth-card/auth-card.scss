@@ -28,6 +28,8 @@
   }
 
   &__footer {
+    @include mixins.flex(center,center,column);
+    gap: variables.$spacing-100;
     &-account {
       @include mixins.flex();
       p,button {
