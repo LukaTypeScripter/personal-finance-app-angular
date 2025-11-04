@@ -1,18 +1,26 @@
 import { CommonModule } from '@angular/common';
-import {Component, computed, input} from '@angular/core';
-import { ControlValueAccessor } from '@angular/forms';
+import {Component, computed, forwardRef, input} from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'app-reusable-input',
   imports: [CommonModule],
   templateUrl: './reusable-input.component.html',
-  styleUrl: './reusable-input.component.scss'
+  styleUrl: './reusable-input.component.scss',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => ReusableInput),
+      multi: true
+    }
+  ]
 })
 export class ReusableInput implements ControlValueAccessor {
   iconPosition = input<'left' | 'right'>()
   iconName = input<string>()
   placeholder = input<string>()
   label = input<string>()
+  type = input<string>('text')
 
   errorMessage = input<{
     message: string,

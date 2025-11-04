@@ -1,0 +1,20 @@
+@use "@/assets/styles/_variables.scss";
+@use "@/assets/styles/_mixins.scss";
+
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.auth-card {
+  max-width: 560px;
+  width: 100%;
+  background-color: variables.$color-white;
+  border-radius: variables.$spacing-250;
+  padding: variables.$spacing-400;
+  display: flex;
+  flex-direction: column;
+  gap: variables.$spacing-400;
+}

@@ -15,6 +15,7 @@
     }
 
     <input
+      [type]="type()"
       (blur)="onTouched()"
       (input)="onInput($event)"
       [disabled]="isDisabled"

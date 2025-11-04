@@ -1,0 +1,20 @@
+@use "@/assets/styles/_variables.scss";
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.auth-login {
+  display: flex;
+  flex-direction: column;
+  gap: variables.$spacing-400;
+
+  &__fields {
+    display: flex;
+    flex-direction: column;
+    gap: variables.$spacing-200;
+  }
+}
+
+

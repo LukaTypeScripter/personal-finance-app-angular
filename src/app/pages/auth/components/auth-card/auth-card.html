@@ -1,0 +1,21 @@
+<div class="auth-card">
+  @if(title()) {
+  <header class="auth-card__header">
+    <h2>{{ title() }}</h2>
+  </header>
+  }
+  <!---->
+  <ng-content select="[body]"></ng-content>
+  <!---->
+  <section class="auth-card__footer">
+    <div class="auth-card__footer-account">
+      <p>Need to create an account?</p>
+      <button>Sign Up </button>
+    </div>
+    <!---->
+    <div class="auth-card__footer-account">
+      <p>Just browsing?</p>
+      <button>Login with demo</button>
+    </div>
+  </section>
+</div>

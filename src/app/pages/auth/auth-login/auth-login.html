@@ -1,1 +1,25 @@
-<p>auth-login works!</p>
+<app-auth-card [title]="'Login'">
+  <form ngProjectAs="[body]" class="auth-login" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="auth-login__fields">
+      <app-reusable-input
+        formControlName="email"
+        [label]="'Email'"
+        [placeholder]="''"
+      />
+
+      <app-reusable-input
+        formControlName="password"
+        [type]="'password'"
+        [label]="'Password'"
+        [placeholder]="''"
+      />
+    </div>
+
+    <app-reusable-button
+      [text]="'Login'"
+      [type]="'submit'"
+      [variant]="'primary'"
+      [fullWidth]="true"
+    />
+  </form>
+</app-auth-card>
