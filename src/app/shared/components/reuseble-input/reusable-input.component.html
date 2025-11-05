@@ -33,8 +33,10 @@
     }
   </div>
   @for (error of errorMessage(); track error.message) {
-  <p *ngIf="error.isVisible" class="input__error-text">
-    {{ error.message }}
-  </p>
+    @if (error.isVisible) {
+      <p  class="input__error-text">
+        {{ error.message }}
+      </p>
+    }
   }
 </div>

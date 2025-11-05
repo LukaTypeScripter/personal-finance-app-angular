@@ -1,3 +1,5 @@
+@let registerFormGroup = registerForm;
+
 <app-auth-card [title]="'Sign up'">
   <form ngProjectAs="[body]" class="auth-register" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
     <div class="auth-register__fields">
@@ -5,12 +7,28 @@
         formControlName="name"
         [label]="'Name'"
         [placeholder]="''"
+        [errorMessage]="[{
+          message:'this field is required!',
+          isVisible:validateFormControl(registerFormGroup,'name','required')
+        },
+        {
+          message:`name must be at least ${registerFormGroup.get('name')?.errors?.['minlength']?.requiredLength} characters`,
+          isVisible:validateFormControl(registerFormGroup,'name','minlength')
+        }]"
       />
 
       <app-reusable-input
         formControlName="email"
         [label]="'Email'"
         [placeholder]="''"
+        [errorMessage]="[{
+          message:'this field is required!',
+          isVisible:validateFormControl(registerFormGroup,'email','required')
+        },
+        {
+          message:'incorrect email format!',
+          isVisible:validateFormControl(registerFormGroup,'email','email')
+        }]"
       />
 
       <app-reusable-input
@@ -20,15 +38,34 @@
         [iconPosition]="'right'"
         [iconName]="'icon-show-password'"
         [placeholder]="''"
+        [errorMessage]="[{
+          message:'this field is required!',
+          isVisible:validateFormControl(registerFormGroup,'password','required')
+        },
+        {
+          message:`password must be at least ${registerFormGroup.get('password')?.errors?.['minlength']?.requiredLength} characters`,
+          isVisible:validateFormControl(registerFormGroup,'password','minlength')
+        }]"
       />
-
       <app-reusable-input
         formControlName="repeatPassword"
         [type]="'password'"
-        [label]="'repeatPassword'"
+        [label]="'Repeat Password'"
         [iconPosition]="'right'"
         [iconName]="'icon-show-password'"
         [placeholder]="''"
+        [errorMessage]="[{
+          message:'this field is required!',
+          isVisible:validateFormControl(registerFormGroup,'repeatPassword','required')
+        },
+        {
+          message:`password must be at least ${registerFormGroup.get('repeatPassword')?.errors?.['minlength']?.requiredLength} characters`,
+          isVisible:validateFormControl(registerFormGroup,'repeatPassword','minlength')
+        },
+        {
+          message:'passwords do not match!',
+          isVisible:validateFormControl(registerFormGroup,'repeatPassword','passwordMismatch',true)
+        }]"
       />
 
     </div>

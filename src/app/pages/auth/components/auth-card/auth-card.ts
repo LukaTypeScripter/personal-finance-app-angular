@@ -1,5 +1,6 @@
 import {Component, computed, inject, input} from '@angular/core';
 import {Navigation} from '@/app/shared/service/navigation';
+import {AuthService} from '@/app/core/service/auth.service';
 
 @Component({
   selector: 'app-auth-card',
@@ -11,13 +12,13 @@ export class AuthCard {
   title = input<string>('');
 
   private readonly navigation = inject(Navigation)
+  private readonly authService = inject(AuthService)
 
   public isInRegistration = computed(() => this.navigation.currentUrl() === '/auth/register')
   public isInLogin = computed(() => this.navigation.currentUrl() === '/auth/login');
 
 
   handleNavigate() {
-    console.log("1")
     if (this.isInLogin()) {
       this.navigation.navigateTo('/auth/register');
     } else if (this.isInRegistration()) {
@@ -26,6 +27,10 @@ export class AuthCard {
   }
 
   handleDemoLogin() {
-    console.log('Demo login clicked');
+    this.authService.login({password:'Chopy686866',email:'lukashinjikashvili85@gmail.com'}).subscribe({
+      next: () => {
+        this.navigation.navigateTo('/dashboard/overview');
+      }
+    })
   }
 }

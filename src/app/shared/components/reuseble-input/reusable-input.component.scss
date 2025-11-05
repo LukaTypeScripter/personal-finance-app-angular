@@ -28,6 +28,13 @@
       font-size: 14px;
     }
   }
+
+  &__error-text {
+    line-height: 150%;
+    font-weight: 700;
+    color: variables.$color-red;
+    margin-top: variables.$spacing-50;
+  }
 }
 
 

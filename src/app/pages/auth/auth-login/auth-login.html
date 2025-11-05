@@ -1,12 +1,22 @@
+@let loginFormGroup = loginForm;
+
 <app-auth-card [title]="'Login'">
-  <form ngProjectAs="[body]" class="auth-login" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <form ngProjectAs="[body]" class="auth-login" [formGroup]="loginFormGroup" (ngSubmit)="onSubmit()">
     <div class="auth-login__fields">
       <app-reusable-input
         formControlName="email"
         [label]="'Email'"
         [placeholder]="''"
+        [errorMessage]="[{
+        message:'this field is required!',
+        isVisible:validateFormControl(loginFormGroup,'email','required')
+       },
+       {
+        message:'incorrect email format!',
+        isVisible:validateFormControl(loginFormGroup,'email','email')
+       }
+       ]"
       />
-
       <app-reusable-input
         formControlName="password"
         [type]="'password'"
@@ -14,6 +24,16 @@
         [iconPosition]="'right'"
         [iconName]="'icon-show-password'"
         [placeholder]="''"
+        [errorMessage]="[{
+        message:'this field is required!',
+        isVisible:validateFormControl(loginFormGroup,'password','required')
+       },
+       {
+        message:`password must be at least ${loginFormGroup.get('password')?.errors?.['minlength']?.requiredLength} characters`,
+        isVisible:validateFormControl(loginFormGroup,'password','minlength')
+       }
+       ]"
+
       />
     </div>
 
