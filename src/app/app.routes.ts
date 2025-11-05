@@ -1,14 +1,16 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard/overview',
+    redirectTo: 'auth/login',
     pathMatch: 'full'
   },
   {
     path: 'dashboard',
     loadComponent: () => import('./layout/dashboard-layout/dashboard-layout').then(m => m.DashboardLayout),
+    canActivate: [authGuard],
     children:[
       {
         path: 'overview',

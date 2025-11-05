@@ -2,6 +2,12 @@
   <form ngProjectAs="[body]" class="auth-register" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
     <div class="auth-register__fields">
       <app-reusable-input
+        formControlName="name"
+        [label]="'Name'"
+        [placeholder]="''"
+      />
+
+      <app-reusable-input
         formControlName="email"
         [label]="'Email'"
         [placeholder]="''"
@@ -17,13 +23,14 @@
       />
 
       <app-reusable-input
-        formControlName="password"
+        formControlName="repeatPassword"
         [type]="'password'"
-        [label]="'Repeat Password'"
+        [label]="'repeatPassword'"
         [iconPosition]="'right'"
         [iconName]="'icon-show-password'"
         [placeholder]="''"
       />
+
     </div>
 
     <app-reusable-button
@@ -31,6 +38,7 @@
       [type]="'submit'"
       [variant]="'primary'"
       [fullWidth]="true"
+      [loading]="isLoading()"
     />
   </form>
 </app-auth-card>

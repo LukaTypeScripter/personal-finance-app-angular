@@ -14,7 +14,11 @@
         }
     </div>
 
-    <div class="sidebar__footer">   
+    <div class="sidebar__footer">
+      <div class="sidebar__footer-item" (click)="handleLogout()">
+        <span>Log out</span>
+      </div>
+      <!---->
         <div class="sidebar__footer-item" (click)="isSidebarOpen.set(!isSidebarOpen())">
             <img src="assets/images/icon-minimize-menu.svg" alt="avatar">
             <span>Minimize Menu</span>
