@@ -1,0 +1,12 @@
+@if (isLoading()) {
+  <div class="global-spinner">
+    <div class="global-spinner__overlay"></div>
+    <div class="global-spinner__content">
+      <ng-lottie
+        [options]="lottieOptions"
+        width="200px"
+        height="200px"
+      />
+    </div>
+  </div>
+}

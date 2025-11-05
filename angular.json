@@ -23,6 +23,7 @@
             "assets": [
               "src/assets/images",
               "src/assets/data",
+              "src/assets/lottie",
               {
                 "glob": "**/*",
                 "input": "public"
