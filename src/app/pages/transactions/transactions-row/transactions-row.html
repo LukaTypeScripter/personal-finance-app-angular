@@ -8,7 +8,7 @@
   </div>
 
   <div class="transactions-row__right">
-    <p>{{ transaction()?.amount }}$</p>
+    <p>{{ transaction()?.amount | currencyFormat:(transaction()?.currency || 'USD') }}</p>
     <p>{{ transaction()?.date | date:'d-MMM-yyyy' }}</p>
   </div>
 

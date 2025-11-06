@@ -68,6 +68,16 @@
         }]"
       />
 
+      <app-reusable-select
+        formControlName="currency"
+        [label]="'Currency'"
+        [options]="currencyOptions"
+        [errorMessage]="[{
+          message:'this field is required!',
+          isVisible:validateFormControl(registerFormGroup,'currency','required')
+        }]"
+      />
+
     </div>
 
     <app-reusable-button

@@ -8,6 +8,7 @@ export const REGISTER_MUTATION = gql`
         id
         email
         name
+        currency
       }
     }
   }
@@ -22,6 +23,7 @@ export const LOGIN_MUTATION = gql`
         id
         email
         name
+        currency
       }
     }
   }
@@ -34,6 +36,7 @@ export const ME_QUERY = gql`
       id
       email
       name
+      currency
     }
   }
 `;

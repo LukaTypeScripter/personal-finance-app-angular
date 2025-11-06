@@ -7,7 +7,7 @@
             [class.transaction-history-item__right--success]="transaction().amount > 0"
 
         >
-            <h3>${{transaction().amount}}</h3>
+            <h3>{{transaction().amount | currencyFormat:(transaction().currency || 'USD')}}</h3>
             <p>{{transaction().date | date:'dd MMM yyyy'}}</p>
         </div>
 </div>

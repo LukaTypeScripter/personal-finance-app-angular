@@ -1,10 +1,12 @@
-import { Component, ViewChild, PLATFORM_ID, inject } from '@angular/core';
+import {Component, ViewChild, PLATFORM_ID, inject, effect} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import {Chart, ChartConfiguration, Plugin, ArcElement, DoughnutController, Legend, Tooltip} from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import {Subscription} from 'rxjs';
-import {BudgetDognut} from '@/app/core/models/finance-data.model';
+import {Budget, BudgetDognut} from '@/app/core/models/finance-data.model';
 import tinycolor from 'tinycolor2';
+import {Api} from '@/app/shared/service/api';
+import {AuthService} from '@/app/core/service/auth.service';
 
 @Component({
   selector: 'app-donut-chart',
@@ -21,50 +23,42 @@ export class DonutChart  {
   totalMax!: number;
   totalSpent!: number;
   subscription!: Subscription;
-  budgets: BudgetDognut[] = [
-    {
-      id: 1,
-      category: 'Dining Out',
-      spent: 55.50,
-      max: 75,
-      theme: { name: 'Yellow', class: 'bg-yellow', color: '#F2CDAC' }
-    },
-    {
-      id: 2,
-      category: 'Personal Care',
-      spent: 115,
-      max: 100,
-      theme: { name: 'Purple', class: 'bg-purple', color: '#826CB0' }
-    },
-    {
-      id: 3,
-      category: 'Bills',
-      spent: 695.48,
-      max: 750,
-      theme: { name: 'Cyan', class: 'bg-cyan', color: '#82C9D7' }
-    },
-    {
-      id: 4,
-      category: 'Entertainment',
-      spent: 52.99,
-      max: 50,
-      theme: { name: 'Green', class: 'bg-g', color: '#277C78' }
-    }
+  budgets: Budget[] = [
+
   ];
   public doughnutChartDatasets: ChartConfiguration<'doughnut'>['data']['datasets'] =
     [];
 
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
 
+  protected userBudgets = inject(Api);
+  private readonly currency = inject(AuthService).currentUser
+
+
+  updateBudgets = effect(() => {
+    const userBudgets = this.userBudgets.userBudgets();
+
+    if(!userBudgets) return;
+
+      this.budgets = userBudgets;
+      this.updateChartData();
+      this.chart?.chart?.update();
+  })
+
+  updateCurrency = effect(() => {
+    const currency = this.userBudgets.currency();
+    if (!currency) return;
+    console.log(currency)
+
+    this.chart?.chart?.update();
+  });
+
+
+
   ngOnInit(): void {
     if (this.isBrowser) {
       this.updateChartData();
     }
-    // this.subscription = this.budgetService.budgets$.subscribe((budgets) => {
-    //   this.budgets = budgets;
-    //   this.updateChartData();
-    //   this.chart?.chart?.update(); // Update the chart after setting new data
-    // });
   }
 
   ngOnDestroy(): void {
@@ -78,7 +72,7 @@ export class DonutChart  {
     let localSpent = 0;
 
     this.budgets.forEach((budget) => {
-      localMax += budget.max;
+      localMax += budget.maximum;
       localSpent += budget.spent;
     });
     this.totalMax = localMax;
@@ -86,14 +80,15 @@ export class DonutChart  {
 
     this.doughnutChartDatasets = [
       {
-        data: this.budgets.map((budget) => budget.max),
-        backgroundColor: this.budgets.map((budget) => budget.theme.color),
+        data: this.budgets.map((budget) => budget.maximum),
+        backgroundColor: this.budgets.map((budget) => budget.theme),
         weight: 1,
+
       },
       {
-        data: this.budgets.map((budget) => budget.max),
+        data: this.budgets.map((budget) => budget.maximum),
         backgroundColor: this.budgets
-          .map((budget) => budget.theme.color)
+          .map((budget) => budget.theme)
           .map((color) => this.lightenColor(color)),
         weight: 0.5,
       },
@@ -118,8 +113,11 @@ export class DonutChart  {
       ctx.fillStyle = '#201F24';
       ctx.font = '700 32px Public Sans';
 
+      const currencySymbol = this.userBudgets.currency() === 'USD' ? '$' : '₾';
 
-      const text = `$${this.totalSpent.toFixed(0)}`;
+
+      const text = `${currencySymbol}${this.totalSpent.toFixed(0)}`;
+
       const firstTextY = centerY;
 
 
@@ -130,7 +128,7 @@ export class DonutChart  {
       ctx.font = '400 12px Public Sans';
 
 
-      const secondText = `of $${this.totalMax.toFixed(0)} limit`;
+      const secondText = `of ${currencySymbol}${this.totalMax.toFixed(0)} limit`;
       const secondTextY = firstTextY + 20 + 8;
       ctx.fillText(secondText, centerX, secondTextY);
 

@@ -1,0 +1,173 @@
+@use "@/assets/styles/_variables.scss";
+@use "@/assets/styles/_mixins.scss";
+
+.floating-menu {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 9999;
+
+  @include mixins.respond(xs) {
+    bottom: 4.5rem;
+    right: 1.5rem;
+  }
+
+  // FAB Button
+  &__fab {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, variables.$color-grey-900 0%, #000 100%);
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    z-index: 10001;
+
+    svg {
+      width: 24px;
+      height: 24px;
+      transition: transform 0.3s ease;
+    }
+
+    &:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4), 0 12px 32px rgba(0, 0, 0, 0.25);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+
+    &--open {
+      background: variables.$color-red;
+      transform: rotate(90deg);
+
+      &:hover {
+        transform: rotate(90deg) scale(1.1);
+      }
+    }
+  }
+
+  // Options Container
+  &__options {
+    position: absolute;
+    bottom: 72px;
+    right: 0;
+    background: white;
+    border-radius: 16px;
+    padding: variables.$spacing-300;
+    min-width: 280px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15), 0 4px 16px rgba(0, 0, 0, 0.1);
+    animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 10000;
+
+    @include mixins.respond(xs) {
+      min-width: 260px;
+      bottom: 64px;
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px) scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  // Option Item
+  &__option {
+    &:not(:last-child) {
+      margin-bottom: variables.$spacing-300;
+      padding-bottom: variables.$spacing-300;
+      border-bottom: 1px solid variables.$color-beige-500;
+    }
+  }
+
+  &__option-label {
+    font-size: variables.$font-size-preset-5;
+    font-weight: 700;
+    color: variables.$color-grey-500;
+    margin-bottom: variables.$spacing-200;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  &__option-buttons {
+    display: flex;
+    gap: variables.$spacing-200;
+  }
+
+  &__option-button {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: variables.$spacing-150;
+    padding: variables.$spacing-200 variables.$spacing-250;
+    border: 2px solid variables.$color-beige-500;
+    border-radius: 8px;
+    background: white;
+    color: variables.$color-grey-900;
+    font-size: variables.$font-size-preset-4;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    .currency-symbol,
+    .flag {
+      font-size: variables.$font-size-preset-3;
+    }
+
+    &:hover {
+      border-color: variables.$color-grey-500;
+      background: variables.$color-beige-100;
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+
+    &--active {
+      border-color: variables.$color-grey-900;
+      background: variables.$color-grey-900;
+      color: white;
+
+      &:hover {
+        background: variables.$color-grey-900;
+        border-color: variables.$color-grey-900;
+      }
+    }
+  }
+
+  // Backdrop
+  &__backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 9998;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}

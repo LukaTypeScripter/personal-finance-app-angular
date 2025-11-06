@@ -4,6 +4,6 @@
     ></div>
     <div class="overview-pots-summary-content">
         <p>{{name()}}</p>
-        <p>${{amount()}}</p>
+        <p>{{amount() | currencyFormat:currency()}}</p>
     </div>
 </div>

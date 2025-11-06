@@ -1,7 +1,10 @@
+export type Currency = 'USD' | 'GEO';
+
 export interface User {
   id: string;
   email: string;
   name: string;
+  currency: Currency;
 }
 
 export interface AuthResponse {
@@ -13,6 +16,7 @@ export interface RegisterInput {
   email: string;
   password: string;
   name: string;
+  currency?: Currency;
 }
 
 export interface LoginInput {

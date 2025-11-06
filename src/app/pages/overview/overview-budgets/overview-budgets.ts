@@ -13,5 +13,7 @@ import { SUMMARY_TYPE } from '@/app/core/constants/summary.constant';
 export class OverviewBudgets {
   protected SUMMARY_TYPE = SUMMARY_TYPE;
 
-  protected budgets = inject(Api).userBudgets;
+  protected budgets = inject(Api);
+  userBudgets = this.budgets.userBudgets;
+  currency = this.budgets.currency
 }

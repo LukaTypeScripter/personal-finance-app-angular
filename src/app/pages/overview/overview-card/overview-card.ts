@@ -11,4 +11,5 @@ export class OverviewCard {
   type = input.required<'black' | 'white'>();
   title = input.required<string>();
   amount = input.required<number>();
+  currency = input<string>('USD');
 }

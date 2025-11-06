@@ -10,6 +10,7 @@
         iconName="icon-search"
         iconPosition="right"
         placeholder="Search transaction"
+        (input)="onSearchChange($any($event.target).value)"
       />
       <!-- -->
       <div class="transaction__content-buttons">
@@ -33,62 +34,85 @@
         <!-- Desktop buttons -->
         <div class="transaction__content-button--desktop transaction__dropdown">
           <span class="transaction__dropdown-label">Sort by</span>
-          <app-reusable-button
-            [text]="'Latest'"
-            [iconName]="'icon-caret-down'"
-            [iconPosition]="'right'"
-            [variant]="'outlined'"
-            [size]="'small'">
-          </app-reusable-button>
+          <app-reusable-dropdown
+            [options]="sortOptions"
+            [selectedValue]="selectedSort"
+            [size]="'small'"
+            (selectionChange)="onSortChange($event)">
+          </app-reusable-dropdown>
         </div>
 
         <div class="transaction__content-button--desktop transaction__dropdown">
           <span class="transaction__dropdown-label">Category</span>
-          <app-reusable-button
-            [text]="'All Transactions'"
-            [iconName]="'icon-caret-down'"
-            [iconPosition]="'right'"
-            [variant]="'outlined'"
-            [size]="'small'">
-          </app-reusable-button>
+          <app-reusable-dropdown
+            [options]="categoryOptions"
+            [selectedValue]="selectedCategory"
+            [size]="'small'"
+            (selectionChange)="onCategoryChange($event)">
+          </app-reusable-dropdown>
         </div>
       </div>
       <!-- -->
     </div>
     <!-- -->
     <div class="transaction__content-rows">
-      @defer (when pageData.length) {
-        @for (transaction of pageData; track $index) {
-          <app-transactions-row [transaction]="transaction"/>
-        }
-      } @placeholder  {
-        @for (_ of [].constructor(ITEMS_PER_PAGE);track $index) {
-          <app-transactions-skeleton/>
+      @if (filteredTransactions().length === 0 && transactions().length > 0) {
+        <div class="transaction__empty-state">
+          <p class="transaction__empty-state-text">No transactions found matching your filters.</p>
+          <p class="transaction__empty-state-subtext">Try adjusting your search or filters.</p>
+        </div>
+      } @else if (transactions().length === 0) {
+        <div class="transaction__empty-state">
+          <p class="transaction__empty-state-text">No transactions yet.</p>
+          <p class="transaction__empty-state-subtext">Start by adding your first transaction.</p>
+        </div>
+      } @else {
+        @defer (when pageData.length) {
+          @for (transaction of pageData; track $index) {
+            <app-transactions-row [transaction]="transaction"/>
+          }
+        } @placeholder  {
+          @for (_ of [].constructor(ITEMS_PER_PAGE);track $index) {
+            <app-transactions-skeleton/>
+          }
         }
       }
     </div>
     <!---->
-    <div class="transaction__pagination">
-      <button class="transaction__pagination-prev" (click)="handlePreviousPage()">
-        <img  alt="icon-filter-mobile"
-              ngSrc="./assets/images/icon-caret-left.svg"
-              width="6"
-              height="11"
-              appLazyAttribute>
-      </button>
-      <div class="transaction__pagination-content">
-        @for (bullets of paginationBullets();track $index) {
-          <div (click)="typeof bullets !== 'string' && currentPage.set(bullets)" [class.transaction__pagination-content--active]="bullets === currentPage()">{{bullets}}</div>
-        }
+    @if (filteredTransactions().length > 0) {
+      <div class="transaction__pagination">
+        <button
+          class="transaction__pagination-prev"
+          (click)="handlePreviousPage()"
+          [disabled]="isPrevDisabled()">
+          <img  alt="Previous page"
+                ngSrc="./assets/images/icon-caret-left.svg"
+                width="6"
+                height="11"
+                appLazyAttribute>
+        </button>
+        <div class="transaction__pagination-content">
+          @for (bullets of paginationBullets();track $index) {
+            <div
+              (click)="typeof bullets !== 'string' && currentPage.set(bullets)"
+              [class.transaction__pagination-content--active]="bullets === currentPage()"
+              [style.cursor]="typeof bullets === 'string' ? 'default' : 'pointer'">
+              {{bullets}}
+            </div>
+          }
+        </div>
+        <button
+          class="transaction__pagination-next"
+          (click)="handleNextPage()"
+          [disabled]="isNextDisabled()">
+          <img  alt="Next page"
+                ngSrc="./assets/images/icon-caret-right.svg"
+                width="6"
+                height="11"
+                appLazyAttribute>
+        </button>
       </div>
-      <button class="transaction__pagination-next" (click)="handleNextPage()">
-        <img  alt="icon-filter-mobile"
-              ngSrc="./assets/images/icon-caret-right.svg"
-              width="6"
-              height="11"
-              appLazyAttribute>
-      </button>
-    </div>
+    }
   </div>
 
 </div>

@@ -5,8 +5,8 @@
         <app-donut-chart></app-donut-chart>
         <!-- -->
         <div class="overview-budgets__chart-summary">
-            @for (budget of budgets(); track $index) {
-                <app-overview-pots-summary [type]="SUMMARY_TYPE[$index]" [theme]="budget.theme" [name]="budget.category" [amount]="budget.maximum"></app-overview-pots-summary>
+            @for (budget of userBudgets(); track $index) {
+                <app-overview-pots-summary [type]="SUMMARY_TYPE[$index]" [theme]="budget.theme" [name]="budget.category" [amount]="budget.spent" [currency]="currency() || 'USD'"></app-overview-pots-summary>
             }
         </div>
     </div>

@@ -1,10 +1,17 @@
-import {Component, computed, effect, inject, linkedSignal, signal} from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+  linkedSignal,
+  signal
+} from '@angular/core';
 import {ReusableInput} from '@/app/shared/components/reuseble-input/reusable-input.component';
 import {ReusableButton} from '@/app/shared/components/reusable-button/reusable-button.component';
+import {ReusableDropdown} from '@/app/shared/components/reusable-dropdown/reusable-dropdown.component';
 import {TransactionsRow} from '@/app/pages/transactions/transactions-row/transactions-row';
 import {Api} from '@/app/shared/service/api';
-import {Transaction} from '@/app/core/models/finance-data.model';
-import {ILinkedSignal} from '@/app/pages/transactions/helper/interfaces/linked-signal.interface';
+import { SortBy, SortOrder} from '@/app/core/models/finance-data.model';
 import {TransactionsSkeleton} from '@/app/pages/transactions/transactions-skeleton/transactions-skeleton';
 import {LazyAttribute} from '@/app/shared/directives/lazy-attribute';
 import {NgOptimizedImage} from '@angular/common';
@@ -12,7 +19,7 @@ import { updatePagination } from './helper/functions/update-pagination.function'
 
 @Component({
   selector: 'app-transactions',
-  imports: [ReusableInput, ReusableButton, TransactionsRow, TransactionsSkeleton, LazyAttribute, NgOptimizedImage],
+  imports: [ReusableInput, ReusableButton, ReusableDropdown, TransactionsRow, TransactionsSkeleton, LazyAttribute, NgOptimizedImage],
   templateUrl: './transactions.html',
   styleUrl: './transactions.scss'
 })
@@ -22,27 +29,65 @@ export class Transactions {
   public readonly ITEMS_PER_PAGE = 10;
   public readonly PAGINATION_BUTTON_COUNT = 4
 
-  public transactions = this.api.userTransactions
+  public searchQuerySig = signal('')
+  public selectedCategory = signal('all');
+  public selectedSort = signal('latest');
+
+  private debounceTimer: any = null;
+
+
+  public categoryOptions = [
+    { value: 'all', label: 'All Transactions' },
+    { value: 'Entertainment', label: 'Entertainment' },
+    { value: 'Bills', label: 'Bills' },
+    { value: 'Groceries', label: 'Groceries' },
+    { value: 'Dining Out', label: 'Dining Out' },
+    { value: 'Transportation', label: 'Transportation' },
+    { value: 'Personal Care', label: 'Personal Care' },
+    { value: 'Education', label: 'Education' },
+    { value: 'Lifestyle', label: 'Lifestyle' },
+    { value: 'Shopping', label: 'Shopping' },
+    { value: 'General', label: 'General' }
+  ];
+
+  public sortOptions = [
+    { value: 'latest', label: 'Latest' },
+    { value: 'oldest', label: 'Oldest' },
+    { value: 'a-z', label: 'A to Z' },
+    { value: 'z-a', label: 'Z to A' },
+    { value: 'highest', label: 'Highest' },
+    { value: 'lowest', label: 'Lowest' }
+  ];
+
+  public transactions = this.api.userTransactions;
+  public currentPage = signal(1);
 
   public totalPages = computed(() => {
-    return Math.ceil(this.transactions().length / this.ITEMS_PER_PAGE);
-  })
-
-  public currentPage = signal(1)
-
-  public paginatedTransaction = linkedSignal<ILinkedSignal, Transaction[]>({
-    source: () => ({
-      currentPage: this.currentPage(),
-      transactions: this.transactions()
-    }),
-    computation: ({currentPage, transactions}) => {
-      const start = (currentPage - 1) * this.ITEMS_PER_PAGE;
-      const end = start + this.ITEMS_PER_PAGE;
-
-
-      return transactions.slice(start, end)
+    const txCount = this.transactions().length;
+    if (txCount < this.ITEMS_PER_PAGE) {
+      return this.currentPage();
     }
+    return this.currentPage() + 1;
   });
+
+  public filteredTransactions = this.transactions;
+
+  private reloadEffect = effect(() => {
+    const searchQuerySig = this.searchQuerySig()
+    const category = this.selectedCategory();
+    const sort = this.selectedSort();
+    const page = this.currentPage();
+
+    if (this.debounceTimer) {
+      clearTimeout(this.debounceTimer);
+    }
+
+    this.debounceTimer = setTimeout(() => {
+      this.loadTransactionsWithFilters();
+    }, 500);
+  });
+
+  public paginatedTransaction = this.transactions;
 
   public paginationBullets = linkedSignal({
     source:() => ({
@@ -54,11 +99,100 @@ export class Transactions {
     }
   })
 
+  public isPrevDisabled = computed(() => this.currentPage() <= 1);
+  public isNextDisabled = computed(() => this.currentPage() >= this.totalPages());
+
   public handleNextPage() {
-    this.currentPage.set(Math.min(this.currentPage() + 1, this.totalPages()))
+    if (!this.isNextDisabled()) {
+      this.currentPage.update(p => p + 1);
+    }
   }
 
   public handlePreviousPage() {
-    this.currentPage.set(Math.max(this.currentPage() - 1, 1))
+    if (!this.isPrevDisabled()) {
+      this.currentPage.update(p => Math.max(p - 1, 1));
+    }
+  }
+
+  public onSearchChange(value: string) {
+    if (this.searchQuerySig() !== value) {
+      this.currentPage.set(1);
+      this.searchQuerySig.set(value);
+    }
+  }
+
+  public onCategoryChange(value: string) {
+    if (this.selectedCategory() !== value) {
+      this.currentPage.set(1);
+      this.selectedCategory.set(value);
+    }
+  }
+
+  public onSortChange(value: string) {
+    if (this.selectedSort() !== value) {
+      this.currentPage.set(1);
+      this.selectedSort.set(value);
+    }
+  }
+
+  private loadTransactionsWithFilters() {
+    const filter: any = {};
+
+    const search = this.searchQuerySig();
+    if (search) {
+      filter.name = search;
+    }
+
+    const category = this.selectedCategory();
+    if (category !== 'all') {
+      filter.category = category;
+    }
+
+    const sortValue = this.selectedSort();
+    let sortBy: SortBy;
+    let sortOrder: SortOrder;
+
+    switch (sortValue) {
+      case 'latest':
+        sortBy = SortBy.DATE;
+        sortOrder = SortOrder.DESC;
+        break;
+      case 'oldest':
+        sortBy = SortBy.DATE;
+        sortOrder = SortOrder.ASC;
+        break;
+      case 'a-z':
+        sortBy = SortBy.NAME;
+        sortOrder = SortOrder.ASC;
+        break;
+      case 'z-a':
+        sortBy = SortBy.NAME;
+        sortOrder = SortOrder.DESC;
+        break;
+      case 'highest':
+        sortBy = SortBy.AMOUNT;
+        sortOrder = SortOrder.DESC;
+        break;
+      case 'lowest':
+        sortBy = SortBy.AMOUNT;
+        sortOrder = SortOrder.ASC;
+        break;
+      default:
+        sortBy = SortBy.DATE;
+        sortOrder = SortOrder.DESC;
+    }
+
+    this.api.loadTransactions({
+      filter: Object.keys(filter).length > 0 ? filter : undefined,
+      sort: { sortBy, sortOrder },
+      skip: (this.currentPage() - 1) * this.ITEMS_PER_PAGE,
+      take: this.ITEMS_PER_PAGE
+    })
+  }
+
+  ngOnDestroy() {
+    if (this.debounceTimer) {
+      clearTimeout(this.debounceTimer);
+    }
   }
 }

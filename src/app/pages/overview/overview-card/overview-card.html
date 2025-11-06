@@ -5,5 +5,5 @@
     }"
 >
     <p class="overview-card__title">{{ title() }}</p>
-    <p class="overview-card__amount">{{ amount() | currencyFormat }}</p>
+    <p class="overview-card__amount">{{ amount() | currencyFormat:currency() }}</p>
 </div>
