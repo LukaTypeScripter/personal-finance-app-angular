@@ -130,3 +130,18 @@ export interface BudgetDognut {
     sortBy?: SortBy;
     sortOrder?: SortOrder;
   }
+
+  // Pagination types
+  export interface PaginationMeta {
+    totalCount: number;
+    totalPages: number;
+    currentPage: number;
+    pageSize: number;
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+  }
+
+  export interface PaginatedTransactions {
+    transactions: Transaction[];
+    pagination: PaginationMeta;
+  }

@@ -11,7 +11,7 @@ import {Api} from '@/app/shared/service/api';
 })
 export class OverviewTransactions {
 
-  protected transactions = inject(Api).userTransactions;
+  protected transactions = inject(Api).transactions;
 
   public readonly slicedTransactions = computed(() => this.transactions().slice(0, 5))
 }

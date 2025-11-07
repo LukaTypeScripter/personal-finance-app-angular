@@ -27,7 +27,7 @@ export class AuthCard {
   }
 
   handleDemoLogin() {
-    this.authService.login({password:'Chopy686866',email:'lukashinjikashvili85@gmail.com'}).subscribe({
+    this.authService.login({password:'password123',email:'john@example.com'}).subscribe({
       next: () => {
         this.navigation.navigateTo('/dashboard/overview');
       }

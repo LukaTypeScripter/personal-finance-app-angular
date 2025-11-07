@@ -36,7 +36,7 @@ export class DonutChart  {
 
 
   updateBudgets = effect(() => {
-    const userBudgets = this.userBudgets.userBudgets();
+    const userBudgets = this.userBudgets.budgets();
 
     if(!userBudgets) return;
 

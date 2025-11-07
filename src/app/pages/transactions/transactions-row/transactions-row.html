@@ -1,6 +1,6 @@
 <div class="transactions-row">
   <div class="transactions-row__left">
-    <img alt="*" class="transactions-row__left-sender-img" src="./assets/images/avatars/emma-richardson.jpg">
+    <div  class="transactions-row__left-sender-img">{{transaction()?.avatar}}</div>
     <div class="transactions-row__left-sender">
       <p>{{ transaction()?.name }}</p>
       <p>{{ transaction()?.category }}</p>

@@ -1,5 +1,6 @@
 import { Component, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { AuthService } from '@/app/core/service/auth.service';
 import { Api } from '@/app/shared/service/api';
 
@@ -83,6 +84,7 @@ import { Api } from '@/app/shared/service/api';
 export class FloatingMenuComponent {
   private authService = inject(AuthService);
   private api = inject(Api);
+  private router = inject(Router);
 
   isOpen = signal(false);
   selectedCurrency = signal<'USD' | 'GEO'>('USD');
@@ -110,7 +112,14 @@ export class FloatingMenuComponent {
 
   switchCurrency(currency: 'USD' | 'GEO') {
     this.selectedCurrency.set(currency);
-    this.api.loadAllData(currency);
+
+    this.api.currency.set(currency);
+
+    const currentUrl = this.router.url;
+
+    if (currentUrl.includes('/overview')) {
+      this.api.loadOverviewData(currency);
+    }
   }
 
   switchLanguage(language: 'en' | 'ka') {

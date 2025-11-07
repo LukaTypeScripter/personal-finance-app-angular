@@ -10,5 +10,5 @@ import { Api } from '@/app/shared/service/api';
 })
 export class OverviewReccuringBill {
 
-  protected reccuringBills = inject(Api).userTransactions;
+  protected reccuringBills = inject(Api).transactions;
 }

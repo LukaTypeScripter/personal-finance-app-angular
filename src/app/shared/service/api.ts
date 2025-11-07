@@ -1,6 +1,6 @@
 import { DEFAULT_FINANCE_DATA } from '@/app/core/constants/default-finance-data.constant';
-import { Balance, Budget, Pot, Transaction, FilterTransactionsInput, SortTransactionsInput } from '@/app/core/models/finance-data.model';
-import {computed, effect, inject, Injectable, signal} from '@angular/core';
+import { Balance, Budget, Pot, Transaction, FilterTransactionsInput, SortTransactionsInput, PaginatedTransactions, PaginationMeta } from '@/app/core/models/finance-data.model';
+import { effect, inject, Injectable, signal, WritableSignal} from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { AuthService } from '@/app/core/service/auth.service';
 import {
@@ -8,7 +8,7 @@ import {
   GET_TRANSACTIONS_QUERY,
   GET_BUDGETS_QUERY,
   GET_POTS_QUERY,
-  GET_BUDGET_SPENDING_QUERY
+  GET_OVERVIEW_DATA_QUERY
 } from '@/app/core/graphql/finance.operations';
 import { map, catchError, of, tap } from 'rxjs';
 
@@ -19,41 +19,50 @@ export class Api {
   private apollo = inject(Apollo);
   private authService = inject(AuthService);
 
-  private transactionsSignal = signal<Transaction[]>([]);
-  private budgetsSignal = signal<Budget[]>([]);
-  private potsSignal = signal<Pot[]>([]);
-  private balanceSignal = signal<Balance>(DEFAULT_FINANCE_DATA.balance);
-  private loadingSignal = signal<boolean>(false);
+  private readonly _transactions = signal<Transaction[]>([]);
+  private readonly _budgets = signal<Budget[]>([]);
+  private readonly _pots = signal<Pot[]>([]);
+  private readonly _balance = signal<Balance>(DEFAULT_FINANCE_DATA.balance);
+  private readonly _loading = signal<boolean>(false);
+  private readonly _paginationMeta = signal<PaginationMeta | null>(null);
 
-  userTransactions = this.transactionsSignal.asReadonly();
-  userBudgets = this.budgetsSignal.asReadonly();
-  userPots = this.potsSignal.asReadonly();
-  userBalance = this.balanceSignal.asReadonly();
-  currency = signal('')
-  userLoading = this.loadingSignal.asReadonly();
+  public  currency = signal<string>('USD');
+
+  readonly transactions = this._transactions.asReadonly();
+  readonly budgets = this._budgets.asReadonly();
+  readonly pots = this._pots.asReadonly();
+  readonly balance = this._balance.asReadonly();
+  readonly loading = this._loading.asReadonly();
+  readonly paginationMeta = this._paginationMeta.asReadonly();
 
   constructor() {
     effect(() => {
       const currentUser = this.authService.currentUser()
 
       if(currentUser) {
-        this.loadAllData(currentUser.currency);
+        this.currency.set(currentUser.currency);
       }
     });
   }
 
 
   loadAllData(currency?: string): void {
-    this.loadingSignal.set(true);
+    const curr = this.resolveCurrency(currency);
 
-    const userCurrency = currency || this.authService.currentUser()?.currency || 'USD';
+    this._loading.set(true);
 
-    this.currency.set(userCurrency);
 
-    this.loadBalance(userCurrency);
-    this.loadTransactions();
-    this.loadBudgets(userCurrency);
-    this.loadPots();
+    this.currency.set(curr);
+
+    this.loadBalance(curr);
+    this.loadTransactions({ currency: curr });
+    this.loadBudgets(curr);
+    this.loadPots(curr);
+  }
+
+  refresh(): void {
+    const curr = this.authService.currentUser()?.currency;
+    if (curr) this.loadAllData(curr);
   }
 
   loadBalance(currency?: string): void {
@@ -75,7 +84,7 @@ export class Api {
       .subscribe(balance => {
         if (!balance) return;
 
-        this.balanceSignal.set(balance);
+        this._balance.set(balance);
       });
   }
 
@@ -85,15 +94,19 @@ export class Api {
     sort?: SortTransactionsInput;
     skip?: number;
     take?: number;
+    currency?: string;
   }): void {
+    const userCurrency = this.resolveCurrency(options?.currency);
+
     this.apollo
-      .query<{ transactions: Transaction[] }>({
+      .query<{ transactions: PaginatedTransactions }>({
         query: GET_TRANSACTIONS_QUERY,
         variables: {
           filter: options?.filter,
           sort: options?.sort,
           skip: options?.skip,
-          take: options?.take
+          take: options?.take,
+          currency: userCurrency
         },
         fetchPolicy: 'network-only'
       })
@@ -101,24 +114,26 @@ export class Api {
         map(result => result?.data?.transactions),
         catchError(error => {
           console.error('Error loading transactions:', error);
-          return of([]);
+          return of(null);
         })
       )
-      .subscribe(transactions => {
-        this.loadingSignal.set(false);
-        if(!transactions) return;
+      .subscribe(paginatedData => {
+        this._loading.set(false);
+        if(!paginatedData) return;
 
-        this.transactionsSignal.set(transactions);
+        this._transactions.set(paginatedData.transactions);
+        this._paginationMeta.set(paginatedData.pagination);
       });
   }
 
 
   loadBudgets(currency?: string): void {
-    const userCurrency = currency || this.authService.currentUser()?.currency || 'USD';
+    const userCurrency = this.resolveCurrency(currency);
 
     this.apollo
-      .query<{ budgets: Array<{id: string; category: string; maximum: number; currency: string; theme: string}> }>({
+      .query<{ budgets: Budget[] }>({
         query: GET_BUDGETS_QUERY,
+        variables: { currency: userCurrency },
         fetchPolicy: 'network-only'
       })
       .pipe(
@@ -129,45 +144,18 @@ export class Api {
         })
       )
       .subscribe(budgets => {
-        if(!budgets || budgets.length === 0) {
-          this.budgetsSignal.set([]);
-          return;
-        }
-
-        const budgetPromises = budgets.map(budget =>
-          this.apollo
-            .query<{ budgetSpending: number }>({
-              query: GET_BUDGET_SPENDING_QUERY,
-              variables: {
-                category: budget.category,
-                currency: userCurrency
-              },
-              fetchPolicy: 'network-only'
-            })
-            .pipe(
-              map(result => ({
-                ...budget,
-                spent: result.data?.budgetSpending || 0
-              })),
-              catchError(() => of({
-                ...budget,
-                spent: 0
-              }))
-            )
-            .toPromise()
-        );
-
-        Promise.all(budgetPromises).then(budgetsWithSpending => {
-          this.budgetsSignal.set(budgetsWithSpending.filter(b => b !== undefined) as Budget[]);
-        });
+        this._budgets.set(budgets.filter(b => !!b));
       });
   }
 
 
-  loadPots(): void {
+  loadPots(currency?: string): void {
+    const userCurrency = this.resolveCurrency(currency);
+
     this.apollo
       .query<{ pots: Pot[] }>({
         query: GET_POTS_QUERY,
+        variables: { currency: userCurrency },
         fetchPolicy: 'network-only'
       })
       .pipe(
@@ -181,15 +169,60 @@ export class Api {
         if (!pots) return;
 
 
-        this.potsSignal.set(pots.filter(pot => !!pot && typeof pot.name !== 'undefined'));
+        this._pots.set(pots.filter(pot => !!pot && typeof pot.name !== 'undefined'));
       });
   }
 
+  loadOverviewData(currency?: string): void {
+    this._loading.set(true);
 
-  refresh(): void {
-    const user = this.authService.currentUser();
-    if (user) {
-      this.loadAllData(user.currency);
+    const curr = this.resolveCurrency(currency);
+
+    this.apollo
+      .query<{
+        balance: Balance;
+        transactions: PaginatedTransactions;
+        budgets: Budget[];
+        pots: Pot[];
+      }>({
+        query: GET_OVERVIEW_DATA_QUERY,
+        variables: { currency: curr },
+        fetchPolicy: 'network-only'
+      })
+      .pipe(
+        catchError(error => {
+          console.error('Error loading overview data:', error);
+          this._loading.set(false);
+          return of(null);
+        })
+      )
+      .subscribe(result => {
+        const data = result?.data;
+        if (!data) return this._loading.set(false);
+
+        this.setSafeData(this._balance, data.balance);
+        this.setSafeData(this._transactions, data.transactions.transactions);
+        this._paginationMeta.set(data.transactions.pagination);
+        this.setSafeData(this._pots, data.pots, (p) => !!p && !!p.name);
+        this.setSafeData(this._budgets, data.budgets);
+        this._loading.set(false);
+      });
+  }
+
+  private setSafeData<T>(
+    signalRef: WritableSignal<T | T[]>,
+    data: T | T[] | null | undefined,
+    filterFn?: (item: any) => boolean
+  ) {
+    if (!data) return;
+    if (Array.isArray(data)) {
+      signalRef.set(filterFn ? data.filter(filterFn) : data);
+    } else {
+      signalRef.set(data);
     }
+  }
+
+  private resolveCurrency(currency?: string): string {
+    return currency || this.currency() || this.authService.currentUser()?.currency || 'USD';
   }
 }

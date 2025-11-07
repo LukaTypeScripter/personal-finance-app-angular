@@ -14,6 +14,6 @@ export class OverviewBudgets {
   protected SUMMARY_TYPE = SUMMARY_TYPE;
 
   protected budgets = inject(Api);
-  userBudgets = this.budgets.userBudgets;
+  userBudgets = this.budgets.budgets;
   currency = this.budgets.currency
 }

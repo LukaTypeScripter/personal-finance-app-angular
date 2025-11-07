@@ -19,21 +19,33 @@ export const GET_TRANSACTIONS_QUERY = gql`
     $sort: SortTransactionsInput
     $skip: Int
     $take: Int
+    $currency: String
   ) {
     transactions(
       filter: $filter
       sort: $sort
       skip: $skip
       take: $take
+      currency: $currency
     ) {
-      id
-      name
-      category
-      date
-      amount
-      currency
-      avatar
-      recurring
+      transactions {
+        id
+        name
+        category
+        date
+        amount
+        currency
+        avatar
+        recurring
+      }
+      pagination {
+        totalCount
+        totalPages
+        currentPage
+        pageSize
+        hasNextPage
+        hasPreviousPage
+      }
     }
   }
 `;
@@ -107,11 +119,12 @@ export const DELETE_TRANSACTION_MUTATION = gql`
 
 // Budgets queries
 export const GET_BUDGETS_QUERY = gql`
-  query GetBudgets {
-    budgets {
+  query GetBudgets($currency: String) {
+    budgets(currency: $currency) {
       id
       category
       maximum
+      spent
       currency
       theme
     }
@@ -169,8 +182,8 @@ export const DELETE_BUDGET_MUTATION = gql`
 
 // Pots queries
 export const GET_POTS_QUERY = gql`
-  query GetPots {
-    pots {
+  query GetPots($currency: String) {
+    pots(currency: $currency) {
       id
       name
       target
@@ -250,5 +263,52 @@ export const WITHDRAW_MONEY_FROM_POT_MUTATION = gql`
 export const DELETE_POT_MUTATION = gql`
   mutation DeletePot($id: String!) {
     deletePot(id: $id)
+  }
+`;
+
+export const GET_OVERVIEW_DATA_QUERY = gql`
+  query GetOverviewData($currency: String) {
+    balance(currency: $currency) {
+      current
+      income
+      expenses
+      currency
+    }
+    transactions(take: 10, sort: { sortBy: DATE, sortOrder: DESC }, currency: $currency) {
+      transactions {
+        id
+        name
+        category
+        date
+        amount
+        currency
+        avatar
+        recurring
+      }
+      pagination {
+        totalCount
+        totalPages
+        currentPage
+        pageSize
+        hasNextPage
+        hasPreviousPage
+      }
+    }
+    budgets(currency: $currency) {
+      id
+      category
+      maximum
+      spent
+      currency
+      theme
+    }
+    pots(currency: $currency) {
+      id
+      name
+      target
+      total
+      currency
+      theme
+    }
   }
 `;

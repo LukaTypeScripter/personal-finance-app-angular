@@ -4,10 +4,10 @@
     <div class="overview-pots__content">
         <app-overview-pots-saved></app-overview-pots-saved>
         <!-- -->
-    
+
         <div class="overview-pots__summary">
-            @for (pot of pots(); track $index) {
-                <app-overview-pots-summary [type]="SUMMARY_TYPE[$index]" [name]="pot.name" [amount]="pot.total" [theme]="pot.theme"></app-overview-pots-summary>
+            @for (pot of userPots(); track $index) {
+                <app-overview-pots-summary [type]="SUMMARY_TYPE[$index]" [name]="pot.name" [amount]="pot.target" [theme]="pot.theme"></app-overview-pots-summary>
             }
         </div>
     </div>

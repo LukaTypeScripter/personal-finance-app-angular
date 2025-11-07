@@ -4,6 +4,7 @@ import {
   effect,
   inject,
   linkedSignal,
+  OnInit,
   signal
 } from '@angular/core';
 import {ReusableInput} from '@/app/shared/components/reuseble-input/reusable-input.component';
@@ -23,8 +24,13 @@ import { updatePagination } from './helper/functions/update-pagination.function'
   templateUrl: './transactions.html',
   styleUrl: './transactions.scss'
 })
-export class Transactions {
+export class Transactions implements OnInit {
   private readonly api = inject(Api);
+
+  ngOnInit(): void {
+    // Transaction page only needs transactions
+    this.loadTransactionsWithFilters();
+  }
 
   public readonly ITEMS_PER_PAGE = 10;
   public readonly PAGINATION_BUTTON_COUNT = 4
@@ -59,15 +65,12 @@ export class Transactions {
     { value: 'lowest', label: 'Lowest' }
   ];
 
-  public transactions = this.api.userTransactions;
+  public transactions = this.api.transactions;
+  public paginationMeta = this.api.paginationMeta;
   public currentPage = signal(1);
 
   public totalPages = computed(() => {
-    const txCount = this.transactions().length;
-    if (txCount < this.ITEMS_PER_PAGE) {
-      return this.currentPage();
-    }
-    return this.currentPage() + 1;
+    return this.paginationMeta()?.totalPages || 1;
   });
 
   public filteredTransactions = this.transactions;
@@ -77,6 +80,7 @@ export class Transactions {
     const category = this.selectedCategory();
     const sort = this.selectedSort();
     const page = this.currentPage();
+    const currency = this.api.currency(); // Watch currency changes
 
     if (this.debounceTimer) {
       clearTimeout(this.debounceTimer);
@@ -99,8 +103,8 @@ export class Transactions {
     }
   })
 
-  public isPrevDisabled = computed(() => this.currentPage() <= 1);
-  public isNextDisabled = computed(() => this.currentPage() >= this.totalPages());
+  public isPrevDisabled = computed(() => !this.paginationMeta()?.hasPreviousPage);
+  public isNextDisabled = computed(() => !this.paginationMeta()?.hasNextPage);
 
   public handleNextPage() {
     if (!this.isNextDisabled()) {
@@ -186,7 +190,8 @@ export class Transactions {
       filter: Object.keys(filter).length > 0 ? filter : undefined,
       sort: { sortBy, sortOrder },
       skip: (this.currentPage() - 1) * this.ITEMS_PER_PAGE,
-      take: this.ITEMS_PER_PAGE
+      take: this.ITEMS_PER_PAGE,
+      currency: this.api.currency()
     })
   }
 

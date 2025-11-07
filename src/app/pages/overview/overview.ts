@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { OverviewCard } from './overview-card/overview-card';
 import { OverviewPots } from './overview-pots/overview-pots';
 import { OverviewTransactions } from './transactions/transactions';
@@ -11,8 +11,13 @@ import { Api } from '@/app/shared/service/api';
   templateUrl: './overview.html',
   styleUrl: './overview.scss'
 })
-export class Overview {
+export class Overview implements OnInit {
 
-  protected balance = inject(Api).userBalance;
+  private api = inject(Api);
+  protected balance = this.api.balance;
+
+  ngOnInit(): void {
+    this.api.loadOverviewData();
+  }
 
 }
