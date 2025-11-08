@@ -1,0 +1,121 @@
+@use "@/assets/styles/_variables.scss";
+@use "@/assets/styles/_mixins.scss";
+
+.money-modal {
+  &__error {
+    @include mixins.flex(center, flex-start);
+    gap: variables.$spacing-200;
+    padding: variables.$spacing-300;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+    color: #dc2626;
+    font-size: variables.$font-size-preset-5;
+    margin-bottom: variables.$spacing-400;
+
+    svg {
+      flex-shrink: 0;
+    }
+  }
+
+  &__info {
+    padding: variables.$spacing-300;
+    background: variables.$color-beige-100;
+    border-radius: 8px;
+    margin-bottom: variables.$spacing-400;
+  }
+
+  &__row {
+    @include mixins.flex(center, space-between);
+    padding: variables.$spacing-200 0;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid variables.$color-beige-500;
+    }
+  }
+
+  &__label {
+    font-size: variables.$font-size-preset-5;
+    color: variables.$color-grey-500;
+  }
+
+  &__value {
+    font-size: variables.$font-size-preset-4;
+    font-weight: 700;
+    color: variables.$color-grey-900;
+
+    &--highlight {
+      color: variables.$color-cyan;
+      font-size: variables.$font-size-preset-3;
+    }
+  }
+
+  &__field {
+    margin-bottom: variables.$spacing-400;
+  }
+
+  &__input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  &__currency {
+    position: absolute;
+    left: variables.$spacing-300;
+    font-size: variables.$font-size-preset-3;
+    color: variables.$color-grey-900;
+    font-weight: 700;
+    pointer-events: none;
+  }
+
+  &__input {
+    width: 100%;
+    padding: variables.$spacing-400 variables.$spacing-300 variables.$spacing-400 variables.$spacing-500;
+    border: 1px solid variables.$color-beige-500;
+    border-radius: 8px;
+    font-size: variables.$font-size-preset-2;
+    font-weight: 700;
+    color: variables.$color-grey-900;
+    transition: border-color 0.2s;
+
+    &:hover {
+      border-color: variables.$color-grey-500;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: variables.$color-grey-900;
+    }
+
+    &::placeholder {
+      color: variables.$color-grey-300;
+    }
+  }
+
+  &__summary {
+    padding: variables.$spacing-300;
+    background: #fef3c7;
+    border: 1px solid #fcd34d;
+    border-radius: 8px;
+    margin-bottom: variables.$spacing-400;
+
+    &--warning {
+      background: #fef3c7;
+      border-color: #fcd34d;
+    }
+  }
+
+  &__footer {
+    @include mixins.flex(center, flex-end);
+    gap: variables.$spacing-300;
+
+    @include mixins.respond(xs) {
+      flex-direction: column-reverse;
+
+      app-reusable-button {
+        width: 100%;
+      }
+    }
+  }
+}

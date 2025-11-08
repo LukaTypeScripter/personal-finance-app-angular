@@ -12,6 +12,11 @@
 
     overflow: unset !important;
 
+  @include mixins.respond(xs) {
+    padding-inline: 10px;
+  }
+
+
     &-input {
       flex-basis: 33%;
       height: 46px;

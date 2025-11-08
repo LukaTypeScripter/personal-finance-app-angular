@@ -1,0 +1,152 @@
+@use "@/assets/styles/_variables.scss";
+@use "@/assets/styles/_mixins.scss";
+
+.modal {
+  &__error {
+    @include mixins.flex(center, flex-start);
+    gap: variables.$spacing-200;
+    padding: variables.$spacing-300;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+    color: #dc2626;
+    font-size: variables.$font-size-preset-5;
+    margin-bottom: variables.$spacing-400;
+
+    svg {
+      flex-shrink: 0;
+    }
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: variables.$spacing-400;
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: variables.$spacing-200;
+
+    &-hint {
+      font-size: variables.$font-size-preset-5;
+      color: variables.$color-grey-500;
+      margin: 0;
+      font-style: italic;
+    }
+  }
+
+  &__label {
+    font-size: variables.$font-size-preset-5;
+    font-weight: 700;
+    color: variables.$color-grey-500;
+  }
+
+  &__select {
+    width: 100%;
+    padding: variables.$spacing-300;
+    border: 1px solid variables.$color-beige-500;
+    border-radius: 8px;
+    font-size: variables.$font-size-preset-4;
+    color: variables.$color-grey-900;
+    background: white;
+    cursor: pointer;
+    transition: border-color 0.2s;
+
+    &:hover:not(:disabled) {
+      border-color: variables.$color-grey-500;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: variables.$color-grey-900;
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      background-color: variables.$color-beige-100;
+    }
+  }
+
+  &__input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  &__currency {
+    position: absolute;
+    left: variables.$spacing-300;
+    font-size: variables.$font-size-preset-4;
+    color: variables.$color-grey-500;
+    pointer-events: none;
+  }
+
+  &__input {
+    width: 100%;
+    padding: variables.$spacing-300;
+    padding-left: variables.$spacing-500;
+    border: 1px solid variables.$color-beige-500;
+    border-radius: 8px;
+    font-size: variables.$font-size-preset-4;
+    color: variables.$color-grey-900;
+    transition: border-color 0.2s;
+
+    &:hover {
+      border-color: variables.$color-grey-500;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: variables.$color-grey-900;
+    }
+
+    &::placeholder {
+      color: variables.$color-grey-300;
+    }
+  }
+
+  &__themes {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+    gap: variables.$spacing-200;
+  }
+
+  &__theme {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+    @include mixins.flex(center, center);
+
+    &:hover {
+      transform: scale(1.1);
+    }
+
+    &--selected {
+      border-color: variables.$color-grey-900;
+      box-shadow: 0 0 0 2px white, 0 0 0 4px variables.$color-grey-900;
+    }
+
+    svg {
+      display: block;
+    }
+  }
+
+  &__footer {
+    @include mixins.flex(center, flex-end);
+    gap: variables.$spacing-300;
+
+    @include mixins.respond(xs) {
+      flex-direction: column-reverse;
+
+      app-reusable-button {
+        width: 100%;
+      }
+    }
+  }
+}

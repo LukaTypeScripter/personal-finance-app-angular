@@ -1,0 +1,116 @@
+@use "@/assets/styles/_variables.scss";
+@use "@/assets/styles/_mixins.scss";
+
+.bottom-sheet {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+  z-index: 1001;
+  animation: slideUp 0.3s ease-out;
+  max-height: 70vh;
+  overflow-y: auto;
+
+  @include mixins.respond(md) {
+    display: none;
+  }
+
+  @include mixins.respond(sm) {
+    display: none;
+  }
+
+  &__backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    animation: fadeIn 0.3s ease-out;
+
+    @include mixins.respond(md) {
+      display: none;
+    }
+
+    @include mixins.respond(sm) {
+      display: none;
+    }
+  }
+
+  &__header {
+    @include mixins.flex(center, space-between);
+    padding: variables.$spacing-400;
+    border-bottom: 1px solid variables.$color-beige-500;
+  }
+
+  &__title {
+    font-size: variables.$font-size-preset-3;
+    font-weight: 700;
+    color: variables.$color-grey-900;
+    margin: 0;
+  }
+
+  &__close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: variables.$spacing-100;
+    color: variables.$color-grey-500;
+    transition: color 0.2s;
+
+    &:hover {
+      color: variables.$color-grey-900;
+    }
+
+    svg {
+      display: block;
+    }
+  }
+
+  &__content {
+    padding: variables.$spacing-200;
+  }
+
+  &__option {
+    padding: variables.$spacing-300 variables.$spacing-400;
+    cursor: pointer;
+    transition: background-color 0.15s;
+    font-size: variables.$font-size-preset-4;
+    color: variables.$color-grey-900;
+    border-radius: 8px;
+    margin-bottom: variables.$spacing-100;
+
+    &:hover {
+      background-color: variables.$color-beige-100;
+    }
+
+    &--active {
+      background-color: variables.$color-beige-100;
+      font-weight: 700;
+      color: variables.$color-grey-900;
+    }
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

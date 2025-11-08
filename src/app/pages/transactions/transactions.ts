@@ -17,10 +17,11 @@ import {TransactionsSkeleton} from '@/app/pages/transactions/transactions-skelet
 import {LazyAttribute} from '@/app/shared/directives/lazy-attribute';
 import {NgOptimizedImage} from '@angular/common';
 import { updatePagination } from './helper/functions/update-pagination.function';
+import { ReusableBottomSheet } from '@/app/shared/components/reusable-bottom-sheet/reusable-bottom-sheet.component';
 
 @Component({
   selector: 'app-transactions',
-  imports: [ReusableInput, ReusableButton, ReusableDropdown, TransactionsRow, TransactionsSkeleton, LazyAttribute, NgOptimizedImage],
+  imports: [ReusableInput, ReusableButton, ReusableDropdown, TransactionsRow, TransactionsSkeleton, LazyAttribute, NgOptimizedImage, ReusableBottomSheet],
   templateUrl: './transactions.html',
   styleUrl: './transactions.scss'
 })
@@ -38,6 +39,8 @@ export class Transactions implements OnInit {
   public searchQuerySig = signal('')
   public selectedCategory = signal('all');
   public selectedSort = signal('latest');
+  public isSortSheetOpen = signal(false);
+  public isCategorySheetOpen = signal(false);
 
   private debounceTimer: any = null;
 
@@ -80,7 +83,7 @@ export class Transactions implements OnInit {
     const category = this.selectedCategory();
     const sort = this.selectedSort();
     const page = this.currentPage();
-    const currency = this.api.currency(); // Watch currency changes
+    const currency = this.api.currency();
 
     if (this.debounceTimer) {
       clearTimeout(this.debounceTimer);
@@ -137,6 +140,32 @@ export class Transactions implements OnInit {
       this.currentPage.set(1);
       this.selectedSort.set(value);
     }
+  }
+
+  public openSortSheet() {
+    this.isSortSheetOpen.set(true);
+  }
+
+  public closeSortSheet() {
+    this.isSortSheetOpen.set(false);
+  }
+
+  public openCategorySheet() {
+    this.isCategorySheetOpen.set(true);
+  }
+
+  public closeCategorySheet() {
+    this.isCategorySheetOpen.set(false);
+  }
+
+  public onMobileSortChange(value: string) {
+    this.onSortChange(value);
+    this.closeSortSheet();
+  }
+
+  public onMobileCategoryChange(value: string) {
+    this.onCategoryChange(value);
+    this.closeCategorySheet();
   }
 
   private loadTransactionsWithFilters() {

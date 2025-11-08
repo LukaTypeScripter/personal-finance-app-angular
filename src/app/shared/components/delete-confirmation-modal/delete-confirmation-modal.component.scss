@@ -1,0 +1,42 @@
+@use "@/assets/styles/_variables.scss";
+@use "@/assets/styles/_mixins.scss";
+
+.delete-confirmation {
+  text-align: center;
+
+  &__icon {
+    @include mixins.flex(center, center);
+    margin-bottom: variables.$spacing-400;
+
+    svg {
+      display: block;
+    }
+  }
+
+  &__message {
+    font-size: variables.$font-size-preset-3;
+    font-weight: 700;
+    color: variables.$color-grey-900;
+    margin: 0 0 variables.$spacing-200 0;
+  }
+
+  &__description {
+    font-size: variables.$font-size-preset-4;
+    color: variables.$color-grey-500;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  &__actions {
+    @include mixins.flex(center, flex-end);
+    gap: variables.$spacing-300;
+
+    @include mixins.respond(xs) {
+      flex-direction: column-reverse;
+
+      app-reusable-button {
+        width: 100%;
+      }
+    }
+  }
+}

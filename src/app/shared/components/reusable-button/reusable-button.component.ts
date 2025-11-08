@@ -12,7 +12,7 @@ export class ReusableButton {
   text = input<string>('');
 
   // Button variants
-  variant = input<'primary' | 'secondary' | 'outlined' | 'ghost'>('primary');
+  variant = input<'primary' | 'secondary' | 'outlined' | 'ghost' | 'danger'>('primary');
 
   // Button sizes
   size = input<'small' | 'medium' | 'large'>('medium');

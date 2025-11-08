@@ -1,0 +1,73 @@
+<div class="budgets">
+  <div class="budgets__header">
+    <h1 class="budgets__title">Budgets</h1>
+    <app-reusable-button
+      text="+ Add New Budget"
+      [variant]="'primary'"
+      [size]="'medium'"
+      (click)="openAddBudgetModal()">
+    </app-reusable-button>
+  </div>
+
+  <div class="budgets__content">
+    <!-- Chart Section -->
+    <div class="budgets__chart-section">
+      <div class="budgets__chart-container">
+        <app-donut-chart></app-donut-chart>
+      </div>
+      <div class="budgets__chart-info">
+        <h3 class="budgets__chart-title">Spending Summary</h3>
+        <p class="budgets__chart-description">
+          See your spending breakdown by category and track your budget limits.
+        </p>
+      </div>
+    </div>
+
+    <!-- Budget Items List -->
+    <div class="budgets__list-section">
+      <h2 class="budgets__list-title">Budget Categories</h2>
+
+      @if (budgets().length === 0) {
+        <div class="budgets__empty-state">
+          <p class="budgets__empty-text">No budgets yet.</p>
+          <p class="budgets__empty-subtext">Start by creating your first budget to track spending.</p>
+          <app-reusable-button
+            text="Create Budget"
+            [variant]="'primary'"
+            [size]="'medium'"
+            (click)="openAddBudgetModal()">
+          </app-reusable-button>
+        </div>
+      } @else {
+        <div class="budgets__list">
+          @for (budget of budgets(); track budget.id) {
+            <app-budget-item
+              [budget]="budget"
+              [currency]="currency()"
+              (edit)="onBudgetEdit(budget)"
+              (delete)="onBudgetDelete(budget.id!)">
+            </app-budget-item>
+          }
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Budget Modal -->
+  <app-budget-modal
+    [isOpen]="isBudgetModalOpen()"
+    [budget]="selectedBudget()"
+    [currency]="currency()"
+    (close)="closeBudgetModal()"
+    (success)="onBudgetSuccess()">
+  </app-budget-modal>
+
+  <!-- Delete Confirmation Modal -->
+  <app-delete-confirmation-modal
+    [isOpen]="isDeleteModalOpen()"
+    [itemName]="budgetToDelete()?.category || ''"
+    [itemType]="'budget'"
+    (close)="closeDeleteModal()"
+    (confirm)="confirmDelete()">
+  </app-delete-confirmation-modal>
+</div>

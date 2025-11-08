@@ -94,6 +94,20 @@
     }
   }
 
+  &--danger {
+    background-color: #dc2626;
+    color: variables.$color-white;
+
+    &:hover:not(:disabled) {
+      background-color: #b91c1c;
+    }
+
+    &:active:not(:disabled) {
+      background-color: #991b1b;
+      transform: scale(0.98);
+    }
+  }
+
   // States
   &--disabled,
   &:disabled {

@@ -1,0 +1,181 @@
+@use "@/assets/styles/_variables.scss";
+@use "@/assets/styles/_mixins.scss";
+
+.pot-item {
+  @include mixins.card();
+
+  & {
+    border-left: 4px solid var(--pot-color, variables.$color-grey-500);
+    transition: box-shadow 0.2s ease;
+  }
+
+  &:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  &__header {
+    @include mixins.flex(center, space-between);
+    margin-bottom: variables.$spacing-400;
+  }
+
+  &__info {
+    @include mixins.flex(center, flex-start);
+    gap: variables.$spacing-200;
+    flex: 1;
+  }
+
+  &__color-indicator {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  &__name {
+    font-size: variables.$font-size-preset-3;
+    font-weight: 700;
+    color: variables.$color-grey-900;
+    margin: 0;
+  }
+
+  &__actions {
+    @include mixins.flex(center, flex-end);
+    gap: variables.$spacing-200;
+  }
+
+  &__action-btn {
+    @include mixins.flex(center, center);
+    width: 32px;
+    height: 32px;
+    background: none;
+    border: none;
+    border-radius: 8px;
+    color: variables.$color-grey-500;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      background: variables.$color-beige-100;
+      color: variables.$color-grey-900;
+    }
+
+    &--delete {
+      &:hover {
+        background: #fef2f2;
+        color: #dc2626;
+      }
+    }
+
+    svg {
+      display: block;
+    }
+  }
+
+  &__savings {
+    margin-bottom: variables.$spacing-400;
+  }
+
+  &__amounts {
+    @include mixins.flex(center, space-between);
+    margin-bottom: variables.$spacing-300;
+
+    @include mixins.respond(xs) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: variables.$spacing-200;
+    }
+  }
+
+  &__amount {
+    @include mixins.flex(flex-start, flex-start);
+    flex-direction: column;
+    gap: variables.$spacing-100;
+
+    &--target {
+      text-align: right;
+
+      @include mixins.respond(xs) {
+        text-align: left;
+      }
+    }
+  }
+
+  &__amount-label {
+    font-size: variables.$font-size-preset-5;
+    color: variables.$color-grey-500;
+  }
+
+  &__amount-value {
+    font-size: variables.$font-size-preset-2;
+    font-weight: 700;
+    color: variables.$color-grey-900;
+
+    &--saved {
+      color: variables.$color-green;
+    }
+  }
+
+  &__progress-bar {
+    width: 100%;
+    height: 8px;
+    background: variables.$color-beige-100;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: variables.$spacing-200;
+  }
+
+  &__progress-fill {
+    height: 100%;
+    background: var(--pot-color, variables.$color-grey-900);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+
+    &--complete {
+      background: variables.$color-green;
+    }
+  }
+
+  &__progress-info {
+    @include mixins.flex(center, space-between);
+    font-size: variables.$font-size-preset-5;
+  }
+
+  &__percentage {
+    font-weight: 700;
+    color: variables.$color-grey-900;
+  }
+
+  &__remaining {
+    color: variables.$color-grey-500;
+  }
+
+  &__success {
+    @include mixins.flex(center, center);
+    gap: variables.$spacing-200;
+    padding: variables.$spacing-200;
+    background: #f0fdf4;
+    border: 1px solid #86efac;
+    border-radius: 8px;
+    margin-bottom: variables.$spacing-300;
+    color: variables.$color-green;
+    font-size: variables.$font-size-preset-5;
+    font-weight: 700;
+
+    svg {
+      flex-shrink: 0;
+    }
+  }
+
+  &__buttons {
+    @include mixins.flex(center, center);
+    gap: variables.$spacing-200;
+
+    @include mixins.respond(xs) {
+      flex-direction: column;
+
+      app-reusable-button {
+        width: 100%;
+      }
+    }
+  }
+}

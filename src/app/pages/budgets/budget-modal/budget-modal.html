@@ -1,0 +1,85 @@
+<app-reusable-modal
+  [isOpen]="isOpen()"
+  [title]="modalTitle()"
+  (close)="onClose()">
+
+  @if (error()) {
+    <div class="modal__error">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 5.33337V8.00004M8 10.6667H8.00667M14.6667 8.00004C14.6667 11.6819 11.6819 14.6667 8 14.6667C4.3181 14.6667 1.33333 11.6819 1.33333 8.00004C1.33333 4.31814 4.3181 1.33337 8 1.33337C11.6819 1.33337 14.6667 4.31814 14.6667 8.00004Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      {{ error() }}
+    </div>
+  }
+
+  <div class="modal__form">
+    <div class="modal__field">
+      <label class="modal__label">Category</label>
+      <select
+        class="modal__select"
+        [value]="category()"
+        [disabled]="isEditMode()"
+        (change)="onCategoryChange($any($event.target).value)">
+        <option value="">Select a category</option>
+        @for (cat of categories; track cat) {
+          <option [value]="cat">{{ cat }}</option>
+        }
+      </select>
+      @if (isEditMode()) {
+        <p class="modal__field-hint">Category cannot be changed after creation</p>
+      }
+    </div>
+
+    <div class="modal__field">
+      <label class="modal__label">Maximum Spend</label>
+      <div class="modal__input-wrapper">
+        <span class="modal__currency">{{ currency() === 'USD' ? '$' : '₾' }}</span>
+        <input
+          type="number"
+          class="modal__input"
+          placeholder="0.00"
+          step="0.01"
+          min="0"
+          [value]="maximum()"
+          (input)="onMaximumChange($any($event.target).value)">
+      </div>
+    </div>
+
+    <div class="modal__field">
+      <label class="modal__label">Theme</label>
+      <div class="modal__themes">
+        @for (theme of themeOptions; track theme.color) {
+          <button
+            type="button"
+            class="modal__theme"
+            [class.modal__theme--selected]="selectedTheme() === theme.color"
+            [style.background-color]="theme.color"
+            [title]="theme.name"
+            (click)="selectTheme(theme.color)">
+            @if (selectedTheme() === theme.color) {
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M13.3333 4L6 11.3333L2.66667 8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            }
+          </button>
+        }
+      </div>
+    </div>
+  </div>
+
+  <div modal-footer class="modal__footer">
+    <app-reusable-button
+      text="Cancel"
+      [variant]="'outlined'"
+      [size]="'medium'"
+      (click)="onClose()">
+    </app-reusable-button>
+    <app-reusable-button
+      [text]="isEditMode() ? 'Update Budget' : 'Add Budget'"
+      [variant]="'primary'"
+      [size]="'medium'"
+      [disabled]="isSubmitting()"
+      (click)="onSubmit()">
+    </app-reusable-button>
+  </div>
+</app-reusable-modal>

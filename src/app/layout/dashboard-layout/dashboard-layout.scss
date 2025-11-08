@@ -9,7 +9,7 @@
   background-color: variables.$color-beige-100;
 
   &__content {
-    padding: 24px 16px 70px 16px;
+    padding: 24px 16px 70px 10px;
   }
 
   @include mixins.respond(sm)  {

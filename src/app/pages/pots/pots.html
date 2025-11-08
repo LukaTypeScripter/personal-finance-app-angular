@@ -1,0 +1,75 @@
+<div class="pots">
+  <div class="pots__header">
+    <h1 class="pots__title">Pots</h1>
+    <app-reusable-button
+      text="+ Add New Pot"
+      [variant]="'primary'"
+      [size]="'medium'"
+      (click)="openAddPotModal()">
+    </app-reusable-button>
+  </div>
+
+  <div class="pots__content">
+    @if (pots().length === 0) {
+      <div class="pots__empty-state">
+        <p class="pots__empty-text">No pots yet.</p>
+        <p class="pots__empty-subtext">Start saving by creating your first pot.</p>
+        <app-reusable-button
+          text="Create Pot"
+          [variant]="'primary'"
+          [size]="'medium'"
+          (click)="openAddPotModal()">
+        </app-reusable-button>
+      </div>
+    } @else {
+      <div class="pots__grid">
+        @for (pot of pots(); track pot.id) {
+          <app-pot-item
+            [pot]="pot"
+            [currency]="currency()"
+            (edit)="onPotEdit(pot)"
+            (delete)="onPotDelete(pot.id!)"
+            (addMoney)="onAddMoney(pot)"
+            (withdrawMoney)="onWithdrawMoney(pot)">
+          </app-pot-item>
+        }
+      </div>
+    }
+  </div>
+
+  <!-- Pot Modal -->
+  <app-pot-modal
+    [isOpen]="isPotModalOpen()"
+    [pot]="selectedPot()"
+    [currency]="currency()"
+    (close)="closePotModal()"
+    (success)="onPotSuccess()">
+  </app-pot-modal>
+
+  <!-- Add Money Modal -->
+  <app-add-money-modal
+    [isOpen]="isAddMoneyModalOpen()"
+    [pot]="selectedPot()"
+    [currency]="currency()"
+    (close)="closeAddMoneyModal()"
+    (success)="onMoneySuccess()">
+  </app-add-money-modal>
+
+  <!-- Withdraw Money Modal -->
+  <app-withdraw-money-modal
+    [isOpen]="isWithdrawMoneyModalOpen()"
+    [pot]="selectedPot()"
+    [currency]="currency()"
+    (close)="closeWithdrawMoneyModal()"
+    (success)="onMoneySuccess()">
+  </app-withdraw-money-modal>
+
+  <!-- Delete Confirmation Modal -->
+  <app-delete-confirmation-modal
+    [isOpen]="isDeleteModalOpen()"
+    [itemName]="potToDelete()?.name || ''"
+    [itemType]="'pot'"
+    (close)="closeDeleteModal()"
+    (confirm)="confirmDelete()">
+  </app-delete-confirmation-modal>
+</div>

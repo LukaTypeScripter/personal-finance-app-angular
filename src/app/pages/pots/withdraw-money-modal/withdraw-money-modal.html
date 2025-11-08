@@ -1,0 +1,65 @@
+<app-reusable-modal
+  [isOpen]="isOpen()"
+  [title]="'Withdraw from ' + (pot()?.name || 'Pot')"
+  [maxWidth]="'480px'"
+  (close)="onClose()">
+
+  @if (error()) {
+    <div class="money-modal__error">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 5.33337V8.00004M8 10.6667H8.00667M14.6667 8.00004C14.6667 11.6819 11.6819 14.6667 8 14.6667C4.3181 14.6667 1.33333 11.6819 1.33333 8.00004C1.33333 4.31814 4.3181 1.33337 8 1.33337C11.6819 1.33337 14.6667 4.31814 14.6667 8.00004Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      {{ error() }}
+    </div>
+  }
+
+  <div class="money-modal__info">
+    <div class="money-modal__row">
+      <span class="money-modal__label">Current Total</span>
+      <span class="money-modal__value">{{ currencySymbol() }}{{ (pot()?.total ?? 0).toFixed(2) }}</span>
+    </div>
+  </div>
+
+  <div class="money-modal__field">
+    <label class="money-modal__label">Amount to Withdraw</label>
+    <div class="money-modal__input-wrapper">
+      <span class="money-modal__currency">{{ currencySymbol() }}</span>
+      <input
+        type="number"
+        class="money-modal__input"
+        placeholder="0.00"
+        step="0.01"
+        min="0"
+        [max]="pot()?.total || 0"
+        [value]="amount()"
+        (input)="onAmountChange($any($event.target).value)">
+    </div>
+  </div>
+
+  @if (amount() > 0) {
+    <div class="money-modal__summary money-modal__summary--warning">
+      <div class="money-modal__row">
+        <span class="money-modal__label">New Total</span>
+        <span class="money-modal__value money-modal__value--highlight">
+          {{ currencySymbol() }}{{ newTotal().toFixed(2) }}
+        </span>
+      </div>
+    </div>
+  }
+
+  <div modal-footer class="money-modal__footer">
+    <app-reusable-button
+      text="Cancel"
+      [variant]="'outlined'"
+      [size]="'medium'"
+      (click)="onClose()">
+    </app-reusable-button>
+    <app-reusable-button
+      text="Confirm Withdrawal"
+      [variant]="'primary'"
+      [size]="'medium'"
+      [disabled]="isSubmitting() || amount() <= 0"
+      (click)="onSubmit()">
+    </app-reusable-button>
+  </div>
+</app-reusable-modal>

@@ -1,0 +1,101 @@
+@use "@/assets/styles/_variables.scss";
+@use "@/assets/styles/_mixins.scss";
+
+.budgets {
+  &__header {
+    @include mixins.flex(center, space-between);
+    margin-bottom: variables.$spacing-400;
+
+    @include mixins.respond(xs) {
+      flex-direction: column;
+      gap: variables.$spacing-300;
+      align-items: flex-start;
+    }
+  }
+
+  &__title {
+    font-size: variables.$font-size-preset-1;
+    font-weight: 700;
+    color: variables.$color-grey-900;
+    margin: 0;
+  }
+
+  &__content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: variables.$spacing-400;
+
+    @include mixins.respond(md) {
+      grid-template-columns: 1fr 1.5fr;
+    }
+  }
+
+  &__chart-section {
+    @include mixins.card();
+
+    & {
+      display: flex;
+      flex-direction: column;
+      gap: variables.$spacing-400;
+    }
+  }
+
+  &__chart-container {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+    aspect-ratio: 1;
+  }
+
+  &__chart-info {
+    text-align: center;
+  }
+
+  &__chart-title {
+    font-size: variables.$font-size-preset-3;
+    font-weight: 700;
+    color: variables.$color-grey-900;
+    margin-bottom: variables.$spacing-200;
+  }
+
+  &__chart-description {
+    font-size: variables.$font-size-preset-5;
+    color: variables.$color-grey-500;
+    line-height: 1.5;
+  }
+
+  &__list-section {
+    @include mixins.card();
+  }
+
+  &__list-title {
+    font-size: variables.$font-size-preset-2;
+    font-weight: 700;
+    color: variables.$color-grey-900;
+    margin-bottom: variables.$spacing-400;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: variables.$spacing-300;
+  }
+
+  &__empty-state {
+    padding: variables.$spacing-500;
+    text-align: center;
+  }
+
+  &__empty-text {
+    font-size: variables.$font-size-preset-3;
+    font-weight: 700;
+    color: variables.$color-grey-900;
+    margin-bottom: variables.$spacing-200;
+  }
+
+  &__empty-subtext {
+    font-size: variables.$font-size-preset-4;
+    color: variables.$color-grey-500;
+    margin-bottom: variables.$spacing-400;
+  }
+}

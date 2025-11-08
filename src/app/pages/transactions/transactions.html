@@ -20,6 +20,7 @@
           [iconOnly]="true"
           [variant]="'ghost'"
           [size]="'small'"
+          (click)="openSortSheet()"
           class="transaction__content-button transaction__content-button--mobile">
         </app-reusable-button>
 
@@ -28,6 +29,7 @@
           [iconOnly]="true"
           [variant]="'ghost'"
           [size]="'small'"
+          (click)="openCategorySheet()"
           class="transaction__content-button transaction__content-button--mobile">
         </app-reusable-button>
 
@@ -114,5 +116,25 @@
       </div>
     }
   </div>
+
+  <!-- Sort Bottom Sheet -->
+  <app-reusable-bottom-sheet
+    title="Sort by"
+    [options]="sortOptions"
+    [selectedValue]="selectedSort"
+    [isOpen]="isSortSheetOpen"
+    (selectionChange)="onMobileSortChange($event)"
+    (closeSheet)="closeSortSheet()">
+  </app-reusable-bottom-sheet>
+
+  <!-- Category Bottom Sheet -->
+  <app-reusable-bottom-sheet
+    title="Category"
+    [options]="categoryOptions"
+    [selectedValue]="selectedCategory"
+    [isOpen]="isCategorySheetOpen"
+    (selectionChange)="onMobileCategoryChange($event)"
+    (closeSheet)="closeCategorySheet()">
+  </app-reusable-bottom-sheet>
 
 </div>

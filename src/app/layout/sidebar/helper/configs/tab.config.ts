@@ -21,7 +21,7 @@ export const tabConfig = [
         icon: 'icon-nav-budgets.svg',
         fill: '#b3b3b3',
         fillActive: 'hsl(177, 52%, 32%)',
-        route: '/budgets'
+        route: '/dashboard/budgets'
     },
     {
         id: 4,
@@ -29,7 +29,7 @@ export const tabConfig = [
         icon: 'icon-nav-pots.svg',
         fill: '#b3b3b3',
         fillActive: 'hsl(177, 52%, 32%)',
-        route: '/pots'
+        route: '/dashboard/pots'
     },
     {
         id: 5,

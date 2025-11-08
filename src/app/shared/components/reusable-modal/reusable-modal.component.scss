@@ -1,0 +1,100 @@
+@use "@/assets/styles/_variables.scss";
+@use "@/assets/styles/_mixins.scss";
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border-radius: 12px;
+  z-index: 1001;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideIn 0.3s ease-out;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+  @include mixins.respond(xs) {
+    width: 95%;
+    max-width: none;
+  }
+
+  &__header {
+    @include mixins.flex(center, space-between);
+    padding: variables.$spacing-400;
+    border-bottom: 1px solid variables.$color-beige-500;
+  }
+
+  &__title {
+    font-size: variables.$font-size-preset-2;
+    font-weight: 700;
+    color: variables.$color-grey-900;
+    margin: 0;
+  }
+
+  &__close {
+    @include mixins.flex(center, center);
+    width: 32px;
+    height: 32px;
+    background: none;
+    border: none;
+    border-radius: 8px;
+    color: variables.$color-grey-500;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      background: variables.$color-beige-100;
+      color: variables.$color-grey-900;
+    }
+
+    svg {
+      display: block;
+    }
+  }
+
+  &__body {
+    padding: variables.$spacing-400;
+  }
+
+  &__footer {
+    padding: variables.$spacing-400;
+    border-top: 1px solid variables.$color-beige-500;
+
+    &:empty {
+      display: none;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
