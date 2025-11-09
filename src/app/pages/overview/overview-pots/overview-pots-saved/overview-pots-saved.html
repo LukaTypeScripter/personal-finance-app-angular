@@ -4,7 +4,7 @@
         <!-- -->
         <div class="overview-pots-saved__content-info">
             <p class="overview-pots-saved__content-title">{{ 'overview.pots.totalSaved' | translate }}</p>
-            <p class="overview-pots-saved__content-amount">$100</p>
+            <p class="overview-pots-saved__content-amount">{{ totalSaved() | currencyFormat: currency() }}</p>
         </div>
     </div>
 </div>
