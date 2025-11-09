@@ -40,7 +40,6 @@ export class WithdrawMoneyModal {
     const num = parseFloat(value);
     this.amount.set(isNaN(num) || num < 0 ? 0 : num);
 
-    // Clear error when amount changes
     if (this.error()) {
       this.error.set(null);
     }

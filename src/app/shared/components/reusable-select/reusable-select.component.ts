@@ -124,7 +124,6 @@ export class ReusableSelect implements ControlValueAccessor {
 
   value: string = '';
 
-  // ControlValueAccessor implementation
   onChange: any = () => {};
   onTouched: any = () => {};
 

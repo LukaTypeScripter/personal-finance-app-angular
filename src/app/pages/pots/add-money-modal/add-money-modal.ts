@@ -67,7 +67,6 @@ export class AddMoneyModal {
       return;
     }
 
-    // Validate that total won't exceed target
     if (this.newTotal() > pot.target) {
       this.error.set(this.translate.instant('errors.exceedsTarget', {
         maxAmount: this.currencySymbol() + this.remainingToTarget().toFixed(2)

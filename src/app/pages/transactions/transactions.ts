@@ -35,7 +35,6 @@ export class Transactions implements OnInit {
   public currency = this.api.currency;
 
   ngOnInit(): void {
-    // Transaction page only needs transactions
     this.loadTransactionsWithFilters();
   }
 
