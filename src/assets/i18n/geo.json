@@ -1,0 +1,238 @@
+{
+  "common": {
+    "cancel": "გაუქმება",
+    "delete": "წაშლა",
+    "edit": "რედაქტირება",
+    "add": "დამატება",
+    "update": "განახლება",
+    "confirm": "დადასტურება",
+    "viewAll": "ყველას ნახვა",
+    "seeDetails": "დეტალების ნახვა",
+    "currency": "ვალუტა",
+    "theme": "თემა",
+    "category": "კატეგორია"
+  },
+  "categories": {
+    "all": "ყველა ტრანზაქცია",
+    "entertainment": "გასართობი",
+    "bills": "გადასახდელები",
+    "groceries": "სასურსათო",
+    "diningOut": "რესტორნები",
+    "transportation": "ტრანსპორტი",
+    "personalCare": "პირადი მოვლა",
+    "education": "განათლება",
+    "lifestyle": "ცხოვრების წესი",
+    "shopping": "შოპინგი",
+    "general": "ზოგადი"
+  },
+  "sortOptions": {
+    "latest": "უახლესი",
+    "oldest": "უძველესი",
+    "aToZ": "ა-დან ჰ-მდე",
+    "zToA": "ჰ-დან ა-მდე",
+    "highest": "უმაღლესი",
+    "lowest": "უდაბლესი"
+  },
+  "themes": {
+    "green": "მწვანე",
+    "yellow": "ყვითელი",
+    "cyan": "ციანი",
+    "navy": "მუქი ლურჯი",
+    "red": "წითელი",
+    "purple": "იისფერი",
+    "turquoise": "ფირუზისფერი",
+    "brown": "ყავისფერი",
+    "magenta": "მაგენტა",
+    "blue": "ლურჯი",
+    "grey": "რუხი",
+    "armyGreen": "სამხედრო მწვანე",
+    "pink": "ვარდისფერი",
+    "gold": "ოქროსფერი",
+    "orange": "ნარინჯისფერი"
+  },
+  "errors": {
+    "fillAllFields": "გთხოვთ შეავსოთ ყველა ველი სწორად",
+    "validAmount": "გთხოვთ შეიყვანოთ სწორი თანხა",
+    "invalidPot": "არასწორი ქოთანი",
+    "exceedsTarget": "ჯამი არ შეიძლება აღემატებოდეს სამიზნეს. მაქსიმალური თანხა რომელიც შეგიძლიათ დაამატოთ არის {{maxAmount}}",
+    "exceedsAvailable": "ამოსაღები თანხა აღემატება ხელმისაწვდომ თანხას",
+    "createBudgetFailed": "ბიუჯეტის შექმნა ვერ მოხერხდა. გთხოვთ სცადოთ თავიდან.",
+    "updateBudgetFailed": "ბიუჯეტის განახლება ვერ მოხერხდა. გთხოვთ სცადოთ თავიდან.",
+    "addMoneyFailed": "თანხის დამატება ვერ მოხერხდა. გთხოვთ სცადოთ თავიდან.",
+    "withdrawMoneyFailed": "თანხის ამოღება ვერ მოხერხდა. გთხოვთ სცადოთ თავიდან.",
+    "registrationFailed": "რეგისტრაცია ვერ მოხერხდა",
+    "loginFailed": "შესვლა ვერ მოხერხდა"
+  },
+  "navigation": {
+    "overview": "მიმოხილვა",
+    "transactions": "ტრანზაქციები",
+    "budgets": "ბიუჯეტები",
+    "pots": "ქოთნები",
+    "recurringBills": "განმეორებადი გადახდები",
+    "logout": "გასვლა",
+    "minimizeMenu": "მენიუს ჩაკეცვა"
+  },
+  "auth": {
+    "login": {
+      "title": "შესვლა",
+      "email": "ელ. ფოსტა",
+      "password": "პაროლი",
+      "loginButton": "შესვლა",
+      "needAccount": "გჭირდებათ ანგარიშის შექმნა?",
+      "signUp": "რეგისტრაცია",
+      "justBrowsing": "უბრალოდ ათვალიერებთ?",
+      "loginDemo": "დემო ანგარიშით შესვლა"
+    },
+    "register": {
+      "title": "რეგისტრაცია",
+      "name": "სახელი",
+      "email": "ელ. ფოსტა",
+      "password": "პაროლი",
+      "repeatPassword": "გაიმეორეთ პაროლი",
+      "currency": "ვალუტა",
+      "createAccount": "ანგარიშის შექმნა",
+      "alreadyHaveAccount": "უკვე გაქვთ ანგარიში?",
+      "login": "შესვლა"
+    },
+    "validation": {
+      "required": "ეს ველი აუცილებელია!",
+      "emailFormat": "არასწორი ელ. ფოსტის ფორმატი!",
+      "minLength": "უნდა იყოს მინიმუმ {{length}} სიმბოლო",
+      "passwordMinLength": "პაროლი უნდა იყოს მინიმუმ {{length}} სიმბოლო",
+      "nameMinLength": "სახელი უნდა იყოს მინიმუმ {{length}} სიმბოლო",
+      "passwordMismatch": "პაროლები არ ემთხვევა!"
+    }
+  },
+  "overview": {
+    "title": "მიმოხილვა",
+    "currentBalance": "ამჟამინდელი ბალანსი",
+    "income": "შემოსავალი",
+    "expenses": "ხარჯები",
+    "pots": {
+      "title": "ქოთნები",
+      "totalSaved": "სულ დაზოგილი"
+    },
+    "budgets": {
+      "title": "ბიუჯეტები"
+    },
+    "transactions": {
+      "title": "ტრანზაქციები"
+    },
+    "recurringBills": {
+      "title": "განმეორებადი გადახდები",
+      "paid": "გადახდილი",
+      "upcoming": "მომავალი",
+      "total": "სულ"
+    }
+  },
+  "transactions": {
+    "title": "ტრანზაქციები",
+    "searchPlaceholder": "ტრანზაქციის ძებნა",
+    "sortBy": "დალაგება",
+    "category": "კატეგორია",
+    "previousPage": "წინა გვერდი",
+    "nextPage": "შემდეგი გვერდი",
+    "emptyState": {
+      "noMatches": "თქვენი ფილტრებით შესაბამისი ტრანზაქციები ვერ მოიძებნა.",
+      "tryAdjusting": "სცადეთ თქვენი ძებნის ან ფილტრების შეცვლა.",
+      "noTransactions": "ჯერ არ არის ტრანზაქციები.",
+      "startAdding": "დაიწყეთ თქვენი პირველი ტრანზაქციის დამატებით."
+    }
+  },
+  "budgets": {
+    "title": "ბიუჯეტები",
+    "addNewBudget": "+ ახალი ბიუჯეტის დამატება",
+    "spendingSummary": "ხარჯების შეჯამება",
+    "spendingDescription": "იხილეთ თქვენი ხარჯების დაშლა კატეგორიების მიხედვით და თვალყური ადევნეთ ბიუჯეტის ლიმიტებს.",
+    "budgetCategories": "ბიუჯეტის კატეგორიები",
+    "emptyState": {
+      "noBudgets": "ჯერ არ არის ბიუჯეტები.",
+      "startCreating": "დაიწყეთ თქვენი პირველი ბიუჯეტის შექმნით ხარჯების თვალყურის დევნებისთვის.",
+      "createBudget": "ბიუჯეტის შექმნა"
+    },
+    "item": {
+      "maximumOf": "მაქსიმუმ",
+      "spent": "დახარჯული",
+      "remaining": "დარჩენილი",
+      "exceeded": "თქვენ გადააჭარბეთ ბიუჯეტის ლიმიტს!",
+      "editBudget": "ბიუჯეტის რედაქტირება",
+      "deleteBudget": "ბიუჯეტის წაშლა"
+    },
+    "modal": {
+      "editBudgetTitle": "ბიუჯეტის რედაქტირება",
+      "addBudgetTitle": "ახალი ბიუჯეტის დამატება",
+      "category": "კატეგორია",
+      "selectCategory": "აირჩიეთ კატეგორია",
+      "categoryHint": "კატეგორია ვერ შეიცვლება შექმნის შემდეგ",
+      "maximumSpend": "მაქსიმალური ხარჯი",
+      "amountPlaceholder": "0.00",
+      "theme": "თემა",
+      "addBudget": "ბიუჯეტის დამატება",
+      "updateBudget": "ბიუჯეტის განახლება"
+    }
+  },
+  "pots": {
+    "title": "ქოთნები",
+    "addNewPot": "+ ახალი ქოთნის დამატება",
+    "emptyState": {
+      "noPots": "ჯერ არ არის ქოთნები.",
+      "startSaving": "დაიწყეთ დაზოგვა თქვენი პირველი ქოთნის შექმნით.",
+      "createPot": "ქოთნის შექმნა"
+    },
+    "item": {
+      "totalSaved": "სულ დაზოგილი",
+      "target": "სამიზნე",
+      "leftToTarget": "% დარჩენილია სამიზნემდე",
+      "targetReached": "სამიზნე მიღწეულია!",
+      "addMoney": "+ თანხის დამატება",
+      "withdraw": "ამოღება",
+      "editPot": "ქოთნის რედაქტირება",
+      "deletePot": "ქოთნის წაშლა"
+    },
+    "modal": {
+      "potName": "ქოთნის სახელი",
+      "potNamePlaceholder": "მაგ. საკანაციო ფონდი",
+      "potNameHint": "ქოთნის სახელი ვერ შეიცვლება შექმნის შემდეგ",
+      "targetAmount": "სამიზნე თანხა",
+      "amountPlaceholder": "0.00",
+      "theme": "თემა",
+      "addPot": "ქოთნის დამატება",
+      "updatePot": "ქოთნის განახლება"
+    },
+    "addMoney": {
+      "title": "თანხის დამატება",
+      "defaultTitle": "ქოთანში",
+      "currentTotal": "ამჟამინდელი ჯამი",
+      "target": "სამიზნე",
+      "amountToAdd": "დასამატებელი თანხა",
+      "amountPlaceholder": "0.00",
+      "newTotal": "ახალი ჯამი",
+      "remainingToTarget": "დარჩენილია სამიზნემდე",
+      "reachTarget": "მიაღწევთ თქვენს სამიზნეს!",
+      "confirmAddition": "დამატების დადასტურება"
+    },
+    "withdraw": {
+      "title": "ამოღება",
+      "defaultTitle": "ქოთნიდან",
+      "currentTotal": "ამჟამინდელი ჯამი",
+      "amountToWithdraw": "ამოსაღები თანხა",
+      "amountPlaceholder": "0.00",
+      "newTotal": "ახალი ჯამი",
+      "confirmWithdrawal": "ამოღების დადასტურება"
+    }
+  },
+  "deleteConfirmation": {
+    "title": "დარწმუნებული ხართ, რომ გსურთ წაშლა",
+    "description": "ეს {{itemType}} სამუდამოდ წაიშლება. ეს მოქმედება შეუქცევადია.",
+    "cancel": "გაუქმება",
+    "delete": "წაშლა"
+  },
+  "altText": {
+    "logo": "ლოგო",
+    "avatar": "ავატარი",
+    "potsSaved": "ქოთნები-დაზოგილი",
+    "add": "დამატება",
+    "previousPage": "წინა გვერდი",
+    "nextPage": "შემდეგი გვერდი"
+  }
+}

@@ -9,6 +9,7 @@ import { AuthService } from '@/app/core/service/auth.service';
 import {passwordMatchValidator} from '@/app/pages/auth/auth-register/helper/functions/password-match.function';
 import {validateFormControl} from '@/app/core/functions/validate-form-control.function';
 import {Navigation} from '@/app/shared/service/navigation';
+import {TranslateModule} from '@ngx-translate/core';
 
 
 
@@ -20,6 +21,7 @@ import {Navigation} from '@/app/shared/service/navigation';
     ReusableButton,
     ReusableSelect,
     ReactiveFormsModule,
+    TranslateModule,
   ],
   templateUrl: './auth-register.html',
   styleUrl: './auth-register.scss',

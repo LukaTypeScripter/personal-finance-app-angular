@@ -1,10 +1,11 @@
 import {Component, computed, inject, input} from '@angular/core';
 import {Navigation} from '@/app/shared/service/navigation';
 import {AuthService} from '@/app/core/service/auth.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-auth-card',
-  imports: [],
+  imports: [TranslateModule],
   templateUrl: './auth-card.html',
   styleUrl: './auth-card.scss'
 })

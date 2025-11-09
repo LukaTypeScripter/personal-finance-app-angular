@@ -1,18 +1,18 @@
 @let loginFormGroup = loginForm;
 
-<app-auth-card [title]="'Login'">
+<app-auth-card [title]="'auth.login.title' | translate">
   <form ngProjectAs="[body]" class="auth-login" [formGroup]="loginFormGroup" (ngSubmit)="onSubmit()">
     <div class="auth-login__fields">
       <app-reusable-input
         formControlName="email"
-        [label]="'Email'"
+        [label]="'auth.login.email' | translate"
         [placeholder]="''"
         [errorMessage]="[{
-        message:'this field is required!',
+        message: 'auth.validation.required' | translate,
         isVisible:validateFormControl(loginFormGroup,'email','required')
        },
        {
-        message:'incorrect email format!',
+        message: 'auth.validation.emailFormat' | translate,
         isVisible:validateFormControl(loginFormGroup,'email','email')
        }
        ]"
@@ -20,16 +20,16 @@
       <app-reusable-input
         formControlName="password"
         [type]="'password'"
-        [label]="'Password'"
+        [label]="'auth.login.password' | translate"
         [iconPosition]="'right'"
         [iconName]="'icon-show-password'"
         [placeholder]="''"
         [errorMessage]="[{
-        message:'this field is required!',
+        message: 'auth.validation.required' | translate,
         isVisible:validateFormControl(loginFormGroup,'password','required')
        },
        {
-        message:`password must be at least ${loginFormGroup.get('password')?.errors?.['minlength']?.requiredLength} characters`,
+        message: ('auth.validation.passwordMinLength' | translate:{length: loginFormGroup.get('password')?.errors?.['minlength']?.requiredLength}),
         isVisible:validateFormControl(loginFormGroup,'password','minlength')
        }
        ]"
@@ -38,7 +38,7 @@
     </div>
 
     <app-reusable-button
-      [text]="'Login'"
+      [text]="'auth.login.loginButton' | translate"
       [type]="'submit'"
       [variant]="'primary'"
       [fullWidth]="true"

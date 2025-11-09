@@ -1,7 +1,7 @@
 export const tabConfig = [
     {
         id: 1,
-        name: 'Overview',
+        nameKey: 'navigation.overview',
         icon: 'icon-nav-overview.svg',
         fill: '#b3b3b3',
         fillActive: 'hsl(177, 52%, 32%)',
@@ -9,7 +9,7 @@ export const tabConfig = [
     },
     {
         id: 2,
-        name: 'Transactions',
+        nameKey: 'navigation.transactions',
         icon: 'icon-nav-transactions.svg',
         fill: '#b3b3b3',
         fillActive: 'hsl(177, 52%, 32%)',
@@ -17,7 +17,7 @@ export const tabConfig = [
     },
     {
         id: 3,
-        name: 'Budgets',
+        nameKey: 'navigation.budgets',
         icon: 'icon-nav-budgets.svg',
         fill: '#b3b3b3',
         fillActive: 'hsl(177, 52%, 32%)',
@@ -25,18 +25,18 @@ export const tabConfig = [
     },
     {
         id: 4,
-        name: 'Pots',
+        nameKey: 'navigation.pots',
         icon: 'icon-nav-pots.svg',
         fill: '#b3b3b3',
         fillActive: 'hsl(177, 52%, 32%)',
         route: '/dashboard/pots'
     },
-    {
-        id: 5,
-        name: 'Recurring Bills',
-        icon: 'icon-nav-recurring-bills.svg',
-        fill: '#b3b3b3',
-        fillActive: 'hsl(177, 52%, 32%)',
-        route: '/recurring-bills'
-    },
+    // {
+    //     id: 5,
+    //     nameKey: 'navigation.recurringBills',
+    //     icon: 'icon-nav-recurring-bills.svg',
+    //     fill: '#b3b3b3',
+    //     fillActive: 'hsl(177, 52%, 32%)',
+    //     route: '/recurring-bills'
+    // },
 ]

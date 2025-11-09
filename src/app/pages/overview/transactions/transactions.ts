@@ -2,10 +2,11 @@ import {Component, computed, inject} from '@angular/core';
 import {CardHeader} from '@/app/shared/components/card-header/card-header';
 import {TransactionHistoryItem} from './transaction-history-item/transaction-history-item';
 import {Api} from '@/app/shared/service/api';
+import {TranslateModule} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-overview-transactions',
-  imports: [CardHeader, TransactionHistoryItem],
+  imports: [CardHeader, TransactionHistoryItem, TranslateModule],
   templateUrl: './transactions.html',
   styleUrl: './transactions.scss'
 })

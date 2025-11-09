@@ -1,0 +1,238 @@
+{
+  "common": {
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "update": "Update",
+    "confirm": "Confirm",
+    "viewAll": "View All",
+    "seeDetails": "See Details",
+    "currency": "Currency",
+    "theme": "Theme",
+    "category": "Category"
+  },
+  "categories": {
+    "all": "All Transactions",
+    "entertainment": "Entertainment",
+    "bills": "Bills",
+    "groceries": "Groceries",
+    "diningOut": "Dining Out",
+    "transportation": "Transportation",
+    "personalCare": "Personal Care",
+    "education": "Education",
+    "lifestyle": "Lifestyle",
+    "shopping": "Shopping",
+    "general": "General"
+  },
+  "sortOptions": {
+    "latest": "Latest",
+    "oldest": "Oldest",
+    "aToZ": "A to Z",
+    "zToA": "Z to A",
+    "highest": "Highest",
+    "lowest": "Lowest"
+  },
+  "themes": {
+    "green": "Green",
+    "yellow": "Yellow",
+    "cyan": "Cyan",
+    "navy": "Navy",
+    "red": "Red",
+    "purple": "Purple",
+    "turquoise": "Turquoise",
+    "brown": "Brown",
+    "magenta": "Magenta",
+    "blue": "Blue",
+    "grey": "Grey",
+    "armyGreen": "Army Green",
+    "pink": "Pink",
+    "gold": "Gold",
+    "orange": "Orange"
+  },
+  "errors": {
+    "fillAllFields": "Please fill in all fields correctly",
+    "validAmount": "Please enter a valid amount",
+    "invalidPot": "Invalid pot",
+    "exceedsTarget": "Total cannot exceed target. Maximum amount you can add is {{maxAmount}}",
+    "exceedsAvailable": "Withdrawal amount exceeds available funds",
+    "createBudgetFailed": "Failed to create budget. Please try again.",
+    "updateBudgetFailed": "Failed to update budget. Please try again.",
+    "addMoneyFailed": "Failed to add money. Please try again.",
+    "withdrawMoneyFailed": "Failed to withdraw money. Please try again.",
+    "registrationFailed": "Registration failed",
+    "loginFailed": "Login failed"
+  },
+  "navigation": {
+    "overview": "Overview",
+    "transactions": "Transactions",
+    "budgets": "Budgets",
+    "pots": "Pots",
+    "recurringBills": "Recurring Bills",
+    "logout": "Log out",
+    "minimizeMenu": "Minimize Menu"
+  },
+  "auth": {
+    "login": {
+      "title": "Login",
+      "email": "Email",
+      "password": "Password",
+      "loginButton": "Login",
+      "needAccount": "Need to create an account?",
+      "signUp": "Sign Up",
+      "justBrowsing": "Just browsing?",
+      "loginDemo": "Login with demo"
+    },
+    "register": {
+      "title": "Sign up",
+      "name": "Name",
+      "email": "Email",
+      "password": "Password",
+      "repeatPassword": "Repeat Password",
+      "currency": "Currency",
+      "createAccount": "Create Account",
+      "alreadyHaveAccount": "Already have an account?",
+      "login": "login"
+    },
+    "validation": {
+      "required": "this field is required!",
+      "emailFormat": "incorrect email format!",
+      "minLength": "must be at least {{length}} characters",
+      "passwordMinLength": "password must be at least {{length}} characters",
+      "nameMinLength": "name must be at least {{length}} characters",
+      "passwordMismatch": "passwords do not match!"
+    }
+  },
+  "overview": {
+    "title": "Overview",
+    "currentBalance": "Current Balance",
+    "income": "Income",
+    "expenses": "Expenses",
+    "pots": {
+      "title": "Pots",
+      "totalSaved": "Total Saved"
+    },
+    "budgets": {
+      "title": "Budgets"
+    },
+    "transactions": {
+      "title": "Transactions"
+    },
+    "recurringBills": {
+      "title": "Recurring Bills",
+      "paid": "Paid",
+      "upcoming": "Upcoming",
+      "total": "Total"
+    }
+  },
+  "transactions": {
+    "title": "Transactions",
+    "searchPlaceholder": "Search transaction",
+    "sortBy": "Sort by",
+    "category": "Category",
+    "previousPage": "Previous page",
+    "nextPage": "Next page",
+    "emptyState": {
+      "noMatches": "No transactions found matching your filters.",
+      "tryAdjusting": "Try adjusting your search or filters.",
+      "noTransactions": "No transactions yet.",
+      "startAdding": "Start by adding your first transaction."
+    }
+  },
+  "budgets": {
+    "title": "Budgets",
+    "addNewBudget": "+ Add New Budget",
+    "spendingSummary": "Spending Summary",
+    "spendingDescription": "See your spending breakdown by category and track your budget limits.",
+    "budgetCategories": "Budget Categories",
+    "emptyState": {
+      "noBudgets": "No budgets yet.",
+      "startCreating": "Start by creating your first budget to track spending.",
+      "createBudget": "Create Budget"
+    },
+    "item": {
+      "maximumOf": "Maximum of",
+      "spent": "Spent",
+      "remaining": "Remaining",
+      "exceeded": "You've exceeded your budget limit!",
+      "editBudget": "Edit budget",
+      "deleteBudget": "Delete budget"
+    },
+    "modal": {
+      "editBudgetTitle": "Edit Budget",
+      "addBudgetTitle": "Add New Budget",
+      "category": "Category",
+      "selectCategory": "Select a category",
+      "categoryHint": "Category cannot be changed after creation",
+      "maximumSpend": "Maximum Spend",
+      "amountPlaceholder": "0.00",
+      "theme": "Theme",
+      "addBudget": "Add Budget",
+      "updateBudget": "Update Budget"
+    }
+  },
+  "pots": {
+    "title": "Pots",
+    "addNewPot": "+ Add New Pot",
+    "emptyState": {
+      "noPots": "No pots yet.",
+      "startSaving": "Start saving by creating your first pot.",
+      "createPot": "Create Pot"
+    },
+    "item": {
+      "totalSaved": "Total Saved",
+      "target": "Target",
+      "leftToTarget": "% left to target",
+      "targetReached": "Target reached!",
+      "addMoney": "+ Add Money",
+      "withdraw": "Withdraw",
+      "editPot": "Edit pot",
+      "deletePot": "Delete pot"
+    },
+    "modal": {
+      "potName": "Pot Name",
+      "potNamePlaceholder": "e.g. Vacation Fund",
+      "potNameHint": "Pot name cannot be changed after creation",
+      "targetAmount": "Target Amount",
+      "amountPlaceholder": "0.00",
+      "theme": "Theme",
+      "addPot": "Add Pot",
+      "updatePot": "Update Pot"
+    },
+    "addMoney": {
+      "title": "Add Money to",
+      "defaultTitle": "Pot",
+      "currentTotal": "Current Total",
+      "target": "Target",
+      "amountToAdd": "Amount to Add",
+      "amountPlaceholder": "0.00",
+      "newTotal": "New Total",
+      "remainingToTarget": "Remaining to Target",
+      "reachTarget": "You'll reach your target!",
+      "confirmAddition": "Confirm Addition"
+    },
+    "withdraw": {
+      "title": "Withdraw from",
+      "defaultTitle": "Pot",
+      "currentTotal": "Current Total",
+      "amountToWithdraw": "Amount to Withdraw",
+      "amountPlaceholder": "0.00",
+      "newTotal": "New Total",
+      "confirmWithdrawal": "Confirm Withdrawal"
+    }
+  },
+  "deleteConfirmation": {
+    "title": "Are you sure you want to delete",
+    "description": "This {{itemType}} will be permanently deleted. This action cannot be undone.",
+    "cancel": "Cancel",
+    "delete": "Delete"
+  },
+  "altText": {
+    "logo": "logo",
+    "avatar": "avatar",
+    "potsSaved": "pots-saved",
+    "add": "add",
+    "previousPage": "Previous page",
+    "nextPage": "Next page"
+  }
+}

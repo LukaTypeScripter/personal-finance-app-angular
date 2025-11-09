@@ -6,9 +6,10 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { filter } from 'rxjs';
 import {Navigation} from '@/app/shared/service/navigation';
 import {AuthService} from '@/app/core/service/auth.service';
+import { TranslateModule } from '@ngx-translate/core';
 @Component({
   selector: 'app-sidebar',
-  imports: [SvgIcon,RouterLink],
+  imports: [SvgIcon,RouterLink, TranslateModule],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.scss'
 })
@@ -18,7 +19,6 @@ export class Sidebar {
   private readonly navigation = inject(Navigation)
   private readonly authService = inject(AuthService)
 
-  private router = inject(Router);
 
 
   public  currentUrl = this.navigation.currentUrl
@@ -26,7 +26,5 @@ export class Sidebar {
   public isSidebarOpen = signal(true);
 
 
-  handleLogout() {
-    this.authService.logout();
-  }
+
 }

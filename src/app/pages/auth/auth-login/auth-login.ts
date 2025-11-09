@@ -7,6 +7,7 @@ import { ReusableButton } from '@/app/shared/components/reusable-button/reusable
 import { AuthService } from '@/app/core/service/auth.service';
 import {validateFormControl} from '@/app/core/functions/validate-form-control.function';
 import {Navigation} from '@/app/shared/service/navigation';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-auth-login',
@@ -14,7 +15,8 @@ import {Navigation} from '@/app/shared/service/navigation';
     ReactiveFormsModule,
     AuthCard,
     ReusableInput,
-    ReusableButton
+    ReusableButton,
+    TranslateModule
   ],
   templateUrl: './auth-login.html',
   styleUrl: './auth-login.scss'

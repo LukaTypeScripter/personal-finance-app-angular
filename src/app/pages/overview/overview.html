@@ -1,12 +1,12 @@
 <div class="overview">
-    <h1 class="overview__title">Overview</h1>
+    <h1 class="overview__title">{{ 'overview.title' | translate }}</h1>
     <!-- -->
     <div class="overview-cards">
-        <app-overview-card type="black" title="Current Balance" [amount]="balance().current" [currency]="balance().currency"></app-overview-card>
+        <app-overview-card type="black" [title]="'overview.currentBalance' | translate" [amount]="balance().current" [currency]="balance().currency"></app-overview-card>
         <!-- -->
-        <app-overview-card type="white" title="Income" [amount]="balance().income" [currency]="balance().currency"></app-overview-card>
+        <app-overview-card type="white" [title]="'overview.income' | translate" [amount]="balance().income" [currency]="balance().currency"></app-overview-card>
         <!-- -->
-        <app-overview-card type="white" title="Expenses" [amount]="balance().expenses" [currency]="balance().currency"></app-overview-card>
+        <app-overview-card type="white" [title]="'overview.expenses' | translate" [amount]="balance().expenses" [currency]="balance().currency"></app-overview-card>
         </div>
     <!-- -->
     <div class="overview__content">
@@ -20,10 +20,6 @@
         <!-- -->
         <div class="overview__content-card">
             <app-overview-budgets></app-overview-budgets>
-        </div>
-        <!-- -->
-        <div class="overview__content-card">
-            <app-overview-reccuring-bill></app-overview-reccuring-bill>
         </div>
     </div>
 </div>

@@ -6,6 +6,7 @@ import { Currency } from '@/app/core/models/auth.model';
 import { ReusableButton } from '@/app/shared/components/reusable-button/reusable-button.component';
 import { ReusableModal } from '@/app/shared/components/reusable-modal/reusable-modal.component';
 import { BudgetService } from '@/app/core/service/budget.service';
+import {TranslateModule, TranslateService} from '@ngx-translate/core';
 
 interface ThemeOption {
   name: string;
@@ -15,12 +16,13 @@ interface ThemeOption {
 @Component({
   selector: 'app-budget-modal',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReusableButton, ReusableModal],
+  imports: [CommonModule, FormsModule, ReusableButton, ReusableModal, TranslateModule],
   templateUrl: './budget-modal.html',
   styleUrl: './budget-modal.scss'
 })
 export class BudgetModal {
   private budgetService = inject(BudgetService);
+  private translate = inject(TranslateService);
 
   isOpen = input.required<boolean>();
   budget = input<Budget | null>(null);
@@ -36,38 +38,40 @@ export class BudgetModal {
   error = signal<string | null>(null);
 
   isEditMode = computed(() => this.budget() !== null);
-  modalTitle = computed(() => this.isEditMode() ? 'Edit Budget' : 'Add New Budget');
+  modalTitle = computed(() => this.isEditMode()
+    ? this.translate.instant('budgets.modal.editBudgetTitle')
+    : this.translate.instant('budgets.modal.addBudgetTitle'));
 
-  categories = [
-    'Entertainment',
-    'Bills',
-    'Groceries',
-    'Dining Out',
-    'Transportation',
-    'Personal Care',
-    'Education',
-    'Lifestyle',
-    'Shopping',
-    'General'
-  ];
+  categories = computed(() => [
+    this.translate.instant('categories.entertainment'),
+    this.translate.instant('categories.bills'),
+    this.translate.instant('categories.groceries'),
+    this.translate.instant('categories.diningOut'),
+    this.translate.instant('categories.transportation'),
+    this.translate.instant('categories.personalCare'),
+    this.translate.instant('categories.education'),
+    this.translate.instant('categories.lifestyle'),
+    this.translate.instant('categories.shopping'),
+    this.translate.instant('categories.general')
+  ]);
 
-  themeOptions: ThemeOption[] = [
-    { name: 'Green', color: '#277C78' },
-    { name: 'Yellow', color: '#F2CDAC' },
-    { name: 'Cyan', color: '#82C9D7' },
-    { name: 'Navy', color: '#626070' },
-    { name: 'Red', color: '#C94736' },
-    { name: 'Purple', color: '#826CB0' },
-    { name: 'Turquoise', color: '#597C7C' },
-    { name: 'Brown', color: '#93674F' },
-    { name: 'Magenta', color: '#934F6F' },
-    { name: 'Blue', color: '#3F82B2' },
-    { name: 'Grey', color: '#97A0AC' },
-    { name: 'Army Green', color: '#7F9161' },
-    { name: 'Pink', color: '#AF81BA' },
-    { name: 'Gold', color: '#CAB361' },
-    { name: 'Orange', color: '#BE6C49' }
-  ];
+  themeOptions = computed<ThemeOption[]>(() => [
+    { name: this.translate.instant('themes.green'), color: '#277C78' },
+    { name: this.translate.instant('themes.yellow'), color: '#F2CDAC' },
+    { name: this.translate.instant('themes.cyan'), color: '#82C9D7' },
+    { name: this.translate.instant('themes.navy'), color: '#626070' },
+    { name: this.translate.instant('themes.red'), color: '#C94736' },
+    { name: this.translate.instant('themes.purple'), color: '#826CB0' },
+    { name: this.translate.instant('themes.turquoise'), color: '#597C7C' },
+    { name: this.translate.instant('themes.brown'), color: '#93674F' },
+    { name: this.translate.instant('themes.magenta'), color: '#934F6F' },
+    { name: this.translate.instant('themes.blue'), color: '#3F82B2' },
+    { name: this.translate.instant('themes.grey'), color: '#97A0AC' },
+    { name: this.translate.instant('themes.armyGreen'), color: '#7F9161' },
+    { name: this.translate.instant('themes.pink'), color: '#AF81BA' },
+    { name: this.translate.instant('themes.gold'), color: '#CAB361' },
+    { name: this.translate.instant('themes.orange'), color: '#BE6C49' }
+  ]);
 
   constructor() {
     effect(() => {
@@ -113,7 +117,7 @@ export class BudgetModal {
     this.error.set(null);
 
     if (!this.category() || this.maximum() <= 0) {
-      this.error.set('Please fill in all fields correctly');
+      this.error.set(this.translate.instant('errors.fillAllFields'));
       return;
     }
 
@@ -135,7 +139,7 @@ export class BudgetModal {
         },
         error: (err) => {
           this.isSubmitting.set(false);
-          this.error.set('Failed to update budget. Please try again.');
+          this.error.set(this.translate.instant('errors.updateBudgetFailed'));
           console.error('Error updating budget:', err);
         }
       });
@@ -155,7 +159,7 @@ export class BudgetModal {
         },
         error: (err) => {
           this.isSubmitting.set(false);
-          this.error.set('Failed to create budget. Please try again.');
+          this.error.set(this.translate.instant('errors.createBudgetFailed'));
           console.error('Error creating budget:', err);
         }
       });

@@ -5,17 +5,17 @@
       <div class="budget-item__details">
         <h3 class="budget-item__category">{{ budget().category }}</h3>
         <p class="budget-item__limit">
-          Maximum of {{ currencySymbol() }}{{ budget().maximum.toFixed(2) }}
+          {{ 'budgets.item.maximumOf' | translate }} {{ currencySymbol() }}{{ budget().maximum.toFixed(2) }}
         </p>
       </div>
     </div>
     <div class="budget-item__actions">
-      <button class="budget-item__action-btn" (click)="onEdit()" title="Edit budget">
+      <button class="budget-item__action-btn" (click)="onEdit()" [title]="'budgets.item.editBudget' | translate">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M11.3333 2.00004C11.5084 1.82494 11.7163 1.68605 11.9451 1.59129C12.1739 1.49653 12.4191 1.44775 12.6667 1.44775C12.9142 1.44775 13.1594 1.49653 13.3882 1.59129C13.617 1.68605 13.8249 1.82494 14 2.00004C14.1751 2.17513 14.314 2.383 14.4088 2.61178C14.5036 2.84055 14.5523 3.08575 14.5523 3.33337C14.5523 3.58099 14.5036 3.82619 14.4088 4.05497C14.314 4.28374 14.1751 4.49161 14 4.66671L5.00001 13.6667L1.33334 14.6667L2.33334 11L11.3333 2.00004Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </button>
-      <button class="budget-item__action-btn budget-item__action-btn--delete" (click)="onDelete()" title="Delete budget">
+      <button class="budget-item__action-btn budget-item__action-btn--delete" (click)="onDelete()" [title]="'budgets.item.deleteBudget' | translate">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M2 4H3.33333H14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           <path d="M5.33333 4.00004V2.66671C5.33333 2.31309 5.47381 1.97395 5.72386 1.7239C5.97391 1.47385 6.31304 1.33337 6.66667 1.33337H9.33333C9.68696 1.33337 10.0261 1.47385 10.2761 1.7239C10.5262 1.97395 10.6667 2.31309 10.6667 2.66671V4.00004M12.6667 4.00004V13.3334C12.6667 13.687 12.5262 14.0261 12.2761 14.2762C12.0261 14.5262 11.687 14.6667 11.3333 14.6667H4.66667C4.31304 14.6667 3.97391 14.5262 3.72386 14.2762C3.47381 14.0261 3.33333 13.687 3.33333 13.3334V4.00004H12.6667Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -35,13 +35,13 @@
     </div>
     <div class="budget-item__amounts">
       <div class="budget-item__amount">
-        <span class="budget-item__amount-label">Spent</span>
+        <span class="budget-item__amount-label">{{ 'budgets.item.spent' | translate }}</span>
         <span class="budget-item__amount-value" [class.budget-item__amount-value--over]="isOverBudget()">
           {{ currencySymbol() }}{{ budget().spent.toFixed(2) }}
         </span>
       </div>
       <div class="budget-item__amount">
-        <span class="budget-item__amount-label">Remaining</span>
+        <span class="budget-item__amount-label">{{ 'budgets.item.remaining' | translate }}</span>
         <span class="budget-item__amount-value budget-item__amount-value--remaining">
           {{ currencySymbol() }}{{ remaining().toFixed(2) }}
         </span>
@@ -54,7 +54,7 @@
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M8 5.33337V8.00004M8 10.6667H8.00667M14.6667 8.00004C14.6667 11.6819 11.6819 14.6667 8 14.6667C4.3181 14.6667 1.33333 11.6819 1.33333 8.00004C1.33333 4.31814 4.3181 1.33337 8 1.33337C11.6819 1.33337 14.6667 4.31814 14.6667 8.00004Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
-      <span>You've exceeded your budget limit!</span>
+      <span>{{ 'budgets.item.exceeded' | translate }}</span>
     </div>
   }
 </div>

@@ -24,6 +24,7 @@
               "src/assets/images",
               "src/assets/data",
               "src/assets/lottie",
+              "src/assets/i18n",
               {
                 "glob": "**/*",
                 "input": "public"

@@ -18,15 +18,17 @@ import {LazyAttribute} from '@/app/shared/directives/lazy-attribute';
 import {NgOptimizedImage} from '@angular/common';
 import { updatePagination } from './helper/functions/update-pagination.function';
 import { ReusableBottomSheet } from '@/app/shared/components/reusable-bottom-sheet/reusable-bottom-sheet.component';
+import {TranslateModule, TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-transactions',
-  imports: [ReusableInput, ReusableButton, ReusableDropdown, TransactionsRow, TransactionsSkeleton, LazyAttribute, NgOptimizedImage, ReusableBottomSheet],
+  imports: [ReusableInput, ReusableButton, ReusableDropdown, TransactionsRow, TransactionsSkeleton, LazyAttribute, NgOptimizedImage, ReusableBottomSheet, TranslateModule],
   templateUrl: './transactions.html',
   styleUrl: './transactions.scss'
 })
 export class Transactions implements OnInit {
   private readonly api = inject(Api);
+  private readonly translate = inject(TranslateService);
 
   ngOnInit(): void {
     // Transaction page only needs transactions
@@ -45,28 +47,28 @@ export class Transactions implements OnInit {
   private debounceTimer: any = null;
 
 
-  public categoryOptions = [
-    { value: 'all', label: 'All Transactions' },
-    { value: 'Entertainment', label: 'Entertainment' },
-    { value: 'Bills', label: 'Bills' },
-    { value: 'Groceries', label: 'Groceries' },
-    { value: 'Dining Out', label: 'Dining Out' },
-    { value: 'Transportation', label: 'Transportation' },
-    { value: 'Personal Care', label: 'Personal Care' },
-    { value: 'Education', label: 'Education' },
-    { value: 'Lifestyle', label: 'Lifestyle' },
-    { value: 'Shopping', label: 'Shopping' },
-    { value: 'General', label: 'General' }
-  ];
+  public categoryOptions = computed(() => [
+    { value: 'all', label: this.translate.instant('categories.all') },
+    { value: 'Entertainment', label: this.translate.instant('categories.entertainment') },
+    { value: 'Bills', label: this.translate.instant('categories.bills') },
+    { value: 'Groceries', label: this.translate.instant('categories.groceries') },
+    { value: 'Dining Out', label: this.translate.instant('categories.diningOut') },
+    { value: 'Transportation', label: this.translate.instant('categories.transportation') },
+    { value: 'Personal Care', label: this.translate.instant('categories.personalCare') },
+    { value: 'Education', label: this.translate.instant('categories.education') },
+    { value: 'Lifestyle', label: this.translate.instant('categories.lifestyle') },
+    { value: 'Shopping', label: this.translate.instant('categories.shopping') },
+    { value: 'General', label: this.translate.instant('categories.general') }
+  ]);
 
-  public sortOptions = [
-    { value: 'latest', label: 'Latest' },
-    { value: 'oldest', label: 'Oldest' },
-    { value: 'a-z', label: 'A to Z' },
-    { value: 'z-a', label: 'Z to A' },
-    { value: 'highest', label: 'Highest' },
-    { value: 'lowest', label: 'Lowest' }
-  ];
+  public sortOptions = computed(() => [
+    { value: 'latest', label: this.translate.instant('sortOptions.latest') },
+    { value: 'oldest', label: this.translate.instant('sortOptions.oldest') },
+    { value: 'a-z', label: this.translate.instant('sortOptions.aToZ') },
+    { value: 'z-a', label: this.translate.instant('sortOptions.zToA') },
+    { value: 'highest', label: this.translate.instant('sortOptions.highest') },
+    { value: 'lowest', label: this.translate.instant('sortOptions.lowest') }
+  ]);
 
   public transactions = this.api.transactions;
   public paginationMeta = this.api.paginationMeta;

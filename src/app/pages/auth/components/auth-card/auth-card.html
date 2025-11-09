@@ -9,14 +9,14 @@
   <!---->
   <section class="auth-card__footer">
     <div class="auth-card__footer-account">
-      <p>Need to create an account?</p>
-      <button (click)="handleNavigate()">{{isInLogin() ? 'Sign Up' : 'login' }} </button>
+      <p>{{ 'auth.login.needAccount' | translate }}</p>
+      <button (click)="handleNavigate()">{{isInLogin() ? ('auth.login.signUp' | translate) : ('auth.register.login' | translate) }} </button>
     </div>
     <!---->
     @if (isInLogin()) {
       <div class="auth-card__footer-account">
-        <p>Just browsing?</p>
-        <button (click)="handleDemoLogin()">Login with demo</button>
+        <p>{{ 'auth.login.justBrowsing' | translate }}</p>
+        <button (click)="handleDemoLogin()">{{ 'auth.login.loginDemo' | translate }}</button>
       </div>
     }
   </section>

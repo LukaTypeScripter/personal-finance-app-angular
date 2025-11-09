@@ -9,11 +9,12 @@ import { WithdrawMoneyModal } from './withdraw-money-modal/withdraw-money-modal'
 import { DeleteConfirmationModal } from '@/app/shared/components/delete-confirmation-modal/delete-confirmation-modal.component';
 import { Pot } from '@/app/core/models/finance-data.model';
 import { PotService } from '@/app/core/service/pot.service';
+import {TranslateModule} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-pots',
   standalone: true,
-  imports: [CommonModule, ReusableButton, PotItem, PotModal, AddMoneyModal, WithdrawMoneyModal, DeleteConfirmationModal],
+  imports: [CommonModule, ReusableButton, PotItem, PotModal, AddMoneyModal, WithdrawMoneyModal, DeleteConfirmationModal, TranslateModule],
   templateUrl: './pots.html',
   styleUrl: './pots.scss'
 })

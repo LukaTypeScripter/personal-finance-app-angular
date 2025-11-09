@@ -4,9 +4,10 @@ import { DonutChart } from '@/app/shared/components/donut-chart/donut-chart';
 import { OverviewPotsSummary } from '../overview-pots/overview-pots-summary/overview-pots-summary';
 import { Api } from '@/app/shared/service/api';
 import { SUMMARY_TYPE } from '@/app/core/constants/summary.constant';
+import {TranslateModule} from '@ngx-translate/core';
 @Component({
   selector: 'app-overview-budgets',
-  imports: [CardHeader,DonutChart,OverviewPotsSummary],
+  imports: [CardHeader,DonutChart,OverviewPotsSummary,TranslateModule],
   templateUrl: './overview-budgets.html',
   styleUrl: './overview-budgets.scss'
 })

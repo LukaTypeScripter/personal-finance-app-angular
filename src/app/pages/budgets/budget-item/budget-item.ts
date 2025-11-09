@@ -1,11 +1,12 @@
 import { Component, input, output, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Budget } from '@/app/core/models/finance-data.model';
+import {TranslateModule} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-budget-item',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslateModule],
   templateUrl: './budget-item.html',
   styleUrl: './budget-item.scss'
 })

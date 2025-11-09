@@ -1,7 +1,7 @@
 @let pageData = paginatedTransaction();
 
 <div class="transactions">
-  <h2 class="transaction-title">Transactions</h2>
+  <h2 class="transaction-title">{{ 'transactions.title' | translate }}</h2>
   <!-- -->
   <div class="transaction__content">
     <div class="transaction__content-header">
@@ -9,7 +9,7 @@
         class="transaction__content-input"
         iconName="icon-search"
         iconPosition="right"
-        placeholder="Search transaction"
+        [placeholder]="'transactions.searchPlaceholder' | translate"
         (input)="onSearchChange($any($event.target).value)"
       />
       <!-- -->
@@ -35,9 +35,9 @@
 
         <!-- Desktop buttons -->
         <div class="transaction__content-button--desktop transaction__dropdown">
-          <span class="transaction__dropdown-label">Sort by</span>
+          <span class="transaction__dropdown-label">{{ 'transactions.sortBy' | translate }}</span>
           <app-reusable-dropdown
-            [options]="sortOptions"
+            [options]="sortOptions()"
             [selectedValue]="selectedSort"
             [size]="'small'"
             (selectionChange)="onSortChange($event)">
@@ -45,9 +45,9 @@
         </div>
 
         <div class="transaction__content-button--desktop transaction__dropdown">
-          <span class="transaction__dropdown-label">Category</span>
+          <span class="transaction__dropdown-label">{{ 'transactions.category' | translate }}</span>
           <app-reusable-dropdown
-            [options]="categoryOptions"
+            [options]="categoryOptions()"
             [selectedValue]="selectedCategory"
             [size]="'small'"
             (selectionChange)="onCategoryChange($event)">
@@ -60,13 +60,13 @@
     <div class="transaction__content-rows">
       @if (filteredTransactions().length === 0 && transactions().length > 0) {
         <div class="transaction__empty-state">
-          <p class="transaction__empty-state-text">No transactions found matching your filters.</p>
-          <p class="transaction__empty-state-subtext">Try adjusting your search or filters.</p>
+          <p class="transaction__empty-state-text">{{ 'transactions.emptyState.noMatches' | translate }}</p>
+          <p class="transaction__empty-state-subtext">{{ 'transactions.emptyState.tryAdjusting' | translate }}</p>
         </div>
       } @else if (transactions().length === 0) {
         <div class="transaction__empty-state">
-          <p class="transaction__empty-state-text">No transactions yet.</p>
-          <p class="transaction__empty-state-subtext">Start by adding your first transaction.</p>
+          <p class="transaction__empty-state-text">{{ 'transactions.emptyState.noTransactions' | translate }}</p>
+          <p class="transaction__empty-state-subtext">{{ 'transactions.emptyState.startAdding' | translate }}</p>
         </div>
       } @else {
         @defer (when pageData.length) {
@@ -87,7 +87,7 @@
           class="transaction__pagination-prev"
           (click)="handlePreviousPage()"
           [disabled]="isPrevDisabled()">
-          <img  alt="Previous page"
+          <img  [alt]="'transactions.previousPage' | translate"
                 ngSrc="./assets/images/icon-caret-left.svg"
                 width="6"
                 height="11"
@@ -107,7 +107,7 @@
           class="transaction__pagination-next"
           (click)="handleNextPage()"
           [disabled]="isNextDisabled()">
-          <img  alt="Next page"
+          <img  [alt]="'transactions.nextPage' | translate"
                 ngSrc="./assets/images/icon-caret-right.svg"
                 width="6"
                 height="11"
@@ -119,8 +119,8 @@
 
   <!-- Sort Bottom Sheet -->
   <app-reusable-bottom-sheet
-    title="Sort by"
-    [options]="sortOptions"
+    [title]="'transactions.sortBy' | translate"
+    [options]="sortOptions()"
     [selectedValue]="selectedSort"
     [isOpen]="isSortSheetOpen"
     (selectionChange)="onMobileSortChange($event)"
@@ -129,8 +129,8 @@
 
   <!-- Category Bottom Sheet -->
   <app-reusable-bottom-sheet
-    title="Category"
-    [options]="categoryOptions"
+    [title]="'transactions.category' | translate"
+    [options]="categoryOptions()"
     [selectedValue]="selectedCategory"
     [isOpen]="isCategorySheetOpen"
     (selectionChange)="onMobileCategoryChange($event)"

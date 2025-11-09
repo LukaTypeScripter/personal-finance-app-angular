@@ -5,9 +5,10 @@ import { CardHeader } from '@/app/shared/components/card-header/card-header';
 import { Api } from '@/app/shared/service/api';
 import { SUMMARY_TYPE } from '@/app/core/constants/summary.constant';
 import {AuthService} from '@/app/core/service/auth.service';
+import {TranslateModule} from '@ngx-translate/core';
 @Component({
   selector: 'app-overview-pots',
-  imports: [CardHeader,OverviewPotsSaved,OverviewPotsSummary],
+  imports: [CardHeader,OverviewPotsSaved,OverviewPotsSummary,TranslateModule],
   templateUrl: './overview-pots.html',
   styleUrl: './overview-pots.scss'
 })

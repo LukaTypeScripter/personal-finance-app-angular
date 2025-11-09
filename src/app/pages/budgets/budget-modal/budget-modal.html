@@ -14,30 +14,30 @@
 
   <div class="modal__form">
     <div class="modal__field">
-      <label class="modal__label">Category</label>
+      <label class="modal__label">{{ 'budgets.modal.category' | translate }}</label>
       <select
         class="modal__select"
         [value]="category()"
         [disabled]="isEditMode()"
         (change)="onCategoryChange($any($event.target).value)">
-        <option value="">Select a category</option>
-        @for (cat of categories; track cat) {
+        <option value="">{{ 'budgets.modal.selectCategory' | translate }}</option>
+        @for (cat of categories(); track cat) {
           <option [value]="cat">{{ cat }}</option>
         }
       </select>
       @if (isEditMode()) {
-        <p class="modal__field-hint">Category cannot be changed after creation</p>
+        <p class="modal__field-hint">{{ 'budgets.modal.categoryHint' | translate }}</p>
       }
     </div>
 
     <div class="modal__field">
-      <label class="modal__label">Maximum Spend</label>
+      <label class="modal__label">{{ 'budgets.modal.maximumSpend' | translate }}</label>
       <div class="modal__input-wrapper">
         <span class="modal__currency">{{ currency() === 'USD' ? '$' : '₾' }}</span>
         <input
           type="number"
           class="modal__input"
-          placeholder="0.00"
+          [placeholder]="'budgets.modal.amountPlaceholder' | translate"
           step="0.01"
           min="0"
           [value]="maximum()"
@@ -46,9 +46,9 @@
     </div>
 
     <div class="modal__field">
-      <label class="modal__label">Theme</label>
+      <label class="modal__label">{{ 'budgets.modal.theme' | translate }}</label>
       <div class="modal__themes">
-        @for (theme of themeOptions; track theme.color) {
+        @for (theme of themeOptions(); track theme.color) {
           <button
             type="button"
             class="modal__theme"
@@ -69,13 +69,13 @@
 
   <div modal-footer class="modal__footer">
     <app-reusable-button
-      text="Cancel"
+      [text]="'common.cancel' | translate"
       [variant]="'outlined'"
       [size]="'medium'"
       (click)="onClose()">
     </app-reusable-button>
     <app-reusable-button
-      [text]="isEditMode() ? 'Update Budget' : 'Add Budget'"
+      [text]="(isEditMode() ? 'budgets.modal.updateBudget' : 'budgets.modal.addBudget') | translate"
       [variant]="'primary'"
       [size]="'medium'"
       [disabled]="isSubmitting()"

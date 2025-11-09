@@ -1,8 +1,8 @@
 <div class="budgets">
   <div class="budgets__header">
-    <h1 class="budgets__title">Budgets</h1>
+    <h1 class="budgets__title">{{ 'budgets.title' | translate }}</h1>
     <app-reusable-button
-      text="+ Add New Budget"
+      [text]="'budgets.addNewBudget' | translate"
       [variant]="'primary'"
       [size]="'medium'"
       (click)="openAddBudgetModal()">
@@ -10,29 +10,27 @@
   </div>
 
   <div class="budgets__content">
-    <!-- Chart Section -->
     <div class="budgets__chart-section">
       <div class="budgets__chart-container">
         <app-donut-chart></app-donut-chart>
       </div>
       <div class="budgets__chart-info">
-        <h3 class="budgets__chart-title">Spending Summary</h3>
+        <h3 class="budgets__chart-title">{{ 'budgets.spendingSummary' | translate }}</h3>
         <p class="budgets__chart-description">
-          See your spending breakdown by category and track your budget limits.
+          {{ 'budgets.spendingDescription' | translate }}
         </p>
       </div>
     </div>
 
-    <!-- Budget Items List -->
     <div class="budgets__list-section">
-      <h2 class="budgets__list-title">Budget Categories</h2>
+      <h2 class="budgets__list-title">{{ 'budgets.budgetCategories' | translate }}</h2>
 
       @if (budgets().length === 0) {
         <div class="budgets__empty-state">
-          <p class="budgets__empty-text">No budgets yet.</p>
-          <p class="budgets__empty-subtext">Start by creating your first budget to track spending.</p>
+          <p class="budgets__empty-text">{{ 'budgets.emptyState.noBudgets' | translate }}</p>
+          <p class="budgets__empty-subtext">{{ 'budgets.emptyState.startCreating' | translate }}</p>
           <app-reusable-button
-            text="Create Budget"
+            [text]="'budgets.emptyState.createBudget' | translate"
             [variant]="'primary'"
             [size]="'medium'"
             (click)="openAddBudgetModal()">
@@ -53,7 +51,6 @@
     </div>
   </div>
 
-  <!-- Budget Modal -->
   <app-budget-modal
     [isOpen]="isBudgetModalOpen()"
     [budget]="selectedBudget()"
@@ -62,7 +59,6 @@
     (success)="onBudgetSuccess()">
   </app-budget-modal>
 
-  <!-- Delete Confirmation Modal -->
   <app-delete-confirmation-modal
     [isOpen]="isDeleteModalOpen()"
     [itemName]="budgetToDelete()?.category || ''"

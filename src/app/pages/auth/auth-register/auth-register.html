@@ -1,32 +1,32 @@
 @let registerFormGroup = registerForm;
 
-<app-auth-card [title]="'Sign up'">
+<app-auth-card [title]="'auth.register.title' | translate">
   <form ngProjectAs="[body]" class="auth-register" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
     <div class="auth-register__fields">
       <app-reusable-input
         formControlName="name"
-        [label]="'Name'"
+        [label]="'auth.register.name' | translate"
         [placeholder]="''"
         [errorMessage]="[{
-          message:'this field is required!',
+          message:('auth.validation.required' | translate),
           isVisible:validateFormControl(registerFormGroup,'name','required')
         },
         {
-          message:`name must be at least ${registerFormGroup.get('name')?.errors?.['minlength']?.requiredLength} characters`,
+          message:('auth.validation.nameMinLength' | translate:{length: registerFormGroup.get('name')?.errors?.['minlength']?.requiredLength}),
           isVisible:validateFormControl(registerFormGroup,'name','minlength')
         }]"
       />
 
       <app-reusable-input
         formControlName="email"
-        [label]="'Email'"
+        [label]="'auth.register.email' | translate"
         [placeholder]="''"
         [errorMessage]="[{
-          message:'this field is required!',
+          message:('auth.validation.required' | translate),
           isVisible:validateFormControl(registerFormGroup,'email','required')
         },
         {
-          message:'incorrect email format!',
+          message:('auth.validation.emailFormat' | translate),
           isVisible:validateFormControl(registerFormGroup,'email','email')
         }]"
       />
@@ -34,46 +34,46 @@
       <app-reusable-input
         formControlName="password"
         [type]="'password'"
-        [label]="'Password'"
+        [label]="'auth.register.password' | translate"
         [iconPosition]="'right'"
         [iconName]="'icon-show-password'"
         [placeholder]="''"
         [errorMessage]="[{
-          message:'this field is required!',
+          message:('auth.validation.required' | translate),
           isVisible:validateFormControl(registerFormGroup,'password','required')
         },
         {
-          message:`password must be at least ${registerFormGroup.get('password')?.errors?.['minlength']?.requiredLength} characters`,
+          message:('auth.validation.passwordMinLength' | translate:{length: registerFormGroup.get('password')?.errors?.['minlength']?.requiredLength}),
           isVisible:validateFormControl(registerFormGroup,'password','minlength')
         }]"
       />
       <app-reusable-input
         formControlName="repeatPassword"
         [type]="'password'"
-        [label]="'Repeat Password'"
+        [label]="'auth.register.repeatPassword' | translate"
         [iconPosition]="'right'"
         [iconName]="'icon-show-password'"
         [placeholder]="''"
         [errorMessage]="[{
-          message:'this field is required!',
+          message:('auth.validation.required' | translate),
           isVisible:validateFormControl(registerFormGroup,'repeatPassword','required')
         },
         {
-          message:`password must be at least ${registerFormGroup.get('repeatPassword')?.errors?.['minlength']?.requiredLength} characters`,
+          message:('auth.validation.passwordMinLength' | translate:{length: registerFormGroup.get('repeatPassword')?.errors?.['minlength']?.requiredLength}),
           isVisible:validateFormControl(registerFormGroup,'repeatPassword','minlength')
         },
         {
-          message:'passwords do not match!',
+          message:('auth.validation.passwordMismatch' | translate),
           isVisible:validateFormControl(registerFormGroup,'repeatPassword','passwordMismatch',true)
         }]"
       />
 
       <app-reusable-select
         formControlName="currency"
-        [label]="'Currency'"
+        [label]="'auth.register.currency' | translate"
         [options]="currencyOptions"
         [errorMessage]="[{
-          message:'this field is required!',
+          message:('auth.validation.required' | translate),
           isVisible:validateFormControl(registerFormGroup,'currency','required')
         }]"
       />
@@ -81,7 +81,7 @@
     </div>
 
     <app-reusable-button
-      [text]="'Create Account'"
+      [text]="'auth.register.createAccount' | translate"
       [type]="'submit'"
       [variant]="'primary'"
       [fullWidth]="true"

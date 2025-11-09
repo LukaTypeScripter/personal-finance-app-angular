@@ -8,11 +8,12 @@ import { BudgetModal } from './budget-modal/budget-modal';
 import { DeleteConfirmationModal } from '@/app/shared/components/delete-confirmation-modal/delete-confirmation-modal.component';
 import { Budget } from '@/app/core/models/finance-data.model';
 import { BudgetService } from '@/app/core/service/budget.service';
+import {TranslateModule} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-budgets',
   standalone: true,
-  imports: [CommonModule, DonutChart, ReusableButton, BudgetItem, BudgetModal, DeleteConfirmationModal],
+  imports: [CommonModule, DonutChart, ReusableButton, BudgetItem, BudgetModal, DeleteConfirmationModal, TranslateModule],
   templateUrl: './budgets.html',
   styleUrl: './budgets.scss'
 })
@@ -68,11 +69,9 @@ export class Budgets implements OnInit {
     if (budget?.id) {
       this.budgetService.deleteBudget(budget.id, this.currency()).subscribe({
         next: () => {
-          console.log('Budget deleted successfully');
           this.closeDeleteModal();
         },
         error: (err) => {
-          console.error('Error deleting budget:', err);
           this.closeDeleteModal();
         }
       });

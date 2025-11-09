@@ -4,6 +4,7 @@ import { ReusableButton } from '@/app/shared/components/reusable-button/reusable
 import { ReusableModal } from '@/app/shared/components/reusable-modal/reusable-modal.component';
 import { Pot } from '@/app/core/models/finance-data.model';
 import { PotService } from '@/app/core/service/pot.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-add-money-modal',
@@ -14,6 +15,7 @@ import { PotService } from '@/app/core/service/pot.service';
 })
 export class AddMoneyModal {
   private potService = inject(PotService);
+  private translate = inject(TranslateService);
 
   isOpen = input.required<boolean>();
   pot = input<Pot | null>(null);
@@ -55,19 +57,21 @@ export class AddMoneyModal {
     this.error.set(null);
 
     if (this.amount() <= 0) {
-      this.error.set('Please enter a valid amount');
+      this.error.set(this.translate.instant('errors.validAmount'));
       return;
     }
 
     const pot = this.pot();
     if (!pot?.id) {
-      this.error.set('Invalid pot');
+      this.error.set(this.translate.instant('errors.invalidPot'));
       return;
     }
 
     // Validate that total won't exceed target
     if (this.newTotal() > pot.target) {
-      this.error.set('Total cannot exceed target. Maximum amount you can add is ' + this.currencySymbol() + this.remainingToTarget().toFixed(2));
+      this.error.set(this.translate.instant('errors.exceedsTarget', {
+        maxAmount: this.currencySymbol() + this.remainingToTarget().toFixed(2)
+      }));
       return;
     }
 
@@ -81,7 +85,7 @@ export class AddMoneyModal {
       },
       error: (err) => {
         this.isSubmitting.set(false);
-        this.error.set('Failed to add money. Please try again.');
+        this.error.set(this.translate.instant('errors.addMoneyFailed'));
         console.error('Error adding money:', err);
       }
     });

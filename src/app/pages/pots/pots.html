@@ -1,8 +1,8 @@
 <div class="pots">
   <div class="pots__header">
-    <h1 class="pots__title">Pots</h1>
+    <h1 class="pots__title">{{ 'pots.title' | translate }}</h1>
     <app-reusable-button
-      text="+ Add New Pot"
+      [text]="'pots.addNewPot' | translate"
       [variant]="'primary'"
       [size]="'medium'"
       (click)="openAddPotModal()">
@@ -12,10 +12,10 @@
   <div class="pots__content">
     @if (pots().length === 0) {
       <div class="pots__empty-state">
-        <p class="pots__empty-text">No pots yet.</p>
-        <p class="pots__empty-subtext">Start saving by creating your first pot.</p>
+        <p class="pots__empty-text">{{ 'pots.emptyState.noPots' | translate }}</p>
+        <p class="pots__empty-subtext">{{ 'pots.emptyState.startSaving' | translate }}</p>
         <app-reusable-button
-          text="Create Pot"
+          [text]="'pots.emptyState.createPot' | translate"
           [variant]="'primary'"
           [size]="'medium'"
           (click)="openAddPotModal()">
