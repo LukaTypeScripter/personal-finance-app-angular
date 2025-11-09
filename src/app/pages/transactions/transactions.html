@@ -1,7 +1,15 @@
 @let pageData = paginatedTransaction();
 
 <div class="transactions">
-  <h2 class="transaction-title">{{ 'transactions.title' | translate }}</h2>
+  <div class="transaction__header">
+    <h2 class="transaction-title">{{ 'transactions.title' | translate }}</h2>
+    <app-reusable-button
+      [text]="'transactions.addNewTransaction' | translate"
+      [variant]="'primary'"
+      [size]="'small'"
+      (click)="openModal()">
+    </app-reusable-button>
+  </div>
   <!-- -->
   <div class="transaction__content">
     <div class="transaction__content-header">
@@ -136,5 +144,13 @@
     (selectionChange)="onMobileCategoryChange($event)"
     (closeSheet)="closeCategorySheet()">
   </app-reusable-bottom-sheet>
+
+  <!-- Transaction Modal -->
+  <app-transaction-modal
+    [isOpen]="isModalOpen()"
+    [currency]="currency()"
+    (close)="closeModal()"
+    (success)="handleTransactionSuccess()">
+  </app-transaction-modal>
 
 </div>

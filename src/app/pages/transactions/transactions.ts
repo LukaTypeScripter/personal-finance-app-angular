@@ -19,16 +19,20 @@ import {NgOptimizedImage} from '@angular/common';
 import { updatePagination } from './helper/functions/update-pagination.function';
 import { ReusableBottomSheet } from '@/app/shared/components/reusable-bottom-sheet/reusable-bottom-sheet.component';
 import {TranslateModule, TranslateService} from '@ngx-translate/core';
+import { TransactionModal } from './transaction-modal/transaction-modal';
 
 @Component({
   selector: 'app-transactions',
-  imports: [ReusableInput, ReusableButton, ReusableDropdown, TransactionsRow, TransactionsSkeleton, LazyAttribute, NgOptimizedImage, ReusableBottomSheet, TranslateModule],
+  imports: [ReusableInput, ReusableButton, ReusableDropdown, TransactionsRow, TransactionsSkeleton, LazyAttribute, NgOptimizedImage, ReusableBottomSheet, TranslateModule, TransactionModal],
   templateUrl: './transactions.html',
   styleUrl: './transactions.scss'
 })
 export class Transactions implements OnInit {
   private readonly api = inject(Api);
   private readonly translate = inject(TranslateService);
+
+  public isModalOpen = signal(false);
+  public currency = this.api.currency;
 
   ngOnInit(): void {
     // Transaction page only needs transactions
@@ -168,6 +172,19 @@ export class Transactions implements OnInit {
   public onMobileCategoryChange(value: string) {
     this.onCategoryChange(value);
     this.closeCategorySheet();
+  }
+
+  openModal() {
+    this.isModalOpen.set(true);
+  }
+
+  closeModal() {
+    this.isModalOpen.set(false);
+  }
+
+  handleTransactionSuccess() {
+    this.loadTransactionsWithFilters();
+    this.closeModal();
   }
 
   private loadTransactionsWithFilters() {

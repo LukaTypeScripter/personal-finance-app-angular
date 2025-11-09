@@ -1,0 +1,87 @@
+<app-reusable-modal
+  [isOpen]="isOpen()"
+  [title]="modalTitle()"
+  (close)="onClose()">
+
+  @if (error()) {
+    <div class="modal__error">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 5.33337V8.00004M8 10.6667H8.00667M14.6667 8.00004C14.6667 11.6819 11.6819 14.6667 8 14.6667C4.3181 14.6667 1.33333 11.6819 1.33333 8.00004C1.33333 4.31814 4.3181 1.33337 8 1.33337C11.6819 1.33337 14.6667 4.31814 14.6667 8.00004Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      {{ error() }}
+    </div>
+  }
+
+  <form [formGroup]="transactionForm" class="modal__form">
+    <app-reusable-input
+      [label]="'transactions.modal.name' | translate"
+      [placeholder]="'transactions.modal.namePlaceholder' | translate"
+      [type]="'text'"
+      formControlName="name">
+    </app-reusable-input>
+
+    <div class="modal__field">
+      <label class="modal__label">{{ 'transactions.modal.avatar' | translate }}</label>
+      <app-reusable-dropdown
+        [options]="avatarOptions"
+        [selectedValue]="selectedAvatar"
+        [size]="'medium'"
+        (selectionChange)="onAvatarChange($event)">
+      </app-reusable-dropdown>
+    </div>
+
+    <div class="modal__field">
+      <label class="modal__label">{{ 'transactions.modal.category' | translate }}</label>
+      <app-reusable-dropdown
+        [options]="categoryOptions()"
+        [selectedValue]="selectedCategory"
+        [size]="'medium'"
+        (selectionChange)="onCategoryChange($event)">
+      </app-reusable-dropdown>
+    </div>
+
+    <app-reusable-input
+      [label]="'transactions.modal.date' | translate"
+      [type]="'date'"
+      formControlName="date">
+    </app-reusable-input>
+
+    <div class="modal__field">
+      <label class="modal__label">{{ 'transactions.modal.amount' | translate }}</label>
+      <div class="modal__input-wrapper">
+        <span class="modal__currency">{{ currency() === 'USD' ? '$' : '₾' }}</span>
+        <app-reusable-input
+          [placeholder]="'transactions.modal.amountPlaceholder' | translate"
+          [type]="'number'"
+          formControlName="amount">
+        </app-reusable-input>
+      </div>
+    </div>
+
+    <div class="modal__field modal__field--checkbox">
+      <label class="modal__checkbox-label">
+        <input
+          type="checkbox"
+          class="modal__checkbox"
+          formControlName="recurring">
+        <span>{{ 'transactions.modal.recurring' | translate }}</span>
+      </label>
+    </div>
+  </form>
+
+  <div modal-footer class="modal__footer">
+    <app-reusable-button
+      [text]="'common.cancel' | translate"
+      [variant]="'outlined'"
+      [size]="'medium'"
+      (click)="onClose()">
+    </app-reusable-button>
+    <app-reusable-button
+      [text]="(isEditMode() ? 'transactions.modal.updateTransaction' : 'transactions.modal.addTransaction') | translate"
+      [variant]="'primary'"
+      [size]="'medium'"
+      [disabled]="isSubmitting()"
+      (click)="onSubmit()">
+    </app-reusable-button>
+  </div>
+</app-reusable-modal>

@@ -2,6 +2,19 @@
 @use "@/assets/styles/_mixins.scss";
 
 .transaction {
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: variables.$spacing-200;
+
+    @include mixins.respond(xs) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: variables.$spacing-200;
+    }
+  }
+
   &-title {
     font-size: variables.$font-size-preset-1;
     color: variables.$color-grey-900;

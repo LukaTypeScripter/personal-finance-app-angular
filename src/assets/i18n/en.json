@@ -54,10 +54,13 @@
     "fillAllFields": "Please fill in all fields correctly",
     "validAmount": "Please enter a valid amount",
     "invalidPot": "Invalid pot",
+    "invalidTransaction": "Invalid transaction",
     "exceedsTarget": "Total cannot exceed target. Maximum amount you can add is {{maxAmount}}",
     "exceedsAvailable": "Withdrawal amount exceeds available funds",
     "createBudgetFailed": "Failed to create budget. Please try again.",
     "updateBudgetFailed": "Failed to update budget. Please try again.",
+    "createTransactionFailed": "Failed to create transaction. Please try again.",
+    "updateTransactionFailed": "Failed to update transaction. Please try again.",
     "addMoneyFailed": "Failed to add money. Please try again.",
     "withdrawMoneyFailed": "Failed to withdraw money. Please try again.",
     "registrationFailed": "Registration failed",
@@ -132,11 +135,27 @@
     "category": "Category",
     "previousPage": "Previous page",
     "nextPage": "Next page",
+    "addNewTransaction": "+ Add New Transaction",
     "emptyState": {
       "noMatches": "No transactions found matching your filters.",
       "tryAdjusting": "Try adjusting your search or filters.",
       "noTransactions": "No transactions yet.",
       "startAdding": "Start by adding your first transaction."
+    },
+    "modal": {
+      "editTransactionTitle": "Edit Transaction",
+      "addTransactionTitle": "Add New Transaction",
+      "name": "Transaction Name",
+      "namePlaceholder": "e.g. Urban Services",
+      "avatar": "Avatar",
+      "category": "Category",
+      "selectCategory": "Select a category",
+      "date": "Date",
+      "amount": "Amount",
+      "amountPlaceholder": "0.00",
+      "recurring": "Recurring Transaction",
+      "addTransaction": "Add Transaction",
+      "updateTransaction": "Update Transaction"
     }
   },
   "budgets": {

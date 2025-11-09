@@ -54,10 +54,13 @@
     "fillAllFields": "გთხოვთ შეავსოთ ყველა ველი სწორად",
     "validAmount": "გთხოვთ შეიყვანოთ სწორი თანხა",
     "invalidPot": "არასწორი ქოთანი",
+    "invalidTransaction": "არასწორი ტრანზაქცია",
     "exceedsTarget": "ჯამი არ შეიძლება აღემატებოდეს სამიზნეს. მაქსიმალური თანხა რომელიც შეგიძლიათ დაამატოთ არის {{maxAmount}}",
     "exceedsAvailable": "ამოსაღები თანხა აღემატება ხელმისაწვდომ თანხას",
     "createBudgetFailed": "ბიუჯეტის შექმნა ვერ მოხერხდა. გთხოვთ სცადოთ თავიდან.",
     "updateBudgetFailed": "ბიუჯეტის განახლება ვერ მოხერხდა. გთხოვთ სცადოთ თავიდან.",
+    "createTransactionFailed": "ტრანზაქციის შექმნა ვერ მოხერხდა. გთხოვთ სცადოთ თავიდან.",
+    "updateTransactionFailed": "ტრანზაქციის განახლება ვერ მოხერხდა. გთხოვთ სცადოთ თავიდან.",
     "addMoneyFailed": "თანხის დამატება ვერ მოხერხდა. გთხოვთ სცადოთ თავიდან.",
     "withdrawMoneyFailed": "თანხის ამოღება ვერ მოხერხდა. გთხოვთ სცადოთ თავიდან.",
     "registrationFailed": "რეგისტრაცია ვერ მოხერხდა",
@@ -132,11 +135,27 @@
     "category": "კატეგორია",
     "previousPage": "წინა გვერდი",
     "nextPage": "შემდეგი გვერდი",
+    "addNewTransaction": "+ ახალი ტრანზაქციის დამატება",
     "emptyState": {
       "noMatches": "თქვენი ფილტრებით შესაბამისი ტრანზაქციები ვერ მოიძებნა.",
       "tryAdjusting": "სცადეთ თქვენი ძებნის ან ფილტრების შეცვლა.",
       "noTransactions": "ჯერ არ არის ტრანზაქციები.",
       "startAdding": "დაიწყეთ თქვენი პირველი ტრანზაქციის დამატებით."
+    },
+    "modal": {
+      "editTransactionTitle": "ტრანზაქციის რედაქტირება",
+      "addTransactionTitle": "ახალი ტრანზაქციის დამატება",
+      "name": "ტრანზაქციის სახელი",
+      "namePlaceholder": "მაგ. Urban Services",
+      "avatar": "ავატარი",
+      "category": "კატეგორია",
+      "selectCategory": "აირჩიეთ კატეგორია",
+      "date": "თარიღი",
+      "amount": "თანხა",
+      "amountPlaceholder": "0.00",
+      "recurring": "განმეორებადი ტრანზაქცია",
+      "addTransaction": "ტრანზაქციის დამატება",
+      "updateTransaction": "ტრანზაქციის განახლება"
     }
   },
   "budgets": {
