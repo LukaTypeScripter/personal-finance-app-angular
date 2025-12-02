@@ -1,5 +1,9 @@
+
+
 <div class="overview">
     <h1 class="overview__title">{{ 'overview.title' | translate }}</h1>
+    <!-- -->
+  <app-overview-slider></app-overview-slider>
     <!-- -->
     <div class="overview-cards">
         <app-overview-card type="black" [title]="'overview.currentBalance' | translate" [amount]="balance().current" [currency]="balance().currency"></app-overview-card>
@@ -7,7 +11,9 @@
         <app-overview-card type="white" [title]="'overview.income' | translate" [amount]="balance().income" [currency]="balance().currency"></app-overview-card>
         <!-- -->
         <app-overview-card type="white" [title]="'overview.expenses' | translate" [amount]="balance().expenses" [currency]="balance().currency"></app-overview-card>
-        </div>
+
+
+    </div>
     <!-- -->
     <div class="overview__content">
         <div class="overview__content-card">
@@ -21,5 +27,7 @@
         <div class="overview__content-card">
             <app-overview-budgets></app-overview-budgets>
         </div>
+
+
     </div>
 </div>

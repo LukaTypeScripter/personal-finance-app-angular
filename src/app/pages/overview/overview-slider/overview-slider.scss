@@ -1,0 +1,216 @@
+@use "@/assets/styles/_variables.scss";
+@use "@/assets/styles/_mixins.scss";
+
+
+
+.slider {
+  margin: variables.$spacing-300 0;
+  overflow: hidden;
+  max-width: 100%;
+
+  &__container {
+    position: relative;
+    height: 180px;
+    overflow: hidden;
+    border-radius: 8px;
+    cursor: grab;
+    user-select: none;
+    max-width: 100%;
+
+    &:active {
+      cursor: grabbing;
+    }
+  }
+
+  &__slides {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    transition: transform 0.4s ease-in-out;
+  }
+
+  &__slide {
+    flex-shrink: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: variables.$spacing-200;
+    box-sizing: border-box;
+  }
+
+  &__content {
+    text-align: center;
+    width: 100%;
+    max-width: 100%;
+    padding: 0 variables.$spacing-200;
+    box-sizing: border-box;
+  }
+
+  &__title {
+    font-size: variables.$font-size-preset-3;
+    font-weight: 700;
+    color: white;
+    margin-bottom: variables.$spacing-100;
+    line-height: 1.2;
+    word-break: break-word;
+  }
+
+  &__description {
+    font-size: variables.$font-size-preset-5;
+    color: white;
+    line-height: 1.4;
+    opacity: 0.95;
+    word-break: break-word;
+  }
+
+  &__button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: white;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    transition: all 0.2s ease;
+    color: variables.$color-grey-900;
+    z-index: 10;
+
+    svg {
+      width: 9px;
+      height: 14px;
+    }
+
+    &:hover {
+      background: variables.$color-grey-100;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    &--prev {
+      left: variables.$spacing-150;
+    }
+
+    &--next {
+      right: variables.$spacing-150;
+    }
+  }
+
+  &__dots {
+    display: flex;
+    justify-content: center;
+    gap: variables.$spacing-100;
+    margin-top: variables.$spacing-150;
+  }
+
+  &__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: none;
+    background: variables.$color-grey-300;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+
+    &:hover {
+      background: variables.$color-grey-500;
+    }
+
+    &--active {
+      background: variables.$color-grey-900;
+      width: 20px;
+      border-radius: 4px;
+    }
+  }
+
+  @include mixins.respond(sm) {
+    margin: variables.$spacing-400 0;
+
+    &__container {
+      height: 220px;
+      border-radius: 10px;
+    }
+
+    &__slide {
+      padding: variables.$spacing-300;
+    }
+
+    &__content {
+      max-width: 600px;
+    }
+
+    &__title {
+      font-size: variables.$font-size-preset-2;
+      margin-bottom: variables.$spacing-150;
+    }
+
+    &__description {
+      font-size: variables.$font-size-preset-4;
+      line-height: 1.5;
+    }
+
+    &__button {
+      width: 36px;
+      height: 36px;
+
+      svg {
+        width: 10px;
+        height: 16px;
+      }
+
+      &--prev {
+        left: variables.$spacing-200;
+      }
+
+      &--next {
+        right: variables.$spacing-200;
+      }
+    }
+
+    &__dots {
+      margin-top: variables.$spacing-200;
+    }
+
+    &__dot {
+      width: 10px;
+      height: 10px;
+
+      &--active {
+        width: 24px;
+        border-radius: 5px;
+      }
+    }
+  }
+
+  @include mixins.respond(md) {
+    &__container {
+      height: 250px;
+      border-radius: 12px;
+    }
+
+    &__slide {
+      padding: variables.$spacing-400;
+    }
+
+    &__title {
+      font-size: variables.$font-size-preset-1;
+    }
+
+    &__button {
+      width: 40px;
+      height: 40px;
+
+      svg {
+        width: 11px;
+        height: 18px;
+      }
+    }
+  }
+}

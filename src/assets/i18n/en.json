@@ -111,6 +111,24 @@
     "currentBalance": "Current Balance",
     "income": "Income",
     "expenses": "Expenses",
+    "slider": {
+      "slide1": {
+        "title": "Track Your Spending",
+        "description": "Monitor your expenses and stay within your budget with our easy-to-use tracking tools."
+      },
+      "slide2": {
+        "title": "Save for Your Goals",
+        "description": "Create savings pots for different goals and watch your money grow over time."
+      },
+      "slide3": {
+        "title": "Manage Your Bills",
+        "description": "Never miss a payment with our recurring bills tracker and reminders."
+      },
+      "slide4": {
+        "title": "Budget Wisely",
+        "description": "Set up budgets for different categories and get insights on your spending patterns."
+      }
+    },
     "pots": {
       "title": "Pots",
       "totalSaved": "Total Saved"

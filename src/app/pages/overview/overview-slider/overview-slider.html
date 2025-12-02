@@ -1,0 +1,45 @@
+<div class="slider">
+  <div class="slider__container"
+       #sliderContainer
+       (touchstart)="onTouchStart($event)"
+       (touchmove)="onTouchMove($event)"
+       (touchend)="onTouchEnd()"
+       (mousedown)="onMouseDown($event)"
+       (mousemove)="onMouseMove($event)"
+       (mouseup)="onMouseUp()"
+       (mouseleave)="onMouseLeave()">
+    <div class="slider__slides" [style.transform]="'translateX(-' + currentSlide() * 100 + '%)'">
+      @for (slide of slides; track $index) {
+        <div class="slider__slide" [style.background]="slide.color">
+          <div class="slider__content">
+            <h2 class="slider__title">{{ slide.titleKey | translate }}</h2>
+            <p class="slider__description">{{ slide.descriptionKey | translate }}</p>
+          </div>
+        </div>
+      }
+    </div>
+
+    <button class="slider__button slider__button--prev" (click)="prevSlide()" aria-label="Previous slide">
+      <svg width="11" height="18" viewBox="0 0 11 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 1L2 9L10 17" stroke="currentColor" stroke-width="2"/>
+      </svg>
+    </button>
+
+    <button class="slider__button slider__button--next" (click)="nextSlide()" aria-label="Next slide">
+      <svg width="11" height="18" viewBox="0 0 11 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 1L9 9L1 17" stroke="currentColor" stroke-width="2"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="slider__dots">
+    @for (slide of slides; track $index) {
+      <button
+        class="slider__dot"
+        [class.slider__dot--active]="currentSlide() === $index"
+        (click)="goToSlide($index)"
+        [attr.aria-label]="'Go to slide ' + ($index + 1)">
+      </button>
+    }
+  </div>
+</div>
