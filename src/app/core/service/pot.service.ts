@@ -11,6 +11,7 @@ import {
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Api } from '@/app/shared/service/api';
+import {Currency} from '@/app/core/models/auth.model';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +31,6 @@ export class PotService {
           if (!result.data?.createPot) {
             throw new Error('Failed to create pot');
           }
-          // Reload pots after creation
           this.api.loadPots(input.currency);
           return result.data.createPot;
         })
@@ -48,14 +48,13 @@ export class PotService {
           if (!result.data?.updatePot) {
             throw new Error('Failed to update pot');
           }
-          // Reload pots after update
           this.api.loadPots(input.currency);
           return result.data.updatePot;
         })
       );
   }
 
-  deletePot(id: string, currency?: string): Observable<boolean> {
+  deletePot(id: string, currency?: Currency): Observable<boolean> {
     return this.apollo
       .mutate<{ deletePot: boolean }>({
         mutation: DELETE_POT_MUTATION,
@@ -65,7 +64,6 @@ export class PotService {
         map(result => {
           const success = result.data?.deletePot ?? false;
           if (success) {
-            // Reload pots after deletion
             this.api.loadPots(currency);
           }
           return success;
@@ -73,7 +71,7 @@ export class PotService {
       );
   }
 
-  addMoneyToPot(id: string, amount: number, currency?: string): Observable<Pot> {
+  addMoneyToPot(id: string, amount: number, currency?: Currency): Observable<Pot> {
     return this.apollo
       .mutate<{ addMoneyToPot: Pot }>({
         mutation: ADD_MONEY_TO_POT_MUTATION,
@@ -84,14 +82,13 @@ export class PotService {
           if (!result.data?.addMoneyToPot) {
             throw new Error('Failed to add money to pot');
           }
-          // Reload pots after adding money
           this.api.loadPots(currency);
           return result.data.addMoneyToPot;
         })
       );
   }
 
-  withdrawMoneyFromPot(id: string, amount: number, currency?: string): Observable<Pot> {
+  withdrawMoneyFromPot(id: string, amount: number, currency?: Currency): Observable<Pot> {
     return this.apollo
       .mutate<{ withdrawMoneyFromPot: Pot }>({
         mutation: WITHDRAW_MONEY_FROM_POT_MUTATION,
@@ -102,7 +99,6 @@ export class PotService {
           if (!result.data?.withdrawMoneyFromPot) {
             throw new Error('Failed to withdraw money from pot');
           }
-          // Reload pots after withdrawal
           this.api.loadPots(currency);
           return result.data.withdrawMoneyFromPot;
         })

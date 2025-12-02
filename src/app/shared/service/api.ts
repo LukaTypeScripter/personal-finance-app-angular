@@ -11,6 +11,7 @@ import {
   GET_OVERVIEW_DATA_QUERY
 } from '@/app/core/graphql/finance.operations';
 import { map, catchError, of, tap } from 'rxjs';
+import {Currency} from '@/app/core/models/auth.model';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,7 @@ export class Api {
   private readonly _loading = signal<boolean>(false);
   private readonly _paginationMeta = signal<PaginationMeta | null>(null);
 
-  public  currency = signal<string>('USD');
+  public  currency = signal<Currency>('USD');
 
   readonly transactions = this._transactions.asReadonly();
   readonly budgets = this._budgets.asReadonly();
@@ -46,7 +47,7 @@ export class Api {
   }
 
 
-  loadAllData(currency?: string): void {
+  loadAllData(currency?: Currency): void {
     const curr = this.resolveCurrency(currency);
 
     this._loading.set(true);
@@ -65,7 +66,7 @@ export class Api {
     if (curr) this.loadAllData(curr);
   }
 
-  loadBalance(currency?: string): void {
+  loadBalance(currency?: Currency): void {
     const userCurrency = currency || this.authService.currentUser()?.currency || 'USD';
 
     this.apollo
@@ -94,7 +95,7 @@ export class Api {
     sort?: SortTransactionsInput;
     skip?: number;
     take?: number;
-    currency?: string;
+    currency?: Currency;
   }): void {
     const userCurrency = this.resolveCurrency(options?.currency);
 
@@ -127,7 +128,7 @@ export class Api {
   }
 
 
-  loadBudgets(currency?: string): void {
+  loadBudgets(currency?: Currency): void {
     const userCurrency = this.resolveCurrency(currency);
 
     this.apollo
@@ -149,7 +150,7 @@ export class Api {
   }
 
 
-  loadPots(currency?: string): void {
+  loadPots(currency?: Currency): void {
     const userCurrency = this.resolveCurrency(currency);
 
     this.apollo
@@ -173,7 +174,7 @@ export class Api {
       });
   }
 
-  loadOverviewData(currency?: string): void {
+  loadOverviewData(currency?: Currency): void {
     this._loading.set(true);
 
     const curr = this.resolveCurrency(currency);
@@ -222,7 +223,7 @@ export class Api {
     }
   }
 
-  private resolveCurrency(currency?: string): string {
+  private resolveCurrency(currency?: Currency): Currency {
     return currency || this.currency() || this.authService.currentUser()?.currency || 'USD';
   }
 }

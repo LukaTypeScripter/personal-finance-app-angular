@@ -1,12 +1,19 @@
-import {Component, ViewChild, PLATFORM_ID, inject, effect} from '@angular/core';
+import {
+  Component,
+  ViewChild,
+  PLATFORM_ID,
+  inject,
+  effect,
+  signal,
+  computed,
+  OnInit
+} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import {Chart, ChartConfiguration, Plugin, ArcElement, DoughnutController, Legend, Tooltip} from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
-import {Subscription} from 'rxjs';
-import {Budget, BudgetDognut} from '@/app/core/models/finance-data.model';
-import tinycolor from 'tinycolor2';
 import {Api} from '@/app/shared/service/api';
-import {AuthService} from '@/app/core/service/auth.service';
+import {doughnutChartOptions,lightenColor,centerTextPlugin} from './helper'
+
 
 @Component({
   selector: 'app-donut-chart',
@@ -16,37 +23,40 @@ import {AuthService} from '@/app/core/service/auth.service';
   templateUrl: './donut-chart.html',
   styleUrl: './donut-chart.scss'
 })
-export class DonutChart  {
+export class DonutChart implements OnInit {
   private platformId = inject(PLATFORM_ID);
-  isBrowser = isPlatformBrowser(this.platformId);
-
-  totalMax!: number;
-  totalSpent!: number;
-  subscription!: Subscription;
-  budgets: Budget[] = [
-
-  ];
-  public doughnutChartDatasets: ChartConfiguration<'doughnut'>['data']['datasets'] =
-    [];
+  public isBrowser = isPlatformBrowser(this.platformId);
 
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
 
   protected userBudgets = inject(Api);
-  private readonly currency = inject(AuthService).currentUser
+
+  private totalMax = signal<number>(0);
+  private totalSpent =  signal<number>(0);
+  private  budgets = computed(() => {
+    return this.userBudgets.budgets()
+  })
+  private readonly currency = this.userBudgets.currency
+
+  private readonly centerTextPlugin: Plugin<'doughnut'> = centerTextPlugin(this.totalSpent(),this.totalMax(),this.currency())
+
+  public readonly doughnutChartOptions: ChartConfiguration<'doughnut'>['options'] = doughnutChartOptions
+  public doughnutChartDatasets: ChartConfiguration<'doughnut'>['data']['datasets'] =
+    [];
 
 
-  updateBudgets = effect(() => {
+  private readonly updateBudgets = effect(() => {
     const userBudgets = this.userBudgets.budgets();
 
 
-    if(!userBudgets) return;
+    if(!userBudgets || userBudgets.length === 0) return;
 
-      this.budgets = userBudgets;
       this.updateChartData();
       this.chart?.chart?.update();
+
   })
 
-  updateCurrency = effect(() => {
+  private readonly updateCurrency = effect(() => {
     const currency = this.userBudgets.currency();
     if (!currency) return;
 
@@ -54,17 +64,9 @@ export class DonutChart  {
     this.chart?.chart?.update();
   });
 
-
-
-  ngOnInit(): void {
+  ngOnInit() {
     if (this.isBrowser) {
-      this.updateChartData();
-    }
-  }
-
-  ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
+      Chart.register(ArcElement, DoughnutController, Legend, Tooltip, this.centerTextPlugin);
     }
   }
 
@@ -72,105 +74,27 @@ export class DonutChart  {
     let localMax = 0;
     let localSpent = 0;
 
-    this.budgets.forEach((budget) => {
+    this.budgets().forEach((budget) => {
       localMax += budget.maximum;
       localSpent += budget.spent;
     });
-    this.totalMax = localMax;
-    this.totalSpent = localSpent;
+    this.totalSpent.set(localSpent);
+    this.totalMax.set(localMax);
 
     this.doughnutChartDatasets = [
       {
-        data: this.budgets.map((budget) => budget.maximum),
-        backgroundColor: this.budgets.map((budget) => budget.theme),
+        data: this.budgets().map((budget) => budget.maximum),
+        backgroundColor: this.budgets().map((budget) => budget.theme),
         weight: 1,
 
       },
       {
-        data: this.budgets.map((budget) => budget.maximum),
-        backgroundColor: this.budgets
+        data: this.budgets().map((budget) => budget.maximum),
+        backgroundColor: this.budgets()
           .map((budget) => budget.theme)
-          .map((color) => this.lightenColor(color)),
+          .map((color) => lightenColor(color)),
         weight: 0.5,
       },
     ];
-  }
-
-
-  centerTextPlugin: Plugin<'doughnut'> = {
-    id: 'centerTextPlugin',
-    beforeDraw: (chart) => {
-      const ctx = chart.ctx;
-      const width = chart.width;
-      const height = chart.height;
-      const centerX = width / 2;
-      const centerY = height / 2;
-
-      ctx.save();
-
-
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillStyle = '#201F24';
-      ctx.font = '700 32px Public Sans';
-
-      const currencySymbol = this.userBudgets.currency() === 'USD' ? '$' : '₾';
-
-
-      const text = `${currencySymbol}${this.totalSpent.toFixed(0)}`;
-
-      const firstTextY = centerY;
-
-
-      ctx.fillText(text, centerX, firstTextY);
-
-
-      ctx.fillStyle = '#696868';
-      ctx.font = '400 12px Public Sans';
-
-
-      const secondText = `of ${currencySymbol}${this.totalMax.toFixed(0)} limit`;
-      const secondTextY = firstTextY + 20 + 8;
-      ctx.fillText(secondText, centerX, secondTextY);
-
-      ctx.restore();
-    },
-  };
-
-  lightenColor = (color: string): string => {
-    let tc = tinycolor(color);
-    return tc
-      .lighten(9)
-      .saturate(0)
-      .toHexString();
-  };
-
-  public doughnutChartLabels: string[] = [];
-
-  public doughnutChartOptions: ChartConfiguration<'doughnut'>['options'] = {
-    responsive: true,
-    maintainAspectRatio: false,
-    cutout: '65%',
-    plugins: {
-      legend: {
-        display: true,
-      },
-    },
-    elements: {
-      arc: {
-        borderWidth: 0,
-      },
-    },
-    datasets: {
-      doughnut: {
-        spacing: 0,
-      },
-    },
-  };
-
-  constructor() {
-    if (this.isBrowser) {
-      Chart.register(ArcElement, DoughnutController, Legend, Tooltip, this.centerTextPlugin);
-    }
   }
 }

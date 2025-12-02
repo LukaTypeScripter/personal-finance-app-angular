@@ -7,7 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, GlobalSpinner, FloatingMenuComponent],
+  imports: [RouterOutlet, FloatingMenuComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })

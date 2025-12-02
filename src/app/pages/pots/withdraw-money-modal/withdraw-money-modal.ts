@@ -5,6 +5,7 @@ import { ReusableModal } from '@/app/shared/components/reusable-modal/reusable-m
 import { Pot } from '@/app/core/models/finance-data.model';
 import { PotService } from '@/app/core/service/pot.service';
 import { TranslateService } from '@ngx-translate/core';
+import {Currency} from '@/app/core/models/auth.model';
 
 @Component({
   selector: 'app-withdraw-money-modal',
@@ -19,7 +20,7 @@ export class WithdrawMoneyModal {
 
   isOpen = input.required<boolean>();
   pot = input<Pot | null>(null);
-  currency = input<string>('USD');
+  currency = input<Currency>('USD');
 
   close = output<void>();
   success = output<void>();

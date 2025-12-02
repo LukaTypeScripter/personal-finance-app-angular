@@ -9,6 +9,7 @@ import {
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Api } from '@/app/shared/service/api';
+import {Currency} from '@/app/core/models/auth.model';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +29,6 @@ export class BudgetService {
           if (!result.data?.createBudget) {
             throw new Error('Failed to create budget');
           }
-          // Reload budgets after creation
           this.api.loadBudgets(input.currency);
           return result.data.createBudget;
         })
@@ -46,14 +46,13 @@ export class BudgetService {
           if (!result.data?.updateBudget) {
             throw new Error('Failed to update budget');
           }
-          // Reload budgets after update
           this.api.loadBudgets(input.currency);
           return result.data.updateBudget;
         })
       );
   }
 
-  deleteBudget(id: string, currency?: string): Observable<boolean> {
+  deleteBudget(id: string, currency?: Currency): Observable<boolean> {
     return this.apollo
       .mutate<{ deleteBudget: boolean }>({
         mutation: DELETE_BUDGET_MUTATION,
@@ -63,7 +62,6 @@ export class BudgetService {
         map(result => {
           const success = result.data?.deleteBudget ?? false;
           if (success) {
-            // Reload budgets after deletion
             this.api.loadBudgets(currency);
           }
           return success;

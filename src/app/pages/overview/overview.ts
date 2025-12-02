@@ -9,7 +9,7 @@ import { Api } from '@/app/shared/service/api';
 import {TranslateModule} from '@ngx-translate/core';
 @Component({
   selector: 'app-overview',
-  imports: [OverviewCard,OverviewPots,OverviewTransactions,OverviewBudgets,OverviewReccuringBill,OverviewSlider,TranslateModule],
+  imports: [OverviewCard,OverviewPots,OverviewTransactions,OverviewBudgets,OverviewSlider,TranslateModule],
   templateUrl: './overview.html',
   styleUrl: './overview.scss'
 })
@@ -19,7 +19,7 @@ export class Overview implements OnInit {
   protected balance = this.api.balance;
 
   ngOnInit(): void {
-    this.api.loadOverviewData();
+    this.api.loadOverviewData(this.api.currency());
   }
 
 }
