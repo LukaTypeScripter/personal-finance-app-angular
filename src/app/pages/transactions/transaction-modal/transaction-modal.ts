@@ -1,4 +1,5 @@
 import { Component, input, output, effect, signal, inject, computed } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Transaction, CreateTransactionInput, UpdateTransactionInput } from '@/app/core/models/finance-data.model';
@@ -21,6 +22,10 @@ export class TransactionModal {
   private translate = inject(TranslateService);
   private fb = inject(FormBuilder);
 
+  // Emits whenever the active language changes; read inside translated computeds
+  // so they re-evaluate (translate.instant is not reactive on its own).
+  private readonly langChange = toSignal(this.translate.onLangChange);
+
   isOpen = input.required<boolean>();
   transaction = input<Transaction | null>(null);
   currency = input<string>('USD');
@@ -40,22 +45,28 @@ export class TransactionModal {
   selectedType = signal<'expense' | 'income'>('expense');
 
   isEditMode = computed(() => this.transaction() !== null);
-  modalTitle = computed(() => this.isEditMode()
-    ? this.translate.instant('transactions.modal.editTransactionTitle')
-    : this.translate.instant('transactions.modal.addTransactionTitle'));
+  modalTitle = computed(() => {
+    this.langChange();
+    return this.isEditMode()
+      ? this.translate.instant('transactions.modal.editTransactionTitle')
+      : this.translate.instant('transactions.modal.addTransactionTitle');
+  });
 
-  categoryOptions = computed<DropdownOption[]>(() => [
-    { value: 'Entertainment', label: this.translate.instant('categories.entertainment') },
-    { value: 'Bills', label: this.translate.instant('categories.bills') },
-    { value: 'Groceries', label: this.translate.instant('categories.groceries') },
-    { value: 'Dining Out', label: this.translate.instant('categories.diningOut') },
-    { value: 'Transportation', label: this.translate.instant('categories.transportation') },
-    { value: 'Personal Care', label: this.translate.instant('categories.personalCare') },
-    { value: 'Education', label: this.translate.instant('categories.education') },
-    { value: 'Lifestyle', label: this.translate.instant('categories.lifestyle') },
-    { value: 'Shopping', label: this.translate.instant('categories.shopping') },
-    { value: 'General', label: this.translate.instant('categories.general') }
-  ]);
+  categoryOptions = computed<DropdownOption[]>(() => {
+    this.langChange();
+    return [
+      { value: 'Entertainment', label: this.translate.instant('categories.entertainment') },
+      { value: 'Bills', label: this.translate.instant('categories.bills') },
+      { value: 'Groceries', label: this.translate.instant('categories.groceries') },
+      { value: 'Dining Out', label: this.translate.instant('categories.diningOut') },
+      { value: 'Transportation', label: this.translate.instant('categories.transportation') },
+      { value: 'Personal Care', label: this.translate.instant('categories.personalCare') },
+      { value: 'Education', label: this.translate.instant('categories.education') },
+      { value: 'Lifestyle', label: this.translate.instant('categories.lifestyle') },
+      { value: 'Shopping', label: this.translate.instant('categories.shopping') },
+      { value: 'General', label: this.translate.instant('categories.general') }
+    ];
+  });
 
   avatarOptions: DropdownOption[] = [
     { value: '😀', label: '😀 Grinning' },
