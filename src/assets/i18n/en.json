@@ -71,9 +71,15 @@
     "transactions": "Transactions",
     "budgets": "Budgets",
     "pots": "Pots",
+    "assistant": "AI Assistant",
     "recurringBills": "Recurring Bills",
     "logout": "Log out",
     "minimizeMenu": "Minimize Menu"
+  },
+  "assistant": {
+    "empty": "Ask me anything about your finances.",
+    "placeholder": "Type your message…",
+    "send": "Send"
   },
   "auth": {
     "login": {
