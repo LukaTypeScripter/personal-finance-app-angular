@@ -32,7 +32,7 @@ export const tabConfig = [
         route: '/dashboard/pots'
     },
     {
-        id: 5,
+        id: 6,
         nameKey: 'navigation.assistant',
         icon: 'icon-nav-overview.svg',
         fill: '#b3b3b3',

@@ -10,7 +10,7 @@ import {
   GET_POTS_QUERY,
   GET_OVERVIEW_DATA_QUERY
 } from '@/app/core/graphql/finance.operations';
-import { map, catchError, of, tap } from 'rxjs';
+import { map, catchError, of } from 'rxjs';
 import {Currency} from '@/app/core/models/auth.model';
 
 @Injectable({
