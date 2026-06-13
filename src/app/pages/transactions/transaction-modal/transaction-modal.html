@@ -47,6 +47,26 @@
     </app-reusable-input>
 
     <div class="modal__field">
+      <label class="modal__label">{{ 'transactions.modal.type' | translate }}</label>
+      <div class="modal__type-toggle" role="group">
+        <button
+          type="button"
+          class="modal__type-option"
+          [class.modal__type-option--active]="selectedType() === 'expense'"
+          (click)="onTypeChange('expense')">
+          {{ 'transactions.modal.expense' | translate }}
+        </button>
+        <button
+          type="button"
+          class="modal__type-option"
+          [class.modal__type-option--active]="selectedType() === 'income'"
+          (click)="onTypeChange('income')">
+          {{ 'transactions.modal.income' | translate }}
+        </button>
+      </div>
+    </div>
+
+    <div class="modal__field">
       <label class="modal__label">{{ 'transactions.modal.amount' | translate }}</label>
       <div class="modal__input-wrapper">
         <span class="modal__currency">{{ currency() === 'USD' ? '$' : '₾' }}</span>

@@ -17,6 +17,17 @@ export class TransactionService {
   private apollo = inject(Apollo);
   private api = inject(Api);
 
+  /**
+   * A transaction affects the transaction list, the running balance, and budget
+   * spending (expenses count against category budgets). Refresh all three so
+   * the UI reflects the change without a manual reload.
+   */
+  private refreshAffectedData(): void {
+    this.api.loadTransactions();
+    this.api.loadBalance();
+    this.api.loadBudgets();
+  }
+
   createTransaction(input: CreateTransactionInput): Observable<Transaction> {
     return this.apollo
       .mutate<{ createTransaction: Transaction }>({
@@ -28,8 +39,7 @@ export class TransactionService {
           if (!result.data?.createTransaction) {
             throw new Error('Failed to create transaction');
           }
-          // Reload transactions after creation
-          this.api.loadTransactions();
+          this.refreshAffectedData();
           return result.data.createTransaction;
         })
       );
@@ -46,8 +56,7 @@ export class TransactionService {
           if (!result.data?.updateTransaction) {
             throw new Error('Failed to update transaction');
           }
-          // Reload transactions after update
-          this.api.loadTransactions();
+          this.refreshAffectedData();
           return result.data.updateTransaction;
         })
       );
@@ -63,8 +72,7 @@ export class TransactionService {
         map(result => {
           const success = result.data?.deleteTransaction ?? false;
           if (success) {
-            // Reload transactions after deletion
-            this.api.loadTransactions();
+            this.refreshAffectedData();
           }
           return success;
         })

@@ -125,11 +125,9 @@ export class FloatingMenuComponent {
 
     this.api.currency.set(currency);
 
-    const currentUrl = this.router.url;
-
-    if (currentUrl.includes('/overview')) {
-      this.api.loadOverviewData(currency);
-    }
+    // Reload all finance data in the new currency so every page (overview,
+    // budgets, transactions, pots) shows converted amounts, not just overview.
+    this.api.loadAllData(currency);
   }
 
   switchLanguage(language: 'en' | 'geo') {

@@ -1,10 +1,23 @@
 import {Plugin} from 'chart.js';
 import {Currency} from '@/app/core/models/auth.model';
 
-export function centerTextPlugin(totalSpent:number,totalMax:number,currency:Currency): Plugin<'doughnut'> {
+/**
+ * Center-text plugin for the budgets doughnut. Accepts getters (not raw values)
+ * so the text reflects the CURRENT spent / max / currency on every redraw,
+ * instead of being frozen at the value captured when the chart was built.
+ */
+export function centerTextPlugin(
+  getTotalSpent: () => number,
+  getTotalMax: () => number,
+  getCurrency: () => Currency,
+): Plugin<'doughnut'> {
   return {
     id: 'centerTextPlugin',
     beforeDraw: (chart) => {
+      const totalSpent = getTotalSpent();
+      const totalMax = getTotalMax();
+      const currency = getCurrency();
+
       const ctx = chart.ctx;
       const width = chart.width;
       const height = chart.height;

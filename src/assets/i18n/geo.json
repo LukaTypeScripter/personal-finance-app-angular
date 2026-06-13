@@ -188,7 +188,10 @@
       "amountPlaceholder": "0.00",
       "recurring": "განმეორებადი ტრანზაქცია",
       "addTransaction": "ტრანზაქციის დამატება",
-      "updateTransaction": "ტრანზაქციის განახლება"
+      "updateTransaction": "ტრანზაქციის განახლება",
+      "type": "ტიპი",
+      "expense": "ხარჯი",
+      "income": "შემოსავალი"
     }
   },
   "budgets": {

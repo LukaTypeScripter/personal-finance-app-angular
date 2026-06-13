@@ -188,7 +188,10 @@
       "amountPlaceholder": "0.00",
       "recurring": "Recurring Transaction",
       "addTransaction": "Add Transaction",
-      "updateTransaction": "Update Transaction"
+      "updateTransaction": "Update Transaction",
+      "type": "Type",
+      "expense": "Expense",
+      "income": "Income"
     }
   },
   "budgets": {
