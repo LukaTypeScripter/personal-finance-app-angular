@@ -19,6 +19,7 @@ import {NgOptimizedImage} from '@angular/common';
 import { updatePagination } from './helper/functions/update-pagination.function';
 import { ReusableBottomSheet } from '@/app/shared/components/reusable-bottom-sheet/reusable-bottom-sheet.component';
 import {TranslateModule, TranslateService} from '@ngx-translate/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { TransactionModal } from './transaction-modal/transaction-modal';
 
 @Component({
@@ -30,6 +31,8 @@ import { TransactionModal } from './transaction-modal/transaction-modal';
 export class Transactions implements OnInit {
   private readonly api = inject(Api);
   private readonly translate = inject(TranslateService);
+  // Re-evaluate translated option lists when the language changes.
+  private readonly langChange = toSignal(this.translate.onLangChange);
 
   public isModalOpen = signal(false);
   public currency = this.api.currency;
@@ -50,28 +53,34 @@ export class Transactions implements OnInit {
   private debounceTimer: any = null;
 
 
-  public categoryOptions = computed(() => [
-    { value: 'all', label: this.translate.instant('categories.all') },
-    { value: 'Entertainment', label: this.translate.instant('categories.entertainment') },
-    { value: 'Bills', label: this.translate.instant('categories.bills') },
-    { value: 'Groceries', label: this.translate.instant('categories.groceries') },
-    { value: 'Dining Out', label: this.translate.instant('categories.diningOut') },
-    { value: 'Transportation', label: this.translate.instant('categories.transportation') },
-    { value: 'Personal Care', label: this.translate.instant('categories.personalCare') },
-    { value: 'Education', label: this.translate.instant('categories.education') },
-    { value: 'Lifestyle', label: this.translate.instant('categories.lifestyle') },
-    { value: 'Shopping', label: this.translate.instant('categories.shopping') },
-    { value: 'General', label: this.translate.instant('categories.general') }
-  ]);
+  public categoryOptions = computed(() => {
+    this.langChange();
+    return [
+      { value: 'all', label: this.translate.instant('categories.all') },
+      { value: 'Entertainment', label: this.translate.instant('categories.entertainment') },
+      { value: 'Bills', label: this.translate.instant('categories.bills') },
+      { value: 'Groceries', label: this.translate.instant('categories.groceries') },
+      { value: 'Dining Out', label: this.translate.instant('categories.diningOut') },
+      { value: 'Transportation', label: this.translate.instant('categories.transportation') },
+      { value: 'Personal Care', label: this.translate.instant('categories.personalCare') },
+      { value: 'Education', label: this.translate.instant('categories.education') },
+      { value: 'Lifestyle', label: this.translate.instant('categories.lifestyle') },
+      { value: 'Shopping', label: this.translate.instant('categories.shopping') },
+      { value: 'General', label: this.translate.instant('categories.general') }
+    ];
+  });
 
-  public sortOptions = computed(() => [
-    { value: 'latest', label: this.translate.instant('sortOptions.latest') },
-    { value: 'oldest', label: this.translate.instant('sortOptions.oldest') },
-    { value: 'a-z', label: this.translate.instant('sortOptions.aToZ') },
-    { value: 'z-a', label: this.translate.instant('sortOptions.zToA') },
-    { value: 'highest', label: this.translate.instant('sortOptions.highest') },
-    { value: 'lowest', label: this.translate.instant('sortOptions.lowest') }
-  ]);
+  public sortOptions = computed(() => {
+    this.langChange();
+    return [
+      { value: 'latest', label: this.translate.instant('sortOptions.latest') },
+      { value: 'oldest', label: this.translate.instant('sortOptions.oldest') },
+      { value: 'a-z', label: this.translate.instant('sortOptions.aToZ') },
+      { value: 'z-a', label: this.translate.instant('sortOptions.zToA') },
+      { value: 'highest', label: this.translate.instant('sortOptions.highest') },
+      { value: 'lowest', label: this.translate.instant('sortOptions.lowest') }
+    ];
+  });
 
   public transactions = this.api.transactions;
   public paginationMeta = this.api.paginationMeta;

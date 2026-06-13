@@ -5,9 +5,10 @@ import { OverviewPotsSummary } from '../overview-pots/overview-pots-summary/over
 import { Api } from '@/app/shared/service/api';
 import { SUMMARY_TYPE } from '@/app/core/constants/summary.constant';
 import {TranslateModule} from '@ngx-translate/core';
+import {EmptyState} from '@/app/shared/components/empty-state/empty-state';
 @Component({
   selector: 'app-overview-budgets',
-  imports: [CardHeader,DonutChart,OverviewPotsSummary,TranslateModule],
+  imports: [CardHeader,DonutChart,OverviewPotsSummary,TranslateModule,EmptyState],
   templateUrl: './overview-budgets.html',
   styleUrl: './overview-budgets.scss'
 })

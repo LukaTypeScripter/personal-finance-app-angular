@@ -31,6 +31,14 @@ export const tabConfig = [
         fillActive: 'hsl(177, 52%, 32%)',
         route: '/dashboard/pots'
     },
+    {
+        id: 6,
+        nameKey: 'navigation.assistant',
+        icon: 'icon-nav-overview.svg',
+        fill: '#b3b3b3',
+        fillActive: 'hsl(177, 52%, 32%)',
+        route: '/dashboard/assistant'
+    },
     // {
     //     id: 5,
     //     nameKey: 'navigation.recurringBills',

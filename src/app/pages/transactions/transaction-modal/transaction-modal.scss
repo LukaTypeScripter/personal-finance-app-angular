@@ -1,28 +1,88 @@
+@use "@/assets/styles/_variables.scss" as v;
+
 .modal {
   &__form {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    padding: 1.5rem 0;
+    gap: v.$spacing-250;
+    padding: v.$spacing-100 0 v.$spacing-50;
   }
 
   &__field {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: v.$spacing-100;
 
     &--checkbox {
       flex-direction: row;
       align-items: center;
     }
+
+    /* Make the avatar / category dropdowns fill the row, consistent with inputs.
+       Anchored on .modal__field (a real element of THIS component) so ::ng-deep
+       actually reaches the child dropdown; !important beats the dropdown's own
+       `.dropdown { display: inline-block }`. */
+    ::ng-deep .dropdown {
+      display: block !important;
+      width: 100% !important;
+    }
+
+    ::ng-deep .dropdown app-reusable-button {
+      display: block !important;
+      width: 100% !important;
+    }
+
+    ::ng-deep .dropdown button {
+      width: 100% !important;
+      justify-content: space-between !important;
+    }
+
+    ::ng-deep .dropdown__menu {
+      border: 1px solid v.$color-grey-300;
+      max-height: 220px;
+      overflow-y: auto;
+    }
   }
 
   &__label {
-    font-size: 0.75rem;
+    font-size: v.$font-size-preset-5;
     font-weight: 700;
-    color: var(--grey-500);
+    color: v.$color-grey-500;
   }
 
+  /* Segmented Expense / Income control */
+  &__type-toggle {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: v.$spacing-50;
+    padding: v.$spacing-50;
+    background: v.$color-beige-100;
+    border-radius: 10px;
+  }
+
+  &__type-option {
+    padding: v.$spacing-150 v.$spacing-200;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: v.$color-grey-500;
+    font-size: v.$font-size-preset-4;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+
+    &:hover {
+      color: v.$color-grey-900;
+    }
+
+    &--active {
+      background: v.$color-grey-900;
+      color: v.$color-white;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+    }
+  }
+
+  /* Amount field with leading currency symbol */
   &__input-wrapper {
     position: relative;
     display: flex;
@@ -31,9 +91,10 @@
 
   &__currency {
     position: absolute;
-    left: 1.25rem;
-    font-size: 0.875rem;
-    color: var(--grey-500);
+    left: v.$spacing-200;
+    font-size: v.$font-size-preset-3;
+    font-weight: 700;
+    color: v.$color-grey-500;
     pointer-events: none;
     z-index: 1;
   }
@@ -42,47 +103,47 @@
     flex: 1;
 
     ::ng-deep input {
-      padding-left: 2.5rem;
+      padding-left: v.$spacing-500;
     }
   }
 
   &__checkbox-label {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: v.$spacing-150;
     cursor: pointer;
-    font-size: 0.875rem;
-    color: var(--grey-900);
+    font-size: v.$font-size-preset-4;
+    color: v.$color-grey-900;
   }
 
   &__checkbox {
     width: 1.25rem;
     height: 1.25rem;
     cursor: pointer;
+    accent-color: v.$color-green;
   }
 
   &__error {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1rem;
-    background: #fef2f2;
-    border: 1px solid #fecaca;
+    gap: v.$spacing-100;
+    padding: v.$spacing-150 v.$spacing-200;
+    background: rgba(v.$color-red, 0.08);
+    border: 1px solid rgba(v.$color-red, 0.35);
     border-radius: 8px;
-    color: #dc2626;
-    font-size: 0.875rem;
+    color: v.$color-red;
+    font-size: v.$font-size-preset-4;
 
     svg {
       flex-shrink: 0;
-      color: #dc2626;
+      color: v.$color-red;
     }
   }
 
   &__footer {
     display: flex;
     justify-content: flex-end;
-    gap: 1rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--beige-100);
+    gap: v.$spacing-200;
+    width: 100%;
   }
 }

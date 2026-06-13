@@ -7,6 +7,7 @@ import { ReusableButton } from '@/app/shared/components/reusable-button/reusable
 import { ReusableModal } from '@/app/shared/components/reusable-modal/reusable-modal.component';
 import { BudgetService } from '@/app/core/service/budget.service';
 import {TranslateModule, TranslateService} from '@ngx-translate/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 interface ThemeOption {
   name: string;
@@ -23,6 +24,8 @@ interface ThemeOption {
 export class BudgetModal {
   private budgetService = inject(BudgetService);
   private translate = inject(TranslateService);
+  // Re-evaluate translated computeds when the language changes.
+  private readonly langChange = toSignal(this.translate.onLangChange);
 
   isOpen = input.required<boolean>();
   budget = input<Budget | null>(null);
@@ -38,11 +41,16 @@ export class BudgetModal {
   error = signal<string | null>(null);
 
   isEditMode = computed(() => this.budget() !== null);
-  modalTitle = computed(() => this.isEditMode()
-    ? this.translate.instant('budgets.modal.editBudgetTitle')
-    : this.translate.instant('budgets.modal.addBudgetTitle'));
+  modalTitle = computed(() => {
+    this.langChange();
+    return this.isEditMode()
+      ? this.translate.instant('budgets.modal.editBudgetTitle')
+      : this.translate.instant('budgets.modal.addBudgetTitle');
+  });
 
-  categories = computed(() => [
+  categories = computed(() => {
+    this.langChange();
+    return [
     this.translate.instant('categories.entertainment'),
     this.translate.instant('categories.bills'),
     this.translate.instant('categories.groceries'),
@@ -53,9 +61,12 @@ export class BudgetModal {
     this.translate.instant('categories.lifestyle'),
     this.translate.instant('categories.shopping'),
     this.translate.instant('categories.general')
-  ]);
+    ];
+  });
 
-  themeOptions = computed<ThemeOption[]>(() => [
+  themeOptions = computed<ThemeOption[]>(() => {
+    this.langChange();
+    return [
     { name: this.translate.instant('themes.green'), color: '#277C78' },
     { name: this.translate.instant('themes.yellow'), color: '#F2CDAC' },
     { name: this.translate.instant('themes.cyan'), color: '#82C9D7' },
@@ -71,7 +82,8 @@ export class BudgetModal {
     { name: this.translate.instant('themes.pink'), color: '#AF81BA' },
     { name: this.translate.instant('themes.gold'), color: '#CAB361' },
     { name: this.translate.instant('themes.orange'), color: '#BE6C49' }
-  ]);
+    ];
+  });
 
   constructor() {
     effect(() => {

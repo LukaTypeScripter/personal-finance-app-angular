@@ -1,14 +1,23 @@
 <div class="overview-pots">
-    <app-card-header [title]="'overview.pots.title' | translate" [redirectPlaceHolder]="'common.seeDetails' | translate" redirectPath="/"></app-card-header>
+    <app-card-header [title]="'overview.pots.title' | translate" [redirectPlaceHolder]="'common.seeDetails' | translate" redirectPath="/dashboard/pots"></app-card-header>
     <!-- -->
-    <div class="overview-pots__content">
-        <app-overview-pots-saved [pots]="userPots()" [currency]="currency()"></app-overview-pots-saved>
-        <!-- -->
+    @if (userPots().length === 0) {
+        <app-empty-state
+            icon="icon-pot.svg"
+            [title]="'overview.pots.emptyTitle' | translate"
+            [message]="'overview.pots.emptyMessage' | translate"
+            [ctaLabel]="'overview.pots.emptyCta' | translate"
+            ctaRoute="/dashboard/pots"></app-empty-state>
+    } @else {
+        <div class="overview-pots__content">
+            <app-overview-pots-saved [pots]="userPots()" [currency]="currency()"></app-overview-pots-saved>
+            <!-- -->
 
-        <div class="overview-pots__summary">
-            @for (pot of userPots(); track $index) {
-                <app-overview-pots-summary [type]="SUMMARY_TYPE[$index]" [name]="pot.name" [amount]="pot.target" [theme]="pot.theme" [currency]="currency()"></app-overview-pots-summary>
-            }
+            <div class="overview-pots__summary">
+                @for (pot of userPots(); track $index) {
+                    <app-overview-pots-summary [type]="SUMMARY_TYPE[$index]" [name]="pot.name" [amount]="pot.target" [theme]="pot.theme" [currency]="currency()"></app-overview-pots-summary>
+                }
+            </div>
         </div>
-    </div>
+    }
 </div>

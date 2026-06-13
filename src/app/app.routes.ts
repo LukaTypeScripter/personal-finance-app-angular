@@ -28,6 +28,10 @@ export const routes: Routes = [
         path: 'pots',
         loadComponent: () => import('./pages/pots/pots').then(m => m.Pots)
       },
+      {
+        path: 'assistant',
+        loadComponent: () => import('./pages/assistant/assistant').then(m => m.Assistant)
+      },
     ]
   },
   {

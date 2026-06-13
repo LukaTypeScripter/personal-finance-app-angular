@@ -3,10 +3,11 @@ import {CardHeader} from '@/app/shared/components/card-header/card-header';
 import {TransactionHistoryItem} from './transaction-history-item/transaction-history-item';
 import {Api} from '@/app/shared/service/api';
 import {TranslateModule} from '@ngx-translate/core';
+import {EmptyState} from '@/app/shared/components/empty-state/empty-state';
 
 @Component({
   selector: 'app-overview-transactions',
-  imports: [CardHeader, TransactionHistoryItem, TranslateModule],
+  imports: [CardHeader, TransactionHistoryItem, TranslateModule, EmptyState],
   templateUrl: './transactions.html',
   styleUrl: './transactions.scss'
 })

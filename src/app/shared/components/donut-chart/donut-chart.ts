@@ -38,9 +38,18 @@ export class DonutChart implements OnInit {
   })
   private readonly currency = this.userBudgets.currency
 
-  private readonly centerTextPlugin: Plugin<'doughnut'> = centerTextPlugin(this.totalSpent(),this.totalMax(),this.currency())
+  // Pass getters so the center text reflects the CURRENT totals/currency on
+  // every redraw rather than the values captured at construction time.
+  private readonly centerTextPlugin: Plugin<'doughnut'> = centerTextPlugin(
+    () => this.totalSpent(),
+    () => this.totalMax(),
+    () => this.currency(),
+  );
 
   public readonly doughnutChartOptions: ChartConfiguration<'doughnut'>['options'] = doughnutChartOptions
+  // Attach the plugin per-chart (not globally) so each donut instance reads its
+  // own component state.
+  public readonly chartPlugins: Plugin<'doughnut'>[] = [this.centerTextPlugin];
   public doughnutChartDatasets: ChartConfiguration<'doughnut'>['data']['datasets'] =
     [];
 
@@ -66,7 +75,9 @@ export class DonutChart implements OnInit {
 
   ngOnInit() {
     if (this.isBrowser) {
-      Chart.register(ArcElement, DoughnutController, Legend, Tooltip, this.centerTextPlugin);
+      // Register chart.js building blocks globally; the center-text plugin is
+      // attached per-chart via [plugins] so it stays bound to this instance.
+      Chart.register(ArcElement, DoughnutController, Legend, Tooltip);
     }
   }
 

@@ -1,4 +1,5 @@
 import { Component, input, output, effect, signal, inject, computed } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Transaction, CreateTransactionInput, UpdateTransactionInput } from '@/app/core/models/finance-data.model';
@@ -21,6 +22,10 @@ export class TransactionModal {
   private translate = inject(TranslateService);
   private fb = inject(FormBuilder);
 
+  // Emits whenever the active language changes; read inside translated computeds
+  // so they re-evaluate (translate.instant is not reactive on its own).
+  private readonly langChange = toSignal(this.translate.onLangChange);
+
   isOpen = input.required<boolean>();
   transaction = input<Transaction | null>(null);
   currency = input<string>('USD');
@@ -35,24 +40,33 @@ export class TransactionModal {
   error = signal<string | null>(null);
   selectedCategory = signal<string>('');
   selectedAvatar = signal<string>('😀');
+  // Expenses are stored as negative amounts (they count against category
+  // budgets); income is positive. Default to expense since that is the common case.
+  selectedType = signal<'expense' | 'income'>('expense');
 
   isEditMode = computed(() => this.transaction() !== null);
-  modalTitle = computed(() => this.isEditMode()
-    ? this.translate.instant('transactions.modal.editTransactionTitle')
-    : this.translate.instant('transactions.modal.addTransactionTitle'));
+  modalTitle = computed(() => {
+    this.langChange();
+    return this.isEditMode()
+      ? this.translate.instant('transactions.modal.editTransactionTitle')
+      : this.translate.instant('transactions.modal.addTransactionTitle');
+  });
 
-  categoryOptions = computed<DropdownOption[]>(() => [
-    { value: 'Entertainment', label: this.translate.instant('categories.entertainment') },
-    { value: 'Bills', label: this.translate.instant('categories.bills') },
-    { value: 'Groceries', label: this.translate.instant('categories.groceries') },
-    { value: 'Dining Out', label: this.translate.instant('categories.diningOut') },
-    { value: 'Transportation', label: this.translate.instant('categories.transportation') },
-    { value: 'Personal Care', label: this.translate.instant('categories.personalCare') },
-    { value: 'Education', label: this.translate.instant('categories.education') },
-    { value: 'Lifestyle', label: this.translate.instant('categories.lifestyle') },
-    { value: 'Shopping', label: this.translate.instant('categories.shopping') },
-    { value: 'General', label: this.translate.instant('categories.general') }
-  ]);
+  categoryOptions = computed<DropdownOption[]>(() => {
+    this.langChange();
+    return [
+      { value: 'Entertainment', label: this.translate.instant('categories.entertainment') },
+      { value: 'Bills', label: this.translate.instant('categories.bills') },
+      { value: 'Groceries', label: this.translate.instant('categories.groceries') },
+      { value: 'Dining Out', label: this.translate.instant('categories.diningOut') },
+      { value: 'Transportation', label: this.translate.instant('categories.transportation') },
+      { value: 'Personal Care', label: this.translate.instant('categories.personalCare') },
+      { value: 'Education', label: this.translate.instant('categories.education') },
+      { value: 'Lifestyle', label: this.translate.instant('categories.lifestyle') },
+      { value: 'Shopping', label: this.translate.instant('categories.shopping') },
+      { value: 'General', label: this.translate.instant('categories.general') }
+    ];
+  });
 
   avatarOptions: DropdownOption[] = [
     { value: '😀', label: '😀 Grinning' },
@@ -82,6 +96,7 @@ export class TransactionModal {
       name: ['', Validators.required],
       category: ['', Validators.required],
       avatar: ['😀', Validators.required],
+      type: ['expense', Validators.required],
       date: [new Date().toISOString().split('T')[0], Validators.required],
       amount: [0, [Validators.required, Validators.min(0.01)]],
       recurring: [false]
@@ -92,16 +107,21 @@ export class TransactionModal {
       const modalOpen = this.isOpen();
 
       if (modalOpen && transactionData) {
+        // Stored amount carries the sign: negative = expense, positive = income.
+        // Show the magnitude in the field and derive the type from the sign.
+        const type = transactionData.amount < 0 ? 'expense' : 'income';
         this.transactionForm.patchValue({
           name: transactionData.name,
           category: transactionData.category,
           avatar: transactionData.avatar || '😀',
+          type,
           date: transactionData.date,
-          amount: transactionData.amount,
+          amount: Math.abs(transactionData.amount),
           recurring: transactionData.recurring
         });
         this.selectedCategory.set(transactionData.category);
         this.selectedAvatar.set(transactionData.avatar || '😀');
+        this.selectedType.set(type);
       } else if (modalOpen && !transactionData) {
         this.resetForm();
       }
@@ -113,13 +133,20 @@ export class TransactionModal {
       name: '',
       category: '',
       avatar: '😀',
+      type: 'expense',
       date: new Date().toISOString().split('T')[0],
       amount: 0,
       recurring: false
     });
     this.selectedCategory.set('');
     this.selectedAvatar.set('😀');
+    this.selectedType.set('expense');
     this.error.set(null);
+  }
+
+  onTypeChange(value: 'expense' | 'income') {
+    this.selectedType.set(value);
+    this.transactionForm.patchValue({ type: value });
   }
 
   onCategoryChange(value: string) {
@@ -155,6 +182,9 @@ export class TransactionModal {
 
     this.isSubmitting.set(true);
 
+    // Encode the sign from the selected type: expenses are negative, income positive.
+    const magnitude = Math.abs(Number(formValue.amount));
+    const signedAmount = formValue.type === 'expense' ? -magnitude : magnitude;
 
     if (this.isEditMode()) {
       const transaction = this.transaction();
@@ -169,7 +199,7 @@ export class TransactionModal {
         category: formValue.category,
         avatar: formValue.avatar,
         date: formValue.date,
-        amount: Number(formValue.amount),
+        amount: signedAmount,
         recurring: formValue.recurring,
         currency: this.currency() as any
       };
@@ -192,7 +222,7 @@ export class TransactionModal {
         category: formValue.category,
         avatar: formValue.avatar,
         date: formValue.date,
-        amount: Number(formValue.amount),
+        amount: signedAmount,
         recurring: formValue.recurring,
         currency: this.currency() as any
       };
