@@ -1,0 +1,20 @@
+<div class="empty-state">
+  @if (icon()) {
+    <span class="empty-state__icon">
+      <app-svg-icon [iconName]="icon()" fill="hsl(177, 52%, 32%)" [width]="22" [height]="22"></app-svg-icon>
+    </span>
+  }
+
+  <h3 class="empty-state__title">{{ title() }}</h3>
+
+  @if (message()) {
+    <p class="empty-state__message">{{ message() }}</p>
+  }
+
+  @if (ctaLabel() && ctaRoute()) {
+    <a class="empty-state__cta" [routerLink]="ctaRoute()">
+      {{ ctaLabel() }}
+      <span class="empty-state__cta-arrow" aria-hidden="true">→</span>
+    </a>
+  }
+</div>

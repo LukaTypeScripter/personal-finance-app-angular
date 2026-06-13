@@ -28,7 +28,8 @@
     @include mixins.respond(sm) {
         &__chart {
             grid-template-columns: 1fr 1fr;
-            gap: 200px;
+            gap: variables.$spacing-400;
+            align-items: center;
 
             &-summary  {
                 grid-template-columns: 1fr;
@@ -39,7 +40,12 @@
     @include mixins.respond(md) {
         margin-top: unset;
         &__chart {
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr;
+            gap: variables.$spacing-300;
+
+            &-summary {
+                grid-template-columns: 1fr;
+            }
         }
     }
 

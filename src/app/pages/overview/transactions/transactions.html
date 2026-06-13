@@ -1,13 +1,22 @@
 <div class="transactions">
-  <app-card-header class="transactions__header" redirectPath="/transactions" [redirectPlaceHolder]="'common.viewAll' | translate"
+  <app-card-header class="transactions__header" redirectPath="/dashboard/transactions" [redirectPlaceHolder]="'common.viewAll' | translate"
                    [title]="'overview.transactions.title' | translate"></app-card-header>
   <!-- -->
-  @for (transaction of slicedTransactions(); track $index) {
-    <div class="transactions__item">
-      <app-transaction-history-item [transaction]="transaction"></app-transaction-history-item>
-      @if ($index < 4) {
-        <div class="transactions__item-line"></div>
-      }
-    </div>
+  @if (slicedTransactions().length === 0) {
+    <app-empty-state
+      icon="icon-nav-transactions.svg"
+      [title]="'overview.transactions.emptyTitle' | translate"
+      [message]="'overview.transactions.emptyMessage' | translate"
+      [ctaLabel]="'overview.transactions.emptyCta' | translate"
+      ctaRoute="/dashboard/transactions"></app-empty-state>
+  } @else {
+    @for (transaction of slicedTransactions(); track $index) {
+      <div class="transactions__item">
+        <app-transaction-history-item [transaction]="transaction"></app-transaction-history-item>
+        @if ($index < 4) {
+          <div class="transactions__item-line"></div>
+        }
+      </div>
+    }
   }
 </div>

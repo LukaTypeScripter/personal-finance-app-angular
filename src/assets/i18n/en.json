@@ -137,13 +137,22 @@
     },
     "pots": {
       "title": "Pots",
-      "totalSaved": "Total Saved"
+      "totalSaved": "Total Saved",
+      "emptyTitle": "No savings pots yet",
+      "emptyMessage": "Create a pot to set money aside for your goals.",
+      "emptyCta": "Create a pot"
     },
     "budgets": {
-      "title": "Budgets"
+      "title": "Budgets",
+      "emptyTitle": "No budgets yet",
+      "emptyMessage": "Set category budgets to keep your spending on track.",
+      "emptyCta": "Create a budget"
     },
     "transactions": {
-      "title": "Transactions"
+      "title": "Transactions",
+      "emptyTitle": "No transactions yet",
+      "emptyMessage": "Add your first transaction to start tracking your money.",
+      "emptyCta": "Add transaction"
     },
     "recurringBills": {
       "title": "Recurring Bills",
