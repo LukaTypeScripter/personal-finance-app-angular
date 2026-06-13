@@ -1,0 +1,42 @@
+<section class="assistant">
+  <h1 class="assistant__title">{{ 'navigation.assistant' | translate }}</h1>
+
+  <div class="assistant__messages" data-testid="assistant-messages">
+    @if (messages().length === 0) {
+      <p class="assistant__empty">{{ 'assistant.empty' | translate }}</p>
+    }
+    @for (message of messages(); track message.id) {
+      <div class="assistant__bubble assistant__bubble--{{ message.role }}">
+        {{ message.content }}
+      </div>
+    }
+    @if (loading()) {
+      <div class="assistant__bubble assistant__bubble--assistant assistant__bubble--typing">…</div>
+    }
+  </div>
+
+  @if (error()) {
+    <p class="assistant__error" role="alert">{{ error() }}</p>
+  }
+
+  <form class="assistant__composer" (ngSubmit)="send()">
+    <input
+      class="assistant__input"
+      data-testid="assistant-input"
+      [ngModel]="draft()"
+      (ngModelChange)="draft.set($event)"
+      name="draft"
+      [disabled]="loading()"
+      [placeholder]="'assistant.placeholder' | translate"
+      autocomplete="off"
+    />
+    <button
+      class="assistant__send"
+      data-testid="assistant-send"
+      type="submit"
+      [disabled]="loading() || !draft().trim()"
+    >
+      {{ 'assistant.send' | translate }}
+    </button>
+  </form>
+</section>
