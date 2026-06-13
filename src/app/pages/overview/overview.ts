@@ -19,7 +19,7 @@ export class Overview implements OnInit {
   protected balance = this.api.balance;
 
   ngOnInit(): void {
-    this.api.loadOverviewData(this.api.currency());
+    this.api.loadOverviewData();
   }
 
 }

@@ -181,32 +181,34 @@ export class Api {
 
     this.apollo
       .query<{
-        balance: Balance;
-        transactions: PaginatedTransactions;
-        budgets: Budget[];
-        pots: Pot[];
+        balance: Balance | null;
+        transactions: PaginatedTransactions | null;
+        budgets: Budget[] | null;
+        pots: Pot[] | null;
       }>({
         query: GET_OVERVIEW_DATA_QUERY,
         variables: { currency: curr },
-        fetchPolicy: 'network-only'
+        fetchPolicy: 'network-only',
       })
       .pipe(
+        map(result => result?.data ?? null),
         catchError(error => {
           console.error('Error loading overview data:', error);
-          this._loading.set(false);
           return of(null);
-        })
+        }),
       )
-      .subscribe(result => {
-        const data = result?.data;
-        if (!data) return this._loading.set(false);
-
-        this.setSafeData(this._balance, data.balance);
-        this.setSafeData(this._transactions, data.transactions.transactions);
-        this._paginationMeta.set(data.transactions.pagination);
-        this.setSafeData(this._pots, data.pots, (p) => !!p && !!p.name);
-        this.setSafeData(this._budgets, data.budgets);
-        this._loading.set(false);
+      .subscribe({
+        next: data => {
+          if (data) {
+            this.setSafeData(this._balance, data.balance);
+            this.setSafeData(this._transactions, data.transactions?.transactions ?? []);
+            this._paginationMeta.set(data.transactions?.pagination ?? null);
+            this.setSafeData(this._pots, data.pots ?? [], p => !!p && !!p.name);
+            this.setSafeData(this._budgets, data.budgets ?? []);
+          }
+          this._loading.set(false);
+        },
+        error: () => this._loading.set(false),
       });
   }
 
@@ -224,6 +226,6 @@ export class Api {
   }
 
   private resolveCurrency(currency?: Currency): Currency {
-    return currency || this.currency() || this.authService.currentUser()?.currency || 'USD';
+    return currency || this.authService.currentUser()?.currency || this.currency() || 'USD';
   }
 }
