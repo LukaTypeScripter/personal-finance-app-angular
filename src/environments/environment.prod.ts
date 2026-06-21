@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://api.yourdomain.com/graphql',
+  apiUrl: 'https://personal-finance-service.onrender.com/graphql',
 };
